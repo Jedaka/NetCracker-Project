@@ -1,7 +1,16 @@
 package com.project.database;
 
-/**
- * Created by Максим on 26.10.2015.
- */
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
 public class DatabaseConnection {
+
+    private static SessionFactory sessionFactory =  new Configuration().configure().buildSessionFactory();
+
+    public static SessionFactory getSessionFactory(){
+        return sessionFactory;
+    }
+
+    private DatabaseConnection(){}
+
 }

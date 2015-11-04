@@ -1,0 +1,36 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http create-session="always"
+          entry-point-ref="AuthenticationEntryPoint">
+        <!--<intercept-url pattern="/**" access="ROLE_USER" />-->
+        <intercept-url pattern="/auth/fail" access="ROLE_USER" />
+        <form-login
+                authentication-failure-url="/auth/fail"
+                username-parameter="email"
+                password-parameter="password"
+                login-processing-url="/auth/login"
+                default-target-url="/auth/profile"/>
+        <logout
+                logout-url="/auth/logout"
+                logout-success-url="/auth/fail"
+                delete-cookies="true"/>
+    </http>
+
+    <beans:bean id="AuthenticationEntryPoint" class="com.project.security.AuthenticationEntryPoint"/>
+
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="user" password="user" authorities="ROLE_USER" />
+                <!--<security:user name="admin" password="admin" authorities="ROLE_ADMIN" />-->
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+
+</beans:beans>

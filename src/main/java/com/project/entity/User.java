@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-@Entity(name = "USER_PROFILE")
+@Entity(name = "USERS")
 public class User {
 
     @Id
@@ -17,10 +17,10 @@ public class User {
     @SequenceGenerator(name="USER_PROFILE_SEQ", sequenceName="USER_PROFILE_SEQ",allocationSize=1)
     private int id;
     private String email;
-    private String name;
+    private String password;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_PROFILE_ID")
+    @JoinColumn(name = "USERS_ID")
     @Cascade({CascadeType.SAVE_UPDATE})
     private Collection<Subscription> subscriptions = new ArrayList<Subscription>();
 
@@ -48,12 +48,12 @@ public class User {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getPassword() {
+        return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
                 ", subscriptions=" + subscriptions +
                 '}';
     }

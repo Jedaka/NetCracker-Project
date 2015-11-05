@@ -14,7 +14,7 @@ public class Serial {
     @SequenceGenerator(name="SERIAL_SEQ", sequenceName="SERIAL_SEQ",allocationSize=1)
     private int id;
     private String title;
-    private String Language;
+    private String language;
 
     public int getId() {
         return id;
@@ -33,11 +33,11 @@ public class Serial {
     }
 
     public String getLanguage() {
-        return Language;
+        return language;
     }
 
     public void setLanguage(String language) {
-        Language = language;
+        this.language = language;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Serial {
         return "Serial{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", Language='" + Language + '\'' +
+                ", language='" + language + '\'' +
                 '}';
     }
 }

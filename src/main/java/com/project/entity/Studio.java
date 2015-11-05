@@ -14,7 +14,7 @@ public class Studio {
     private int id;
 
     private String name;
-    private String Language;
+    private String language;
 
     public int getId() {
         return id;
@@ -33,11 +33,11 @@ public class Studio {
     }
 
     public String getLanguage() {
-        return Language;
+        return language;
     }
 
     public void setLanguage(String language) {
-        Language = language;
+        this.language = language;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Studio {
         return "Studio{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", Language='" + Language + '\'' +
+                ", Language='" + language + '\'' +
                 '}';
     }
 }

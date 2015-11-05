@@ -25,7 +25,7 @@ public class HelloController {
 		User user = new User();
 		user.setId(1);
 		user.setEmail("sd@sad.ru");
-		user.setName("sdds");
+		user.setPassword("sdds");
 		return user;
 	}
 

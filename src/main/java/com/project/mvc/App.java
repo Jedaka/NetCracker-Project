@@ -1,5 +1,6 @@
 package com.project.mvc;
 
+import com.project.database.DatabaseConnection;
 import com.project.database.dao.UserDAO;
 import com.project.entity.Serial;
 import com.project.entity.Studio;
@@ -19,7 +20,7 @@ public class App {
 
         User user = new User();
         user.setEmail("hello@ksd.ru");
-        user.setName("Zhek");
+        user.setPassword("sad");
 
         Studio studio1 = new Studio();
         studio1.setName("LostFilm");
@@ -37,6 +38,8 @@ public class App {
         userDAO.save(user);
 
         System.out.println(userDAO.getById(1));
+
+        DatabaseConnection.getSessionFactory().close();
 
     }
 

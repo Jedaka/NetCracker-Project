@@ -37,7 +37,7 @@ public class App {
 
         userDAO.save(user);
 
-        System.out.println(userDAO.getById(1));
+        System.out.println(userDAO.getById(13));
 
         DatabaseConnection.getSessionFactory().close();
 

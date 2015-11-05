@@ -20,7 +20,7 @@ public class User {
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USERS_ID")
+    @JoinColumn(name = "USERS_ID", referencedColumnName = "ID", nullable = false)
     @Cascade({CascadeType.SAVE_UPDATE})
     private Collection<Subscription> subscriptions = new ArrayList<Subscription>();
 

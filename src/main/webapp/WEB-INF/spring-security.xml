@@ -23,13 +23,11 @@
     </http>
 
     <beans:bean id="AuthenticationEntryPoint" class="com.project.security.AuthenticationEntryPoint"/>
+    <beans:bean id="SecurityConfig" class="com.project.security.SecurityConfig"/>
+    <beans:bean id="UserDetailsServiceConfig" class="com.project.security.UserDetailsServiceConfig"/>
 
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="user" password="user" authorities="ROLE_USER" />
-                <!--<security:user name="admin" password="admin" authorities="ROLE_ADMIN" />-->
-            </user-service>
+        <authentication-provider user-service-ref="UserDetailsServiceConfig">
         </authentication-provider>
     </authentication-manager>
 

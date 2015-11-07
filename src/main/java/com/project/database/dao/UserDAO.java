@@ -4,6 +4,7 @@ import com.project.database.DatabaseConnection;
 import com.project.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -46,6 +47,24 @@ public class UserDAO implements GenericDAO<User> {
             session.getTransaction().commit();
         } catch (Exception e) {
             //TODO
+            //Logger HERE
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return user;
+    }
+
+    public User getByEmail(String email){
+        User user = null;
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            user = (User) session.createCriteria(User.class).add(Restrictions.eq("email", email)).uniqueResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            //TODO
+            e.printStackTrace();
             //Logger HERE
             session.getTransaction().rollback();
         } finally {

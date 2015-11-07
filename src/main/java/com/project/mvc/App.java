@@ -35,9 +35,9 @@ public class App {
         subscription.setStudio(studio1);
         user.setSubscriptions(Arrays.asList(subscription));
 
-        userDAO.save(user);
+//        userDAO.save(user);
 
-        System.out.println(userDAO.getById(13));
+        System.out.println(userDAO.getByEmail("hello@ksd.ru"));
 
         DatabaseConnection.getSessionFactory().close();
 

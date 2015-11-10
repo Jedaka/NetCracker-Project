@@ -1,8 +1,8 @@
 package com.project.security;
 
-import com.project.database.dao.UserDAO;
 import com.project.model.User;
 import com.project.service.ApplicationContextProvider;
+import com.project.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +19,8 @@ public class UserDetailsServiceConfig implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         ApplicationContext applicationContext = ApplicationContextProvider.getApplicationContext();
-        UserDAO userDAO = applicationContext.getBean("userDAO", UserDAO.class);
-        User user = userDAO.getByEmail(s);
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        User user = userService.findByEmail(s);
         if (user == null) throw new UsernameNotFoundException("Username not found in the database");
         UserDetails userDetails = convertToUserDetails(user);
         return userDetails;

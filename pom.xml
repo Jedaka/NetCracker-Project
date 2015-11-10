@@ -8,7 +8,7 @@
     <name>Project</name>
 
     <properties>
-        <spring.version>4.1.1.RELEASE</spring.version>
+        <spring.version>4.2.2.RELEASE</spring.version>
         <spring.security.version>3.2.9.RELEASE</spring.security.version>
     </properties>
 
@@ -84,6 +84,7 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.0.2.Final</version>
         </dependency>
+
 
         <dependency>
             <groupId>com.oracle</groupId>
@@ -178,6 +179,35 @@
                     <server>apache-tomcat-7.0.65</server>
                     <url>http://localhost:8080/manager/text</url>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>[ groupId ]</groupId>
+                                    <artifactId>[ artifactId ]</artifactId>
+                                    <version>[ version ]</version>
+                                    <type>[ packaging ]</type>
+                                    <classifier> [classifier - optional] </classifier>
+                                    <overWrite>[ true or false ]</overWrite>
+                                    <outputDirectory>[ output directory ]</outputDirectory>
+                                    <destFileName>[ filename ]</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <!-- other configurations here -->
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

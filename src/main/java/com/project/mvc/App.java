@@ -1,6 +1,6 @@
 package com.project.mvc;
 
-import com.project.database.dao.UserDAO;
+import com.project.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -14,7 +14,7 @@ public class App {
 
         ApplicationContext applicationContext = new FileSystemXmlApplicationContext("C:\\Users\\jedaka\\Desktop\\Project\\src\\main\\webapp\\WEB-INF\\applicationContext.xml");
 
-        UserDAO userDAO = applicationContext.getBean("userDAO", UserDAO.class);
+        UserService userService = applicationContext.getBean("userService", UserService.class);
 
 //        User user = new User();
 //        user.setEmail("hello@ksd.ru");
@@ -34,7 +34,7 @@ public class App {
 //        user.setSubscriptions(Arrays.asList(subscription));
 //        userDAO.save(user);
 
-        System.out.println(userDAO.getByEmail("hello@ksd.ru"));
+        System.out.println(userService.findByEmail("hello@ksd.ru"));
 
     }
 

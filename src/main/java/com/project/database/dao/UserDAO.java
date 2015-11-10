@@ -6,99 +6,42 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 /**
  * Created by jedaka on 03.11.2015.
  */
-public class UserDAO implements GenericDAO<User> {
+public class UserDAO {
 
     @Autowired
-    public SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-    @Override
-    public boolean save(User object) {
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            session.save(object);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            //TODO
-            //Logger HERE
-            session.getTransaction().rollback();
-            return false;
-        } finally {
-            session.close();
-        }
-        return true;
+    public int create(User object) {
+        Session session = sessionFactory.getCurrentSession();
+        return (Integer) session.save(object);
     }
 
-    @Override
-    public User getById(int id) {
-        User user = null;
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            user = session.get(User.class, id);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            //TODO
-            //Logger HERE
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
+    public User read(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(User.class, id);
+    }
+
+    public void update(User object) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(object);
+    }
+
+    public void delete(User object) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(object);
+    }
+
+    public User findByEmail(String email){
+        Session session = sessionFactory.getCurrentSession();
+        User user = (User) session.createCriteria(User.class).add(Restrictions.eq("email", email)).uniqueResult();
         return user;
-    }
-
-    public User getByEmail(String email){
-        User user = null;
-        Session session = sessionFactory.openSession();
-        try {
-            session.beginTransaction();
-            user = (User) session.createCriteria(User.class).add(Restrictions.eq("email", email)).uniqueResult();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            //TODO
-            e.printStackTrace();
-            //Logger HERE
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return user;
-    }
-
-
-    @Override
-    public boolean update(User object) {
-
-        return false;
-    }
-
-    @Override
-    public boolean delete(User object) {
-        return false;
-    }
-
-    @Override
-    public List<User> getAll() {
-        return null;
-    }
-
-    @Override
-    public User getByPK(String PK) {
-        return null;
-    }
-
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
 
 }

@@ -1,10 +1,10 @@
 package com.project.database.dao;
 
-import com.project.database.DatabaseConnection;
-import com.project.entity.User;
+import com.project.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -13,11 +13,8 @@ import java.util.List;
  */
 public class UserDAO implements GenericDAO<User> {
 
-    static SessionFactory sessionFactory;
-
-    public UserDAO() {
-        sessionFactory = DatabaseConnection.getSessionFactory();
-    }
+    @Autowired
+    public SessionFactory sessionFactory;
 
     @Override
     public boolean save(User object) {
@@ -93,6 +90,14 @@ public class UserDAO implements GenericDAO<User> {
     @Override
     public User getByPK(String PK) {
         return null;
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
 

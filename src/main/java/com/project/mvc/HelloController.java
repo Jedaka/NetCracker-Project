@@ -9,14 +9,18 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Controller
 @EnableWebMvc
-@RequestMapping("/")
 public class HelloController {
 
 	@Secured("ROLE_USER")
-	@RequestMapping(name = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
 		model.addAttribute("message", "Hello world!");
 		return "hello";
+	}
+
+	@RequestMapping(value = "/login")
+	public String login(){
+		return "login";
 	}
 
 }

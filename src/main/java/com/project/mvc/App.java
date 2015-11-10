@@ -1,45 +1,40 @@
 package com.project.mvc;
 
-import com.project.database.DatabaseConnection;
 import com.project.database.dao.UserDAO;
-import com.project.entity.Serial;
-import com.project.entity.Studio;
-import com.project.entity.Subscription;
-import com.project.entity.User;
-
-import java.util.Arrays;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 /**
  * Created by jedaka on 31.10.2015.
  */
 public class App {
 
-    static UserDAO userDAO = new UserDAO();
 
     public static void main(String[] args) {
 
-        User user = new User();
-        user.setEmail("hello@ksd.ru");
-        user.setPassword("sad");
+        ApplicationContext applicationContext = new FileSystemXmlApplicationContext("C:\\Users\\jedaka\\Desktop\\Project\\src\\main\\webapp\\WEB-INF\\applicationContext.xml");
 
-        Studio studio1 = new Studio();
-        studio1.setName("LostFilm");
-        studio1.setLanguage("ru");
+        UserDAO userDAO = applicationContext.getBean("userDAO", UserDAO.class);
 
-        Serial serial = new Serial();
-        serial.setTitle("LOST");
-        serial.setLanguage("en");
-
-        Subscription subscription = new Subscription();
-        subscription.setSerial(serial);
-        subscription.setStudio(studio1);
-        user.setSubscriptions(Arrays.asList(subscription));
-
+//        User user = new User();
+//        user.setEmail("hello@ksd.ru");
+//        user.setPassword("sad");
+//
+//        Studio studio1 = new Studio();
+//        studio1.setName("LostFilm");
+//        studio1.setLanguage("ru");
+//
+//        Serial serial = new Serial();
+//        serial.setTitle("LOST");
+//        serial.setLanguage("en");
+//
+//        Subscription subscription = new Subscription();
+//        subscription.setSerial(serial);
+//        subscription.setStudio(studio1);
+//        user.setSubscriptions(Arrays.asList(subscription));
 //        userDAO.save(user);
 
         System.out.println(userDAO.getByEmail("hello@ksd.ru"));
-
-        DatabaseConnection.getSessionFactory().close();
 
     }
 

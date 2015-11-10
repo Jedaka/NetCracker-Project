@@ -15,7 +15,8 @@
                 username-parameter="email"
                 password-parameter="password"
                 login-processing-url="/auth/login"
-                default-target-url="/auth/profile"/>
+                default-target-url="/auth/profile"
+                login-page="/login"/>
         <logout
                 logout-url="/auth/logout"
                 logout-success-url="/auth/fail"

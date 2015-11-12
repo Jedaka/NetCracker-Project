@@ -17,11 +17,25 @@ public class Subscription {
     @SequenceGenerator(name = "SUBSCRIPTION_SEQ", sequenceName = "SUBSCRIPTION_SEQ", allocationSize = 1)
     private int id;
     @Cascade({CascadeType.SAVE_UPDATE})
-    @OneToOne
+    @ManyToOne
     private Serial serial;
     @Cascade({CascadeType.SAVE_UPDATE})
-    @OneToOne
+    @ManyToOne
     private Studio studio;
+
+    public Subscription(Serial serial, Studio studio) {
+        this.serial = serial;
+        this.studio = studio;
+    }
+
+    public Subscription(Token token){
+        this.serial = token.getSerial();
+        this.studio = token.getStudio();
+    }
+
+    public Subscription() {
+
+    }
 
     public Serial getSerial() {
         return serial;

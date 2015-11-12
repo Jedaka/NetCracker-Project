@@ -3,8 +3,11 @@ package com.project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.tomcat.util.security.ConcurrentMessageDigest;
+import org.apache.tomcat.util.security.MD5Encoder;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import sun.security.provider.MD5;
 
 import javax.persistence.*;
 import java.io.WriteAbortedException;
@@ -21,8 +24,7 @@ public class User {
     private int id;
     @Column(unique = true)
     private String email;
-    @JsonIgnore
-    @JsonProperty()
+//    @JsonIgnore
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -68,6 +70,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+//        String md5Password = ConcurrentMessageDigest.digestMD5(password.getBytes()).toString();
+//
+//
+//        MD5Encoder
+//        System.out.println(password);
+//        System.out.println(password.getBytes());
+//        System.out.println(md5Password);
+//
+//        this.password = md5Password;
     }
 
     public void addSubscription(Subscription subscription){

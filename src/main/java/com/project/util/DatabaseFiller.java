@@ -32,6 +32,7 @@ public class DatabaseFiller {
         Studio kurazhBambey = new Studio("Кураж Бамбей", "ru");
 
         tokenService.save(bigBangTheory, kurazhBambey);
+        tokenService.save(bigBangTheory, null);
         tokenService.save(howIMetYourMother, kurazhBambey);
         tokenService.save(iLiveWithModels, kurazhBambey);
 

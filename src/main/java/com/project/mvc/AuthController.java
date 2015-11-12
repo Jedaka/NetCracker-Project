@@ -33,7 +33,7 @@ public class AuthController {
         } catch (Exception e) {
             return new jsonResponse(jsonResponse.Status.ERROR, "Already exist");
         }
-        return new jsonResponse(jsonResponse.Status.OK, "Good");
+        return new jsonResponse(jsonResponse.Status.OK, user);
     }
 
     @Secured("ROLE_USER")

@@ -12,7 +12,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        ApplicationContext applicationContext = new FileSystemXmlApplicationContext("C:\\Users\\jedaka\\Desktop\\Project\\src\\main\\webapp\\WEB-INF\\applicationContext.xml");
+        ApplicationContext applicationContext = new FileSystemXmlApplicationContext("src/main/webapp/WEB-INF/applicationContext.xml");
 
         DatabaseFiller.persistTestData();
 

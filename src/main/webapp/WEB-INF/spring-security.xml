@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <http create-session="always"
+    <http create-session="stateless"
           entry-point-ref="AuthenticationEntryPoint">
         <!--<intercept-url pattern="/**" access="ROLE_USER" />-->
         <intercept-url pattern="/auth/fail" access="ROLE_USER" />
@@ -15,12 +15,12 @@
                 username-parameter="email"
                 password-parameter="password"
                 login-processing-url="/auth/login"
-                default-target-url="/auth/profile"
-                login-page="/login"/>
+                default-target-url="/auth/profile"/>
         <logout
                 logout-url="/auth/logout"
                 logout-success-url="/auth/fail"
                 delete-cookies="true"/>
+        <remember-me remember-me-parameter="remember" />
     </http>
 
     <beans:bean id="AuthenticationEntryPoint" class="com.project.security.AuthenticationEntryPoint"/>
@@ -29,6 +29,7 @@
 
     <authentication-manager>
         <authentication-provider user-service-ref="UserDetailsServiceConfig">
+            <password-encoder hash="md5" />
         </authentication-provider>
     </authentication-manager>
 

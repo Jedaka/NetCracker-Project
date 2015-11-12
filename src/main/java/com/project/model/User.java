@@ -1,10 +1,13 @@
 package com.project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,7 +19,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_PROFILE_SEQ")
     @SequenceGenerator(name="USER_PROFILE_SEQ", sequenceName="USER_PROFILE_SEQ",allocationSize=1)
     private int id;
+    @Column(unique = true)
     private String email;
+    @JsonIgnore
+    @JsonProperty()
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER)

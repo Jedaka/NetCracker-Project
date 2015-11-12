@@ -2,7 +2,11 @@ package com.project.service;
 
 import com.project.database.dao.UserDAO;
 import com.project.model.User;
+import com.project.some.ChangePasswordForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +43,21 @@ public class UserService {
 
     public void setUserDAO(UserDAO userDAO) {
         this.userDAO = userDAO;
+    }
+
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return findByEmail(email);
+    }
+
+    public Boolean changePassword(ChangePasswordForm passwordForm) {
+        User user = getCurrentUser();
+        if (user.getPassword().equals(passwordForm.getOldPassword())) {
+            user.setPassword(passwordForm.getNewPassword());
+            save(user);
+            return true;
+        }
+        return false;
     }
 }

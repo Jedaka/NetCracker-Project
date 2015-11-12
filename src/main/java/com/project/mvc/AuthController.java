@@ -1,13 +1,11 @@
 package com.project.mvc;
 
 import com.project.model.User;
-import com.project.service.ApplicationContextProvider;
 import com.project.service.UserService;
 import com.project.some.ChangePasswordForm;
 import com.project.some.RegistrationForm;
 import com.project.some.jsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,23 +20,23 @@ public class AuthController {
     UserService userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, headers = {"Content-type=application/json"})
-    public jsonResponse register(RegistrationForm form) {
-        int id;
+    public jsonResponse register(@RequestBody RegistrationForm form) {
         User user = new User();
         user.setEmail(form.getEmail());
         user.setPassword(form.getPassword());
+
+        // TODO: We need more exceptions
         try {
-            id = userService.save(user);
-            user = userService.read(id);
+            userService.save(user);
         } catch (Exception e) {
             return new jsonResponse(jsonResponse.Status.ERROR, "Already exist");
         }
-        return new jsonResponse(jsonResponse.Status.OK, user);
+        return new jsonResponse(jsonResponse.Status.OK, "Good job");
     }
 
     @Secured("ROLE_USER")
     @RequestMapping(value = "/change_password", method = RequestMethod.POST)
-    public jsonResponse changePassword(ChangePasswordForm passwordForm) {
+    public jsonResponse changePassword(@RequestBody ChangePasswordForm passwordForm) {
 
         String message = userService.changePassword(passwordForm) ? "Good" : "Bad";
 
@@ -51,5 +49,4 @@ public class AuthController {
         User user = userService.getCurrentUser();
         return new jsonResponse(jsonResponse.Status.OK, user);
     }
-
 }

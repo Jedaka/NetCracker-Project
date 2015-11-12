@@ -24,7 +24,7 @@ public class User {
     private int id;
     @Column(unique = true)
     private String email;
-//    @JsonIgnore
+    @JsonIgnore
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -70,15 +70,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-//        String md5Password = ConcurrentMessageDigest.digestMD5(password.getBytes()).toString();
-//
-//
-//        MD5Encoder
-//        System.out.println(password);
-//        System.out.println(password.getBytes());
-//        System.out.println(md5Password);
-//
-//        this.password = md5Password;
     }
 
     public void addSubscription(Subscription subscription){

@@ -29,7 +29,6 @@
 
     <authentication-manager>
         <authentication-provider user-service-ref="UserDetailsServiceConfig">
-            <password-encoder hash="md5" />
         </authentication-provider>
     </authentication-manager>
 

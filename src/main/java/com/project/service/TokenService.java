@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by jedaka on 12.11.2015.
  */
@@ -20,6 +22,10 @@ public class TokenService {
 
     public String save(Serial serial, Studio studio) {
         return tokenDAO.create(new Token(serial, studio));
+    }
+
+    public List getAll() {
+        return tokenDAO.getAll();
     }
 
     @Transactional(readOnly = true)

@@ -1,5 +1,7 @@
 package com.project.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 /**
@@ -9,11 +11,22 @@ import javax.persistence.*;
 public class Token {
 
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String token;
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Serial serial;
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Studio studio;
+
+    public Token(Serial serial, Studio studio) {
+        this.serial = serial;
+        this.studio = studio;
+    }
+
+    public Token() {
+
+    }
 
     public String getToken() {
         return token;

@@ -24,6 +24,14 @@ public class User {
     @Cascade({CascadeType.SAVE_UPDATE})
     private Collection<Subscription> subscriptions = new ArrayList<Subscription>();
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
     public Collection<Subscription> getSubscriptions() {
         return subscriptions;
     }
@@ -54,6 +62,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void addSubscription(Subscription subscription){
+        this.subscriptions.add(subscription);
     }
 
     @Override

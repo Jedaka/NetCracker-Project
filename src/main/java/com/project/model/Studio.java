@@ -16,6 +16,14 @@ public class Studio {
     private String name;
     private String language;
 
+    public Studio(String name, String language) {
+        this.name = name;
+        this.language = language;
+    }
+
+    public Studio() {
+    }
+
     public int getId() {
         return id;
     }

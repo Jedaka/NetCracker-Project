@@ -16,6 +16,14 @@ public class Serial {
     private String title;
     private String language;
 
+    public Serial(String title, String language) {
+        this.title = title;
+        this.language = language;
+    }
+
+    public Serial() {
+    }
+
     public int getId() {
         return id;
     }

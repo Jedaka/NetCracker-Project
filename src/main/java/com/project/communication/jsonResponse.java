@@ -1,4 +1,4 @@
-package com.project.some;
+package com.project.communication;
 
 /**
  * Created by vganshin on 12.11.15.
@@ -30,5 +30,13 @@ public class jsonResponse {
 
     public void setMessage(Object message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "jsonResponse{" +
+                "status=" + status +
+                ", message=" + message +
+                '}';
     }
 }

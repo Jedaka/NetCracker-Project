@@ -2,9 +2,8 @@ package com.project.service;
 
 import com.project.database.dao.UserDAO;
 import com.project.model.User;
-import com.project.some.ChangePasswordForm;
+import com.project.communication.ChangePasswordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class UserService {
         return findByEmail(email);
     }
 
-    public Boolean changePassword(ChangePasswordForm passwordForm) {
+    public Boolean changePassword(ChangePasswordRequest passwordForm) {
         User user = getCurrentUser();
         if (user.getPassword().equals(passwordForm.getOldPassword())) {
             user.setPassword(passwordForm.getNewPassword());

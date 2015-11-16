@@ -27,6 +27,7 @@ public class Episode {
     @Column(name = "PUB_DATETIME")
     private Date date;
 
+
     public int getId() {
         return id;
     }
@@ -81,5 +82,47 @@ public class Episode {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Episode episode = (Episode) o;
+
+        if (id != episode.id) return false;
+        if (seasonNumber != episode.seasonNumber) return false;
+        if (episodeNumber != episode.episodeNumber) return false;
+        if (!serial.equals(episode.serial)) return false;
+        if (!studio.equals(episode.studio)) return false;
+        if (link != null ? !link.equals(episode.link) : episode.link != null) return false;
+        return date.equals(episode.date);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + serial.hashCode();
+        result = 31 * result + studio.hashCode();
+        result = 31 * result + seasonNumber;
+        result = 31 * result + episodeNumber;
+        result = 31 * result + (link != null ? link.hashCode() : 0);
+        result = 31 * result + date.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Episode{" +
+                "id=" + id +
+                ", serial=" + serial +
+                ", studio=" + studio +
+                ", seasonNumber=" + seasonNumber +
+                ", episodeNumber=" + episodeNumber +
+                ", link='" + link + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

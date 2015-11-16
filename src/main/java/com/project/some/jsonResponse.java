@@ -4,12 +4,11 @@ package com.project.some;
  * Created by vganshin on 12.11.15.
  */
 public class jsonResponse {
-    public enum Status {OK, ERROR};
     Status status;
     Object message;
-
     public jsonResponse() {
     }
+
 
     public jsonResponse(Status status, Object message) {
         this.status = status;
@@ -31,4 +30,6 @@ public class jsonResponse {
     public void setMessage(Object message) {
         this.message = message;
     }
+
+    public enum Status {OK, ERROR}
 }

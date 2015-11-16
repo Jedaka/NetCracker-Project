@@ -56,4 +56,25 @@ public class Serial {
                 ", language='" + language + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Serial serial = (Serial) o;
+
+        if (id != serial.id) return false;
+        if (!title.equals(serial.title)) return false;
+        return language.equals(serial.language);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + title.hashCode();
+        result = 31 * result + language.hashCode();
+        return result;
+    }
 }

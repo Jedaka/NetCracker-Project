@@ -56,4 +56,25 @@ public class Studio {
                 ", Language='" + language + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Studio studio = (Studio) o;
+
+        if (id != studio.id) return false;
+        if (!name.equals(studio.name)) return false;
+        return language.equals(studio.language);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + language.hashCode();
+        return result;
+    }
 }

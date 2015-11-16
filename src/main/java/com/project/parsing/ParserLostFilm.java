@@ -127,9 +127,7 @@ public final class ParserLostFilm extends Parser{
             episode.setSerial(serial);
             episode.setStudio(STUDIO);
             episodes.add(episode);
-            System.out.println(episode.toString());
         }
-        // System.out.println(episodes.size());
         Object[] ans = {token, serial, episodes};
         return ans;
 

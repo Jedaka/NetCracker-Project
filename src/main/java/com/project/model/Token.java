@@ -13,6 +13,10 @@ import javax.persistence.*;
 public class Token {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TOKEN_SEQ")
+    @SequenceGenerator(name = "TOKEN_SEQ", sequenceName = "TOKEN_SEQ", allocationSize = 1)
+    private int id;
+
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @JsonIgnore
@@ -53,6 +57,14 @@ public class Token {
 
     public void setStudio(Studio studio) {
         this.studio = studio;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

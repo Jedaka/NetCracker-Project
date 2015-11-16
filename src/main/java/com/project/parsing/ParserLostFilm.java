@@ -14,25 +14,31 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Created by ������ on 14.11.2015.
+ * Created by Максим on 14.11.2015.
  */
-abstract public class ParserLostFilm extends Parser {
+public final class ParserLostFilm extends Parser{
 
     public static final Studio STUDIO = new Studio("Lostfilm", "ru");
     public static final String URL = "http://www.lostfilm.tv";
     public static final String URL_SERIALS = "http://www.lostfilm.tv/serials.php";
 
+    public static void main(String[] args) {
+        new ParserLostFilm().parsing();
+
+    }
+
     /**
      * @returns The method returns nothing. It's do parsing.
      */
-    public static void parsing() {
-        Iterator<Element> serials_iterator = getIterator();
-        if (serials_iterator == null) {
+
+    public void parsing() {
+        Iterator<Element> serialsIterator = getIterator();
+        if (serialsIterator == null) {
             return;
         }
-        while (serials_iterator.hasNext()) {
+        while (serialsIterator.hasNext()) {
             try {
-                Element serial = serials_iterator.next();
+                Element serial = serialsIterator.next();
                 Object[] parsingRes = getEpisodesInfo(serial.attr("href"));
                 Token token = (Token) parsingRes[0];
                 Serial serial1 = (Serial) parsingRes[1];
@@ -43,12 +49,13 @@ abstract public class ParserLostFilm extends Parser {
 
 
         }
+        System.out.println("Готовченко");
     }
 
     /**
      * @return All available serials as Iterator<Element>
      */
-    private static Iterator<Element> getIterator() {
+    private Iterator<Element> getIterator() {
         Document doc = getDocument(URL_SERIALS);
         Elements elements = doc.getElementsByClass("mid").get(0).getElementsByClass("bb_a");
         Iterator<Element> iterator = elements.iterator();
@@ -58,7 +65,7 @@ abstract public class ParserLostFilm extends Parser {
     /*
      * @returns all episode
      */
-    private static Episode parsingEpisode(Element episode) throws NullPointerException {
+    protected  Episode parsingEpisode(Element episode) throws NullPointerException {
         Episode parsedEpisode = new Episode();
         Integer episodeNum = parseEpisodeNum(episode);
         if (episodeNum == null) {
@@ -66,7 +73,8 @@ abstract public class ParserLostFilm extends Parser {
         }
         Elements dateAndSeasonAnsEpisode = episode.select("span:not(style)")
                 .not("span[class=micro]")
-                .not("span[style=color:#4b4b4b]").not("span[style=line-height:11px;display:block]");
+                .not("span[style=color:#4b4b4b]")
+                .not("span[style=line-height:11px;display:block]");
         Date date = convert(dateAndSeasonAnsEpisode.get(0).text());
         String[] strings = dateAndSeasonAnsEpisode.get(1).text().toString().split(" |-");
         int season;
@@ -83,7 +91,7 @@ abstract public class ParserLostFilm extends Parser {
         return parsedEpisode;
     }
 
-    private static Integer parseEpisodeNum(Element episode) {
+    protected Integer parseEpisodeNum(Element episode) {
         Elements element = episode.getElementsByClass("t_episode_num").select("label");
         if (!element.isEmpty()) return null;
         try {
@@ -99,7 +107,7 @@ abstract public class ParserLostFilm extends Parser {
      * @param url_appendix is appendix to serial url
      * @return Object[], where Object[0] is token, Object[1] - serial, Object[2] - set of episodes
      */
-    private static Object[] getEpisodesInfo(String url_appendix) throws NullPointerException {
+   protected Object[] getEpisodesInfo(String url_appendix) throws NullPointerException {
         Document doc = getDocument(URL + url_appendix);
         Serial serial = new Serial();
         Episode episode;
@@ -125,25 +133,5 @@ abstract public class ParserLostFilm extends Parser {
         Object[] ans = {token, serial, episodes};
         return ans;
 
-    }
-
-    @SuppressWarnings("unchecked")
-    /**
-     * @param date is a date represented as dd.mm.yyyy hh24:mm
-     * @return Date format
-     */
-    public static Date convert(String date) {
-        String[] strings = date.split("[.| |:|]");
-        int day = Integer.parseInt(strings[0]);
-        int month = Integer.parseInt(strings[1]);
-        int year = Integer.parseInt(strings[2]);
-        int hours = Integer.parseInt(strings[3]);
-        int minutes = Integer.parseInt(strings[4]);
-        return new Date(year, month, day, hours, minutes);
-
-    }
-
-    public static void main(String[] args) {
-        ParserLostFilm.parsing();
     }
 }

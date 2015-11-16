@@ -1,14 +1,15 @@
-package com.project.some;
+package com.project.communication;
 
 /**
  * Created by vganshin on 12.11.15.
  */
 public class jsonResponse {
+    public enum Status {OK, ERROR};
     Status status;
     Object message;
+
     public jsonResponse() {
     }
-
 
     public jsonResponse(Status status, Object message) {
         this.status = status;
@@ -31,5 +32,11 @@ public class jsonResponse {
         this.message = message;
     }
 
-    public enum Status {OK, ERROR}
+    @Override
+    public String toString() {
+        return "jsonResponse{" +
+                "status=" + status +
+                ", message=" + message +
+                '}';
+    }
 }

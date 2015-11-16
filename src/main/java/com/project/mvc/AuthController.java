@@ -2,9 +2,9 @@ package com.project.mvc;
 
 import com.project.model.User;
 import com.project.service.UserService;
-import com.project.some.ChangePasswordForm;
-import com.project.some.RegistrationForm;
-import com.project.some.jsonResponse;
+import com.project.communication.ChangePasswordRequest;
+import com.project.communication.RegistrationRequest;
+import com.project.communication.jsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class AuthController {
     UserService userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, headers = {"Content-type=application/json"})
-    public jsonResponse register(@RequestBody RegistrationForm form) {
+    public jsonResponse register(@RequestBody RegistrationRequest form) {
         User user = new User();
         user.setEmail(form.getEmail());
         user.setPassword(form.getPassword());
@@ -36,7 +36,7 @@ public class AuthController {
 
     @Secured("ROLE_USER")
     @RequestMapping(value = "/change_password", method = RequestMethod.POST)
-    public jsonResponse changePassword(@RequestBody ChangePasswordForm passwordForm) {
+    public jsonResponse changePassword(@RequestBody ChangePasswordRequest passwordForm) {
 
         String message = userService.changePassword(passwordForm) ? "Good" : "Bad";
 

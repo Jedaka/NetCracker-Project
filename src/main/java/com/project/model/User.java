@@ -2,15 +2,9 @@ package com.project.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.tomcat.util.security.ConcurrentMessageDigest;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import sun.security.provider.MD5;
-
 import javax.persistence.*;
-import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -38,6 +32,7 @@ public class User {
     }
 
     public User() {
+
     }
 
     public Collection<Subscription> getSubscriptions() {

@@ -1,9 +1,10 @@
-package com.project.some;
+package com.project.communication;
 
 /**
  * Created by vganshin on 12.11.15.
  */
-public class RegistrationForm {
+public class RegistrationRequest {
+
     private String email;
     private String password;
 
@@ -21,5 +22,13 @@ public class RegistrationForm {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "RegistrationForm{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

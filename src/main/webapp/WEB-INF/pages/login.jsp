@@ -21,15 +21,15 @@
         </tr>
         <tr>
             <td>Password:</td>
-            <td><input type='password' name='password' /></td>
+            <td><input type='password' name='password'/></td>
         </tr>
         <tr>
             <td>Remember me:</td>
-            <td><input type='checkbox' name='remember' /></td>
+            <td><input type='checkbox' name='remember'/></td>
         </tr>
         <tr>
             <td colspan='2'><input name="submit" type="submit"
-                                   value="submit" /></td>
+                                   value="submit"/></td>
         </tr>
     </table>
 </form>

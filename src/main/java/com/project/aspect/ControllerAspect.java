@@ -2,7 +2,10 @@ package com.project.aspect;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 
 /**
  * Created by jedaka on 10.11.2015.
@@ -13,7 +16,7 @@ public class ControllerAspect {
     private Logger logger;
 
     @Before(value = "controllerPointCut()")
-    public void controllerAdviceBefore(JoinPoint joinPoint){
+    public void controllerAdviceBefore(JoinPoint joinPoint) {
 
         logger = Logger.getLogger(joinPoint.getTarget().getClass());
 
@@ -23,9 +26,9 @@ public class ControllerAspect {
         stringBuilder.append(joinPoint.getSignature().toShortString()).append(" | ");
 
 
-        if (args.length > 0){
+        if (args.length > 0) {
             stringBuilder.append("Method arguments: ");
-            for (Object arg: args){
+            for (Object arg : args) {
                 stringBuilder.append(" ").append(arg);
             }
 
@@ -34,14 +37,15 @@ public class ControllerAspect {
 
     }
 
-    @AfterReturning(value =  "controllerPointCut()", returning = "returnValue")
-    public void controllerAdviceAfter(JoinPoint joinPoint, Object returnValue){
+    @AfterReturning(value = "controllerPointCut()", returning = "returnValue")
+    public void controllerAdviceAfter(JoinPoint joinPoint, Object returnValue) {
         logger = Logger.getLogger(joinPoint.getTarget().getClass());
         logger.info(joinPoint.getSignature().toShortString() + " | Return: " + returnValue.toString());
 
     }
 
     @Pointcut("execution(* com.project.mvc.*.*(..))")
-    public void controllerPointCut(){}
+    public void controllerPointCut() {
+    }
 
 }

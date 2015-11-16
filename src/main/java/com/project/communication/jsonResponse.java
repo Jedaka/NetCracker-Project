@@ -4,10 +4,8 @@ package com.project.communication;
  * Created by vganshin on 12.11.15.
  */
 public class jsonResponse {
-    public enum Status {OK, ERROR};
-    Status status;
+        Status status;;
     Object message;
-
     public jsonResponse() {
     }
 
@@ -39,4 +37,6 @@ public class jsonResponse {
                 ", message=" + message +
                 '}';
     }
+
+public enum Status {OK, ERROR}
 }

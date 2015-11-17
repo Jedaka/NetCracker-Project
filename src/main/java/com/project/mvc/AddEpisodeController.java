@@ -48,6 +48,7 @@ public class AddEpisodeController {
             response.setMessage("exception was thrown");
             return response;
         }
+
         logger.info("Episode has been added: " + episode);
         response.setStatus(JsonResponse.Status.OK);
         response.setMessage(episode);

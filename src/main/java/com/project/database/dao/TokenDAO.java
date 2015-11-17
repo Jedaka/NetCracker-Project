@@ -15,9 +15,9 @@ public class TokenDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public String create(Token object) {
+    public int create(Token object) {
         Session session = sessionFactory.getCurrentSession();
-        return (String) session.save(object);
+        return (Integer) session.save(object);
     }
 
     public List getAll() {

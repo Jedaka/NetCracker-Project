@@ -37,8 +37,10 @@
 
 
     <bean id="applicationContextProvider" class="com.project.service.ApplicationContextProvider"/>
-    <bean id="userDAO" class="com.project.database.dao.UserDAO" autowire="byName"/>
-    <bean id="userService" class="com.project.service.UserService" autowire="byType"/>
+    <bean id="userDAO" class="com.project.database.dao.UserDAO" autowire="byType"/>
+    <bean id="userService" class="com.project.service.UserService" autowire="byName"/>
     <bean id="tokenDAO" class="com.project.database.dao.TokenDAO" autowire="byType"/>
     <bean id="tokenService" class="com.project.service.TokenService" autowire="byName"/>
+    <bean id="episodeDAO" class="com.project.database.dao.EpisodeDAO" autowire="byType"/>
+    <bean id="episodeService" class="com.project.service.EpisodeService" autowire="byName"/>
 </beans>

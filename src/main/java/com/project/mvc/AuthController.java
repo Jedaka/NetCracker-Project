@@ -4,7 +4,7 @@ import com.project.model.User;
 import com.project.service.UserService;
 import com.project.communication.ChangePasswordRequest;
 import com.project.communication.RegistrationRequest;
-import com.project.communication.jsonResponse;
+import com.project.communication.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class AuthController {
     UserService userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, headers = {"Content-type=application/json"})
-    public jsonResponse register(@RequestBody RegistrationRequest form) {
+    public JsonResponse register(@RequestBody RegistrationRequest form) {
         User user = new User();
         user.setEmail(form.getEmail());
         user.setPassword(form.getPassword());
@@ -29,24 +29,24 @@ public class AuthController {
         try {
             userService.save(user);
         } catch (Exception e) {
-            return new jsonResponse(jsonResponse.Status.ERROR, "Already exist");
+            return new JsonResponse(JsonResponse.Status.ERROR, "Already exist");
         }
-        return new jsonResponse(jsonResponse.Status.OK, "Good job");
+        return new JsonResponse(JsonResponse.Status.OK, "Good job");
     }
 
     @Secured("ROLE_USER")
     @RequestMapping(value = "/change_password", method = RequestMethod.POST)
-    public jsonResponse changePassword(@RequestBody ChangePasswordRequest passwordForm) {
+    public JsonResponse changePassword(@RequestBody ChangePasswordRequest passwordForm) {
 
         String message = userService.changePassword(passwordForm) ? "Good" : "Bad";
 
-        return new jsonResponse(jsonResponse.Status.OK, message);
+        return new JsonResponse(JsonResponse.Status.OK, message);
     }
 
     @Secured("ROLE_USER")
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public jsonResponse profile() {
+    public JsonResponse profile() {
         User user = userService.getCurrentUser();
-        return new jsonResponse(jsonResponse.Status.OK, user);
+        return new JsonResponse(JsonResponse.Status.OK, user);
     }
 }

@@ -1,5 +1,6 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -13,9 +14,11 @@ public class Episode {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EPISODE_SEQ")
     @SequenceGenerator(name="EPISODE_SEQ", sequenceName="EPISODE_SEQ",allocationSize=1)
+    @JsonIgnore
     private int id;
 
     @ManyToOne
+    @JsonIgnore
     private Token token;
     @Column(name = "SEASON_NUMBER")
     private int seasonNumber;

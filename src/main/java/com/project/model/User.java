@@ -15,6 +15,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_PROFILE_SEQ")
     @SequenceGenerator(name="USER_PROFILE_SEQ", sequenceName="USER_PROFILE_SEQ",allocationSize=1)
+    @JsonIgnore
     private int id;
     @Column(unique = true)
     private String email;

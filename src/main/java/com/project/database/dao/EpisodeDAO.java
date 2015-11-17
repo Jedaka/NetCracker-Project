@@ -13,7 +13,7 @@ public class EpisodeDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public int create(Episode object) {
+    public int create(Episode object) throws Exception{
         Session session = sessionFactory.getCurrentSession();
         return (Integer) session.save(object);
     }

@@ -16,8 +16,8 @@ public class EpisodeService {
     @Autowired
     private EpisodeDAO episodeDAO;
 
-    public void save(Episode episode){
-        this.episodeDAO.create(episode);
+    public int save(Episode episode) throws Exception{
+        return this.episodeDAO.create(episode);
     }
 
     public void setEpisodeDAO(EpisodeDAO episodeDAO) {

@@ -1,6 +1,8 @@
 package com.project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -12,9 +14,11 @@ public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBSCRIPTION_SEQ")
     @SequenceGenerator(name = "SUBSCRIPTION_SEQ", sequenceName = "SUBSCRIPTION_SEQ", allocationSize = 1)
+    @JsonIgnore
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private Token token;
 
     public Subscription() {

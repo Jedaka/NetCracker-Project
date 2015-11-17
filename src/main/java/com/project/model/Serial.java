@@ -1,5 +1,7 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -12,6 +14,7 @@ public class Serial {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SERIAL_SEQ")
     @SequenceGenerator(name="SERIAL_SEQ", sequenceName="SERIAL_SEQ",allocationSize=1)
+    @JsonIgnore
     private int id;
     private String title;
     private String language;

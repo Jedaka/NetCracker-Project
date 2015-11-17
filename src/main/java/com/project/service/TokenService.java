@@ -24,21 +24,27 @@ public class TokenService {
         return tokenDAO.create(new Token(serial, studio));
     }
 
-    public List getAll() {
-        return tokenDAO.getAll();
-    }
-
-    @Transactional(readOnly = true)
-    public Token get(String token) {
-        return tokenDAO.read(token);
-    }
-
     public void update(Token token){
         tokenDAO.update(token);
     }
 
     public void delete(Token token){
         tokenDAO.delete(token);
+    }
+
+    @Transactional(readOnly = true)
+    public List getAll() {
+        return tokenDAO.getAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Token get(int id) {
+        return tokenDAO.read(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Token findByToken(String token){
+        return tokenDAO.findByToken(token);
     }
 
     public void setTokenDAO(TokenDAO tokenDAO) {

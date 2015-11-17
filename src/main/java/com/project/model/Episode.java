@@ -1,5 +1,6 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
@@ -27,6 +28,7 @@ public class Episode {
     private String link;
     @Type(type = "timestamp")
     @Column(name = "PUB_DATETIME")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm")
     private Date date;
 
     public int getId() {

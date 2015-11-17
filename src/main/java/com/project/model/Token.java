@@ -1,6 +1,8 @@
 package com.project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -13,8 +15,10 @@ public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TOKEN_SEQ")
     @SequenceGenerator(name = "TOKEN_SEQ", sequenceName = "TOKEN_SEQ", allocationSize = 1)
+    @JsonIgnore
     private int id;
 
+    @JsonIgnore
     private String token = UUID.randomUUID().toString();
 
     @ManyToOne(cascade = CascadeType.ALL)

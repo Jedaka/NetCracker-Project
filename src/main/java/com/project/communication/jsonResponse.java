@@ -3,15 +3,19 @@ package com.project.communication;
 /**
  * Created by vganshin on 12.11.15.
  */
-public class jsonResponse {
-    public enum Status {OK, ERROR};
-    Status status;
-    Object message;
+public class JsonResponse {
 
-    public jsonResponse() {
+    public enum Status {
+        OK, ERROR
     }
 
-    public jsonResponse(Status status, Object message) {
+    private Status status;
+    private Object message;
+
+    public JsonResponse() {
+    }
+
+    public JsonResponse(Status status, Object message) {
         this.status = status;
         this.message = message;
     }

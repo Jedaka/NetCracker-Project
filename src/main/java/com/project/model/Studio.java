@@ -1,5 +1,7 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -11,6 +13,7 @@ public class Studio {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDIO_SEQ")
     @SequenceGenerator(name="STUDIO_SEQ", sequenceName="STUDIO_SEQ",allocationSize=1)
+    @JsonIgnore
     private int id;
 
     private String name;

@@ -1,10 +1,9 @@
 package com.project.model;
 
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 
 /**
  * Created by jedaka on 03.11.2015.
@@ -15,42 +14,29 @@ public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBSCRIPTION_SEQ")
     @SequenceGenerator(name = "SUBSCRIPTION_SEQ", sequenceName = "SUBSCRIPTION_SEQ", allocationSize = 1)
+    @JsonIgnore
     private int id;
-    @Cascade({CascadeType.SAVE_UPDATE})
-    @ManyToOne
-    private Serial serial;
-    @Cascade({CascadeType.SAVE_UPDATE})
-    @ManyToOne
-    private Studio studio;
 
-    public Subscription(Serial serial, Studio studio) {
-        this.serial = serial;
-        this.studio = studio;
-    }
-
-    public Subscription(Token token){
-        this.serial = token.getSerial();
-        this.studio = token.getStudio();
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Token token;
 
     public Subscription() {
 
     }
 
-    public Serial getSerial() {
-        return serial;
+    //Temporary constructor
+    public Subscription(Serial serial, Studio studio){
+        Token token = new Token(serial, studio);
+        this.token = token;
     }
 
-    public void setSerial(Serial serial) {
-        this.serial = serial;
+    public Serial getSerial(){
+        return token.getSerial();
     }
 
-    public Studio getStudio() {
-        return studio;
-    }
-
-    public void setStudio(Studio studio) {
-        this.studio = studio;
+    public Studio getStudio(){
+        return token.getStudio();
     }
 
     public int getId() {
@@ -61,12 +47,21 @@ public class Subscription {
         this.id = id;
     }
 
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
+
     @Override
+
     public String toString() {
         return "Subscription{" +
                 "id=" + id +
-                ", serial=" + serial +
-                ", studio=" + studio +
+                ", serial=" + getSerial() +
+                ", studio=" + getStudio() +
                 '}';
     }
 }

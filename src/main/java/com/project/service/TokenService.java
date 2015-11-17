@@ -20,17 +20,8 @@ public class TokenService {
     @Autowired
     private TokenDAO tokenDAO;
 
-    public String save(Serial serial, Studio studio) {
+    public int save(Serial serial, Studio studio) {
         return tokenDAO.create(new Token(serial, studio));
-    }
-
-    public List getAll() {
-        return tokenDAO.getAll();
-    }
-
-    @Transactional(readOnly = true)
-    public Token get(String token) {
-        return tokenDAO.read(token);
     }
 
     public void update(Token token){
@@ -39,6 +30,21 @@ public class TokenService {
 
     public void delete(Token token){
         tokenDAO.delete(token);
+    }
+
+    @Transactional(readOnly = true)
+    public List getAll() {
+        return tokenDAO.getAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Token get(int id) {
+        return tokenDAO.read(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Token findByToken(String token){
+        return tokenDAO.findByToken(token);
     }
 
     public void setTokenDAO(TokenDAO tokenDAO) {

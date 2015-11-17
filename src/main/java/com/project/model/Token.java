@@ -2,9 +2,9 @@ package com.project.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * Created by jedaka on 03.11.2015.
@@ -15,12 +15,12 @@ public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TOKEN_SEQ")
     @SequenceGenerator(name = "TOKEN_SEQ", sequenceName = "TOKEN_SEQ", allocationSize = 1)
+    @JsonIgnore
     private int id;
 
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @JsonIgnore
-    private String token;
+    private String token = UUID.randomUUID().toString();
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Serial serial;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -70,7 +70,8 @@ public class Token {
     @Override
     public String toString() {
         return "Token{" +
-                "token=" + token +
+                "id=" + id +
+                ", token='" + token + '\'' +
                 ", serial=" + serial +
                 ", studio=" + studio +
                 '}';

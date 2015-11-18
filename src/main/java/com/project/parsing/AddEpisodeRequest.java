@@ -1,14 +1,12 @@
 package com.project.parsing;
 
-import com.project.model.Episode;
-
 /**
- * Created by Максим on 17.11.2015.
+ * Created by Максим on 18.11.2015.
  */
 public class AddEpisodeRequest {
     private String token;
 
-    private Episode episode;
+    private EpisodeTMP episode;
 
     public String getToken() {
         return token;
@@ -18,11 +16,12 @@ public class AddEpisodeRequest {
         this.token = token;
     }
 
-    public Episode getEpisode() {
+    public EpisodeTMP getEpisode() {
         return episode;
     }
 
-    public void setEpisode(Episode episode) {
+    public void setEpisode(EpisodeTMP episode) {
         this.episode = episode;
     }
+
 }

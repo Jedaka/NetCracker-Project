@@ -1,6 +1,5 @@
 package com.project.parsing;
 
-import com.project.model.Episode;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,8 +33,9 @@ public abstract class Parser {
         int minutes = Integer.parseInt(strings[4]);
         return new Date(year, month, day, hours, minutes);
     }
+
     abstract protected  Object[] getEpisodesInfo(String url_appendix) throws NullPointerException;
     abstract protected Integer parseEpisodeNum(Element episode);
-    abstract protected Episode parsingEpisode(Element episode) throws NullPointerException;
+    abstract protected EpisodeTMP parsingEpisode(Element episode) throws NullPointerException;
     abstract public void parsing();
     }

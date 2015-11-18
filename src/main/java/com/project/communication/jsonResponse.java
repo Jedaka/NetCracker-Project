@@ -4,7 +4,7 @@ package com.project.communication;
  * Created by vganshin on 12.11.15.
  */
 public class jsonResponse {
-        Status status;;
+    Status status;
     Object message;
     public jsonResponse() {
     }

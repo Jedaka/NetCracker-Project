@@ -49,7 +49,8 @@ public final class ParserLostFilm extends Parser{
 
 
         }
-        System.out.println("Готовченко");
+        System.out.println("Готовченко!");
+
     }
 
     /**
@@ -65,8 +66,8 @@ public final class ParserLostFilm extends Parser{
     /*
      * @returns all episode
      */
-    protected  Episode parsingEpisode(Element episode) throws NullPointerException {
-        Episode parsedEpisode = new Episode();
+    protected EpisodeTMP parsingEpisode(Element episode) throws NullPointerException {
+        EpisodeTMP parsedEpisode = new EpisodeTMP();
         Integer episodeNum = parseEpisodeNum(episode);
         if (episodeNum == null) {
             return null;
@@ -110,23 +111,21 @@ public final class ParserLostFilm extends Parser{
    protected Object[] getEpisodesInfo(String url_appendix) throws NullPointerException {
         Document doc = getDocument(URL + url_appendix);
         Serial serial = new Serial();
-        Episode episode;
-        try {
-            episode = new Episode();
-        } catch (NullPointerException e) {
-            return null;
-        }
+        EpisodeTMP episodeTMP = new EpisodeTMP();
         String nameSerial = doc.getElementsByTag("title").text();
         serial.setTitle(nameSerial);
         serial.setLanguage("ru");
         Token token = new Token(serial, STUDIO);
         Elements series_Element = doc.getElementsByClass("t_row");
-        Set<Episode> episodes = new HashSet<Episode>();
+        Set<EpisodeTMP> episodes = new HashSet<EpisodeTMP>();
         for (int i = 0; i < series_Element.size(); i++) {
-            episode = parsingEpisode(series_Element.get(i));
-            episode.setSerial(serial);
-            episode.setStudio(STUDIO);
-            episodes.add(episode);
+            episodeTMP = parsingEpisode(series_Element.get(i));
+            if (episodeTMP == null) continue;
+            episodes.add(episodeTMP);
+            AddEpisodeRequest addEpisodeRequest = new AddEpisodeRequest();
+            addEpisodeRequest.setEpisode(episodeTMP);
+            addEpisodeRequest.setToken(token.toString());
+            JsonRequest.send(addEpisodeRequest);
         }
         Object[] ans = {token, serial, episodes};
         return ans;

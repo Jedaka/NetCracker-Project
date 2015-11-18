@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
@@ -18,7 +20,7 @@
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
         <property name="packagesToScan" value="com.project.model" />
@@ -33,9 +35,12 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+
     <bean id="applicationContextProvider" class="com.project.service.ApplicationContextProvider"/>
-    <bean id="userDAO" class="com.project.database.dao.UserDAO" autowire="byName"/>
-    <bean id="userService" class="com.project.service.UserService" autowire="byType"/>
+    <bean id="userDAO" class="com.project.database.dao.UserDAO" autowire="byType"/>
+    <bean id="userService" class="com.project.service.UserService" autowire="byName"/>
     <bean id="tokenDAO" class="com.project.database.dao.TokenDAO" autowire="byType"/>
     <bean id="tokenService" class="com.project.service.TokenService" autowire="byName"/>
+    <bean id="episodeDAO" class="com.project.database.dao.EpisodeDAO" autowire="byType"/>
+    <bean id="episodeService" class="com.project.service.EpisodeService" autowire="byName"/>
 </beans>

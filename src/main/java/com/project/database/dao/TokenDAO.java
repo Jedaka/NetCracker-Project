@@ -3,6 +3,7 @@ package com.project.database.dao;
 import com.project.model.Token;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -15,9 +16,9 @@ public class TokenDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public String create(Token object) {
+    public int create(Token object) {
         Session session = sessionFactory.getCurrentSession();
-        return (String) session.save(object);
+        return (Integer) session.save(object);
     }
 
     public List getAll() {
@@ -25,9 +26,14 @@ public class TokenDAO {
         return session.createCriteria(Token.class).list();
     }
 
-    public Token read(String token) {
+    public Token read(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Token.class, token);
+        return session.get(Token.class, id);
+    }
+
+    public Token findByToken(String token){
+        Session session = sessionFactory.getCurrentSession();
+        return (Token) session.createCriteria(Token.class).add(Restrictions.eq("token", token)).uniqueResult();
     }
 
     public void update(Token object) {

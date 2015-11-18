@@ -1,9 +1,9 @@
-package com.project.some;
+package com.project.communication;
 
 /**
  * Created by vganshin on 12.11.15.
  */
-public class ChangePasswordForm {
+public class ChangePasswordRequest {
     private String oldPassword;
     private String newPassword;
 
@@ -21,5 +21,13 @@ public class ChangePasswordForm {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "ChangePasswordForm{" +
+                "oldPassword='" + oldPassword + '\'' +
+                ", newPassword='" + newPassword + '\'' +
+                '}';
     }
 }

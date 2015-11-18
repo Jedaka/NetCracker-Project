@@ -1,5 +1,7 @@
 package com.project.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -13,11 +15,12 @@ public class Episode {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EPISODE_SEQ")
     @SequenceGenerator(name="EPISODE_SEQ", sequenceName="EPISODE_SEQ",allocationSize=1)
+    @JsonIgnore
     private int id;
-    @OneToOne
-    private Serial serial;
-    @OneToOne
-    private Studio studio;
+
+    @ManyToOne
+    @JsonIgnore
+    private Token token;
     @Column(name = "SEASON_NUMBER")
     private int seasonNumber;
     @Column(name = "EPISODE_NUMBER")
@@ -25,6 +28,7 @@ public class Episode {
     private String link;
     @Type(type = "timestamp")
     @Column(name = "PUB_DATETIME")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm")
     private Date date;
 
     public int getId() {
@@ -35,20 +39,20 @@ public class Episode {
         this.id = id;
     }
 
-    public Serial getSerial() {
-        return serial;
+    public Serial getSerial(){
+        return token.getSerial();
     }
 
-    public void setSerial(Serial serial) {
-        this.serial = serial;
+    public Studio getStudio(){
+        return token.getStudio();
     }
 
-    public Studio getStudio() {
-        return studio;
+    public Token getToken() {
+        return token;
     }
 
-    public void setStudio(Studio studio) {
-        this.studio = studio;
+    public void setToken(Token token) {
+        this.token = token;
     }
 
     public int getSeasonNumber() {
@@ -81,5 +85,17 @@ public class Episode {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Episode{" +
+                "id=" + id +
+                ", token=" + token +
+                ", seasonNumber=" + seasonNumber +
+                ", episodeNumber=" + episodeNumber +
+                ", link='" + link + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

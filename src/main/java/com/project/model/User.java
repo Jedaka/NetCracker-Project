@@ -2,15 +2,9 @@ package com.project.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.tomcat.util.security.ConcurrentMessageDigest;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import sun.security.provider.MD5;
-
 import javax.persistence.*;
-import java.io.WriteAbortedException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -21,6 +15,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_PROFILE_SEQ")
     @SequenceGenerator(name="USER_PROFILE_SEQ", sequenceName="USER_PROFILE_SEQ",allocationSize=1)
+    @JsonIgnore
     private int id;
     @Column(unique = true)
     private String email;
@@ -38,6 +33,7 @@ public class User {
     }
 
     public User() {
+
     }
 
     public Collection<Subscription> getSubscriptions() {

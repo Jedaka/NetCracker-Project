@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * Created by jedaka on 17.11.2015.
  */
@@ -18,7 +20,13 @@ public class EpisodeDAO {
         return (Integer) session.save(object);
     }
 
+    public List<Episode> getAll(){
+        Session session = sessionFactory.getCurrentSession();
+        return session.createCriteria(Episode.class).list();
+    }
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
 }

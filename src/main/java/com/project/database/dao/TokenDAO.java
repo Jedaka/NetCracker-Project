@@ -21,7 +21,7 @@ public class TokenDAO {
         return (Integer) session.save(object);
     }
 
-    public List getAll() {
+    public List<Token> getAll() {
         Session session = sessionFactory.getCurrentSession();
         return session.createCriteria(Token.class).list();
     }

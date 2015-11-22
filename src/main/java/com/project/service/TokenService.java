@@ -33,7 +33,7 @@ public class TokenService {
     }
 
     @Transactional(readOnly = true)
-    public List getAll() {
+    public List<Token> getAll() {
         return tokenDAO.getAll();
     }
 

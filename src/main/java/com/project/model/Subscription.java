@@ -21,12 +21,16 @@ public class Subscription {
     @ManyToOne(cascade = CascadeType.ALL)
     private Token token;
 
+    @ManyToOne
+    private User user;
+
     public Subscription() {
 
     }
 
     //Temporary constructor
-    public Subscription(Token token) {
+    public Subscription(User user, Token token) {
+        this.user = user;
         this.token = token;
     }
 
@@ -36,6 +40,14 @@ public class Subscription {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Token getToken() {

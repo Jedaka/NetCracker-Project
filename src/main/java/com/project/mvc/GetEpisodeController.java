@@ -42,10 +42,10 @@ public class GetEpisodeController {
                 jsonResponse.setStatus(JsonResponse.Status.ERROR);
             }
             jsonResponse.setMessage(episodeList);// if user is not authorized then return all episodes
-        }
+        } else
         if (user == null && request.isSubscribed()){
             jsonResponse.setStatus(JsonResponse.Status.ERROR); // fairy-tale situation
-        }
+        } else
         if (user != null && !request.isSubscribed()){  // return all episodes to choosing
             try {
                 episodeList = episodesFromIndex(episodeService.getAll(),request.getFromEpisode(), request.getNumberOfEpisodes(), false);
@@ -53,7 +53,7 @@ public class GetEpisodeController {
             } catch (Exception e) {
                 jsonResponse.setStatus(JsonResponse.Status.ERROR);
             }
-        }
+        }else
         if (user != null && request.isSubscribed()){
             try {
                 episodeList = episodesFromIndex(episodeService.getAll(), request.getFromEpisode(), request.getNumberOfEpisodes(), true);

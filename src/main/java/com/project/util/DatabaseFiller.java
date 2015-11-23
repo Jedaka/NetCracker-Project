@@ -40,29 +40,29 @@ public class DatabaseFiller {
 
         //LostFilm
 
-//        Serial walkingDead = new Serial("Walking Dead", "en");
-//        Serial gotham = new Serial("Gotham", "en");
-//        Serial americanHorrorStory = new Serial("American Horror Story", "en");
-//
-//        Studio lostFilm = new Studio("LostFilm", "ru");
-//
-//        Token token3 = new Token(walkingDead, lostFilm);
-//
-//        tokenService.save(token3);
-//        tokenService.save(new Token(gotham, lostFilm));
-//        tokenService.save(new Token(americanHorrorStory, lostFilm));
+        Serial walkingDead = new Serial("Walking Dead", "en");
+        Serial gotham = new Serial("Gotham", "en");
+        Serial americanHorrorStory = new Serial("American Horror Story", "en");
+
+        Studio lostFilm = new Studio("LostFilm", "ru");
+
+        Token token3 = new Token(walkingDead, lostFilm);
+
+        tokenService.save(token3);
+        tokenService.save(new Token(gotham, lostFilm));
+        tokenService.save(new Token(americanHorrorStory, lostFilm));
 
         //NovaFilm
 
-//        Serial supernatural = new Serial("Supernatural", "en");
-//        Serial dexter = new Serial("Dexter", "en");
-//        Serial lieToMe = new Serial("Lie To Me", "en");
-//
-//        Studio novaFilm = new Studio("NovaFilm", "ru");
-//
-//        tokenService.save(new Token(supernatural, novaFilm));
-//        tokenService.save(new Token(dexter, novaFilm));
-//        tokenService.save(new Token(lieToMe, novaFilm));
+        Serial supernatural = new Serial("Supernatural", "en");
+        Serial dexter = new Serial("Dexter", "en");
+        Serial lieToMe = new Serial("Lie To Me", "en");
+
+        Studio novaFilm = new Studio("NovaFilm", "ru");
+
+        tokenService.save(new Token(supernatural, novaFilm));
+        tokenService.save(new Token(dexter, novaFilm));
+        tokenService.save(new Token(lieToMe, novaFilm));
 
         /* Users */
 

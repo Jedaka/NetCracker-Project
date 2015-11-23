@@ -16,7 +16,6 @@ public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TOKEN_SEQ")
     @SequenceGenerator(name = "TOKEN_SEQ", sequenceName = "TOKEN_SEQ", allocationSize = 1)
-    @JsonIgnore
     private int id;
 
     @JsonIgnore

@@ -50,24 +50,6 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public void addSubscritionForUser(User user, Token token) {
-        subscriptionDAO.create(new Subscription(user, token));
-    }
-
-    public void removeSubscriptionFromUser(User user, Token token) {
-        subscriptionDAO.delete(subscriptionDAO.findByUserAndToken(user, token));
-    }
-
-    public void addSubscritionForCurrentUser(Token token) {
-        User user = this.getCurrentUser();
-        subscriptionDAO.create(new Subscription(user, token));
-    }
-
-    public void removeSubscriptionFromCurrentUser(Token token) {
-        User user = this.getCurrentUser();
-        subscriptionDAO.delete(subscriptionDAO.findByUserAndToken(user, token));
-    }
-
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();

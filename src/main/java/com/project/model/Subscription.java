@@ -15,22 +15,17 @@ public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SUBSCRIPTION_SEQ")
     @SequenceGenerator(name = "SUBSCRIPTION_SEQ", sequenceName = "SUBSCRIPTION_SEQ", allocationSize = 1)
-    @JsonIgnore
     private int id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Token token;
-
-    @ManyToOne
-    private User user;
 
     public Subscription() {
 
     }
 
     //Temporary constructor
-    public Subscription(User user, Token token) {
-        this.user = user;
+    public Subscription(Token token) {
         this.token = token;
     }
 
@@ -40,14 +35,6 @@ public class Subscription {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Token getToken() {

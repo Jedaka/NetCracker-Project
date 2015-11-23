@@ -9,6 +9,7 @@ import javax.persistence.*;
  * Created by jedaka on 03.11.2015.
  */
 @Entity(name = "SUBSCRIPTION")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"token_id", "users_id"}))
 public class Subscription {
 
     @Id
@@ -17,8 +18,7 @@ public class Subscription {
     @JsonIgnore
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
     private Token token;
 
     public Subscription() {
@@ -26,17 +26,8 @@ public class Subscription {
     }
 
     //Temporary constructor
-    public Subscription(Serial serial, Studio studio){
-        Token token = new Token(serial, studio);
+    public Subscription(Token token) {
         this.token = token;
-    }
-
-    public Serial getSerial(){
-        return token.getSerial();
-    }
-
-    public Studio getStudio(){
-        return token.getStudio();
     }
 
     public int getId() {
@@ -60,8 +51,7 @@ public class Subscription {
     public String toString() {
         return "Subscription{" +
                 "id=" + id +
-                ", serial=" + getSerial() +
-                ", studio=" + getStudio() +
+                ", token=" + getToken() +
                 '}';
     }
 }

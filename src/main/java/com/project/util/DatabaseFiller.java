@@ -1,9 +1,6 @@
 package com.project.util;
 
-import com.project.model.Serial;
-import com.project.model.Studio;
-import com.project.model.Subscription;
-import com.project.model.User;
+import com.project.model.*;
 import com.project.service.ApplicationContextProvider;
 import com.project.service.TokenService;
 import com.project.service.UserService;
@@ -21,71 +18,78 @@ public class DatabaseFiller {
         TokenService tokenService = applicationContext.getBean("tokenService", TokenService.class);
         UserService userService = applicationContext.getBean("userService", UserService.class);
 
+        System.out.println(userService.findByEmail("vasya@gmail.com"));
+
         /* Serials and Studios */
 
         //Кураж Бамбей
 
-        Serial bigBangTheory = new Serial("Big Bang Theory", "en");
-        Serial howIMetYourMother = new Serial("How I Met Your Mother", "en");
-        Serial iLiveWithModels = new Serial("I Live With Models", "en");
-
-        Studio kurazhBambey = new Studio("Кураж Бамбей", "ru");
-
-        tokenService.save(bigBangTheory, kurazhBambey);
-        tokenService.save(bigBangTheory, null);
-        tokenService.save(howIMetYourMother, kurazhBambey);
-        tokenService.save(iLiveWithModels, kurazhBambey);
+//        Serial bigBangTheory = new Serial("Big Bang Theory", "en");
+//        Serial howIMetYourMother = new Serial("How I Met Your Mother", "en");
+//        Serial iLiveWithModels = new Serial("I Live With Models", "en");
+//
+//        Studio kurazhBambey = new Studio("Кураж Бамбей", "ru");
+//
+//        Token token1 = new Token(bigBangTheory, kurazhBambey);
+//        Token token2 = new Token(bigBangTheory, null);
+//
+//        tokenService.save(token1);
+//        tokenService.save(token2);
+//        tokenService.save(new Token(howIMetYourMother, kurazhBambey));
+//        tokenService.save(new Token(iLiveWithModels, kurazhBambey));
 
         //LostFilm
 
-        Serial walkingDead = new Serial("Walking Dead", "en");
-        Serial gotham = new Serial("Gotham", "en");
-        Serial americanHorrorStory = new Serial("American Horror Story", "en");
-
-        Studio lostFilm = new Studio("LostFilm", "ru");
-
-        tokenService.save(walkingDead, lostFilm);
-        tokenService.save(gotham, lostFilm);
-        tokenService.save(americanHorrorStory, lostFilm);
+//        Serial walkingDead = new Serial("Walking Dead", "en");
+//        Serial gotham = new Serial("Gotham", "en");
+//        Serial americanHorrorStory = new Serial("American Horror Story", "en");
+//
+//        Studio lostFilm = new Studio("LostFilm", "ru");
+//
+//        Token token3 = new Token(walkingDead, lostFilm);
+//
+//        tokenService.save(token3);
+//        tokenService.save(new Token(gotham, lostFilm));
+//        tokenService.save(new Token(americanHorrorStory, lostFilm));
 
         //NovaFilm
 
-        Serial supernatural = new Serial("Supernatural", "en");
-        Serial dexter = new Serial("Dexter", "en");
-        Serial lieToMe = new Serial("Lie To Me", "en");
-
-        Studio novaFilm = new Studio("NovaFilm", "ru");
-
-        tokenService.save(supernatural, novaFilm);
-        tokenService.save(dexter, novaFilm);
-        tokenService.save(lieToMe, novaFilm);
+//        Serial supernatural = new Serial("Supernatural", "en");
+//        Serial dexter = new Serial("Dexter", "en");
+//        Serial lieToMe = new Serial("Lie To Me", "en");
+//
+//        Studio novaFilm = new Studio("NovaFilm", "ru");
+//
+//        tokenService.save(new Token(supernatural, novaFilm));
+//        tokenService.save(new Token(dexter, novaFilm));
+//        tokenService.save(new Token(lieToMe, novaFilm));
 
         /* Users */
 
-        User vasya = new User("vasya@gmail.com", "qwerty");
-        vasya.addSubscription(new Subscription(bigBangTheory, kurazhBambey));
-        vasya.addSubscription(new Subscription(supernatural, novaFilm));
+//        User vasya = new User("vasya@gmail.com", "qwerty");
+//        vasya.addSubscription(new Subscription(token1));
+//        vasya.addSubscription(new Subscription(token2));
 
-        User petya = new User("petua@yandex.ru", "sad123");
-        petya.addSubscription(new Subscription(walkingDead, lostFilm));
+//        User petya = new User("petua@yandex.ru", "sad123");
+//        petya.addSubscription(new Subscription(token1));
+//
+//        User stepa = new User("xcks12@yahoo.com", "saczqw421");
+//        petya.addSubscription(new Subscription(howIMetYourMother, kurazhBambey));
+//
+//        User katya = new User("kate123@gmail.com", "katekate");
+//
+//        User natasha = new User("dogcat@mail.ru", "123456");
+//        natasha.addSubscription(new Subscription(bigBangTheory, kurazhBambey));
+//        natasha.addSubscription(new Subscription(howIMetYourMother, kurazhBambey));
+//        natasha.addSubscription(new Subscription(iLiveWithModels, kurazhBambey));
+//        natasha.addSubscription(new Subscription(walkingDead, lostFilm));
+//        natasha.addSubscription(new Subscription(dexter, novaFilm));
 
-        User stepa = new User("xcks12@yahoo.com", "saczqw421");
-        petya.addSubscription(new Subscription(howIMetYourMother, kurazhBambey));
-
-        User katya = new User("kate123@gmail.com", "katekate");
-
-        User natasha = new User("dogcat@mail.ru", "123456");
-        natasha.addSubscription(new Subscription(bigBangTheory, kurazhBambey));
-        natasha.addSubscription(new Subscription(howIMetYourMother, kurazhBambey));
-        natasha.addSubscription(new Subscription(iLiveWithModels, kurazhBambey));
-        natasha.addSubscription(new Subscription(walkingDead, lostFilm));
-        natasha.addSubscription(new Subscription(dexter, novaFilm));
-
-        userService.save(vasya);
-        userService.save(petya);
-        userService.save(stepa);
-        userService.save(katya);
-        userService.save(natasha);
+//        userService.save(vasya);
+//        userService.save(petya);
+//        userService.save(stepa);
+//        userService.save(katya);
+//        userService.save(natasha);
 
     }
 }

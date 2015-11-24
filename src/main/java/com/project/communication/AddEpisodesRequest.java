@@ -7,20 +7,20 @@ import java.util.Set;
  */
 public class AddEpisodesRequest {
 
-    private Set<AddEpisodeRequest> addEpisodeRequest;
+    private Set<AddEpisodeRequest> addEpisodeRequests;
 
-    public Set<AddEpisodeRequest> getAddEpisodeRequest() {
-        return addEpisodeRequest;
+    public Set<AddEpisodeRequest> getAddEpisodeRequests() {
+        return addEpisodeRequests;
     }
 
-    public void setAddEpisodeRequest(Set<AddEpisodeRequest> addEpisodeRequest) {
-        this.addEpisodeRequest = addEpisodeRequest;
+    public void setAddEpisodeRequests(Set<AddEpisodeRequest> addEpisodeRequests) {
+        this.addEpisodeRequests = addEpisodeRequests;
     }
 
     @Override
     public String toString() {
         return "AddEpisodesRequest{" +
-                "addEpisodeRequest=" + addEpisodeRequest +
+                "addEpisodeRequests=" + addEpisodeRequests +
                 '}';
     }
 }

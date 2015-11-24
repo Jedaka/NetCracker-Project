@@ -36,7 +36,7 @@ public class AddEpisodeController {
         stringBuilder.append("Adding new episodes. ");
 
         JsonResponse response = new JsonResponse();
-        Set<AddEpisodeRequest> episodes = request.getAddEpisodeRequest();
+        Set<AddEpisodeRequest> episodes = request.getAddEpisodeRequests();
 
         stringBuilder.append(episodes.size() + " received. ");
 

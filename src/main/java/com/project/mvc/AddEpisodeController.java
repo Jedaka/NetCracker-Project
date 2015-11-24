@@ -40,9 +40,7 @@ public class AddEpisodeController {
             Token token = tokenService.findByToken(recievedToken);
 
             if (token == null) {
-                response.setStatus(JsonResponse.Status.ERROR);
-                response.setMessage("invalid token");
-                return response;
+                continue;
             }
 
             Episode episode = iterator.next().getEpisode();
@@ -50,16 +48,13 @@ public class AddEpisodeController {
             try {
                 episodeService.save(episode);
             } catch (Exception e) {
-                logger.error(e);
-                response.setStatus(JsonResponse.Status.ERROR);
-                response.setMessage("exception was thrown");
-                return response;
+                continue;
             }
-            logger.info("Episode has been added: " + episode);
-            response.setStatus(JsonResponse.Status.OK);
-            response.setMessage(episode);
-        }
 
+        }
+        logger.info("Episodes has been added: " + iterator.toString());
+        response.setStatus(JsonResponse.Status.OK);
+        response.setMessage(iterator);
         return response;
     }
 

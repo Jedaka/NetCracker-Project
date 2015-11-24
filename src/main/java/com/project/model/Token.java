@@ -10,6 +10,7 @@ import java.util.UUID;
  * Created by jedaka on 03.11.2015.
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"serial_id", "studio_id"}))
 public class Token {
 
     @Id

@@ -20,8 +20,8 @@ public class TokenService {
     @Autowired
     private TokenDAO tokenDAO;
 
-    public int save(Serial serial, Studio studio) {
-        return tokenDAO.create(new Token(serial, studio));
+    public int save(Token token) {
+        return tokenDAO.create(token);
     }
 
     public void update(Token token){

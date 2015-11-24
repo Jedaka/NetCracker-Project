@@ -1,7 +1,8 @@
 package com.project.mvc;
 
-import com.project.communication.AddEpisodeRequest;
+import com.project.communication.addEpisodes.AddEpisodeRequest;
 import com.project.communication.JsonResponse;
+import com.project.communication.addEpisodes.EpisodeRequest;
 import com.project.model.Episode;
 import com.project.model.Token;
 import com.project.service.EpisodeService;
@@ -11,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by jedaka on 17.11.2015.
@@ -27,31 +32,34 @@ public class AddEpisodeController {
 
     @RequestMapping(value = "/episode")
     public JsonResponse addEpisode(@RequestBody AddEpisodeRequest request){
-
         JsonResponse response = new JsonResponse();
-        String recievedToken = request.getToken();
-        Token token = tokenService.findByToken(recievedToken);
+        Set<EpisodeRequest> episodes = request.getEpisodeRequests();
+        Iterator<EpisodeRequest> iterator = episodes.iterator();
+        while (iterator.hasNext()) {
+            String recievedToken = iterator.next().getToken();
+            Token token = tokenService.findByToken(recievedToken);
 
-        if (token == null){
-            response.setStatus(JsonResponse.Status.ERROR);
-            response.setMessage("invalid token");
-            return response;
+            if (token == null) {
+                response.setStatus(JsonResponse.Status.ERROR);
+                response.setMessage("invalid token");
+                return response;
+            }
+
+            Episode episode = iterator.next().getEpisode();
+            episode.setToken(token);
+            try {
+                episodeService.save(episode);
+            } catch (Exception e) {
+                logger.error(e);
+                response.setStatus(JsonResponse.Status.ERROR);
+                response.setMessage("exception was thrown");
+                return response;
+            }
+            logger.info("Episode has been added: " + episode);
+            response.setStatus(JsonResponse.Status.OK);
+            response.setMessage(episode);
         }
 
-        Episode episode = request.getEpisode();
-        episode.setToken(token);
-        try {
-            episodeService.save(episode);
-        } catch (Exception e) {
-            logger.error(e);
-            response.setStatus(JsonResponse.Status.ERROR);
-            response.setMessage("exception was thrown");
-            return response;
-        }
-
-        logger.info("Episode has been added: " + episode);
-        response.setStatus(JsonResponse.Status.OK);
-        response.setMessage(episode);
         return response;
     }
 

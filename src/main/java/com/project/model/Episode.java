@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by jedaka on 03.11.2015.
  */
 @Entity(name = "EPISODE")
-public class Episode {
+public class Episode implements Comparable<Episode> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EPISODE_SEQ")
     @SequenceGenerator(name="EPISODE_SEQ", sequenceName="EPISODE_SEQ",allocationSize=1)
@@ -97,5 +97,9 @@ public class Episode {
                 ", link='" + link + '\'' +
                 ", date=" + date +
                 '}';
+    }
+    @Override
+    public int compareTo(Episode o) {
+        return this.date.compareTo(o.date);
     }
 }

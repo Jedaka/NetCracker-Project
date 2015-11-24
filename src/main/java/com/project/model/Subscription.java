@@ -18,7 +18,7 @@ public class Subscription {
     @JsonIgnore
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     private Token token;
 
     @ManyToOne

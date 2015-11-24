@@ -33,6 +33,6 @@ public class SubscriptionDAO {
 
     public Subscription findByUserAndToken(User user, Token token) {
         Session session = sessionFactory.getCurrentSession();
-        return (Subscription) session.createCriteria(Subscription.class).add(Restrictions.eq("user_id", user.getId())).add(Restrictions.eq("token_id", token.getId()));
+        return (Subscription) session.createCriteria(Subscription.class).add(Restrictions.eq("user_id", user.getId())).add(Restrictions.eq("token_id", token.getId())).uniqueResult();
     }
 }

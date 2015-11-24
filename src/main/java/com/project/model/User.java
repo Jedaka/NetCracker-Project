@@ -4,9 +4,11 @@ package com.project.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Entity(name = "USERS")
@@ -22,10 +24,10 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "USERS_ID", referencedColumnName = "ID", nullable = false)
-    @Cascade({CascadeType.SAVE_UPDATE})
-    private Collection<Subscription> subscriptions = new ArrayList<Subscription>();
+    @Cascade({CascadeType.ALL})
+    private List<Subscription> subscriptions = new ArrayList<Subscription>();
 
     public User(String email, String password) {
         this.email = email;
@@ -36,11 +38,11 @@ public class User {
 
     }
 
-    public Collection<Subscription> getSubscriptions() {
+    public List<Subscription> getSubscriptions() {
         return subscriptions;
     }
 
-    public void setSubscriptions(Collection<Subscription> subscriptions) {
+    public void setSubscriptions(List<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
     }
 

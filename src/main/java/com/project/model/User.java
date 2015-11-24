@@ -44,6 +44,7 @@ public class User {
         this.subscriptions = subscriptions;
     }
 
+
     public int getId() {
         return id;
     }

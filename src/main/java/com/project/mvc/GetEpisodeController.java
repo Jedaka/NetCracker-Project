@@ -4,6 +4,7 @@ import com.project.communication.GetEpisodeRequest;
 import com.project.communication.JsonResponse;
 import com.project.model.Episode;
 import com.project.model.Subscription;
+import com.project.model.Token;
 import com.project.model.User;
 import com.project.service.EpisodeService;
 import com.project.service.UserService;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by jedaka on 23.11.2015.
@@ -56,7 +55,7 @@ public class GetEpisodeController {
         }else
         if (user != null && request.isSubscribed()){
             try {
-                episodeList = episodesFromIndex(episodeService.getAll(), request.getFromEpisode(), request.getNumberOfEpisodes(), true);
+                episodeList = episodesFromIndex(episodeService.getAllOrderByDate(), request.getFromEpisode(), request.getNumberOfEpisodes(), true);
 
             } catch (Exception e) {
                 jsonResponse.setStatus(JsonResponse.Status.ERROR);
@@ -68,18 +67,49 @@ public class GetEpisodeController {
     }
     private List<Episode> episodesFromIndex(List<Episode> episodes, int start, int count, boolean subscribed){
         List<Episode> answer = new ArrayList<Episode>();
-        Collection<Subscription> userSubscriptions = user.getSubscriptions();
-        for (int i = start; i < start+count; i++){
-            if (subscribed) {
-                if (userSubscriptions.contains(episodes.get(i))){
-                    answer.add(episodes.get(i));
-                }else{
-                    count++;
+        HashSet<Token> tokens = getUserTokens(user.getSubscriptions());
+        boolean b = false;
+        for(Episode episode: episodes){
+            if (episode.getId() == start){
+                b = true;
+            }
+            if (b) {
+                if (subscribed) {
+                    Iterator<Token> tokenIterator = tokens.iterator();
+                    boolean wasAdded = false;
+                    while (tokenIterator.hasNext()) {
+                        Token userToken = tokenIterator.next();
+                        if (userToken.equals(episode.getToken())) {
+                            answer.add(episode);
+                            wasAdded = true;
+                            break;
+                        }
+                    }
+                    if (wasAdded) {
+                        count--;
+                        if (count == 0){
+                            break;
+                        }
+                    }
+                } else {
+                    answer.add(episode);
+                    count--;
+                    if (count == 0){
+                        break;
+                    }
                 }
-            }else{
-                answer.add(episodes.get(i));
             }
         }
+
         return answer;
+    }
+    private HashSet<Token> getUserTokens(Collection<Subscription> subscriptions){
+        HashSet<Token> tokens = new HashSet<Token>();
+        Iterator<Subscription> iterator = subscriptions.iterator();
+        while(iterator.hasNext()){
+            Token tmp = iterator.next().getToken();
+            tokens.add(tmp);
+        }
+        return tokens;
     }
 }

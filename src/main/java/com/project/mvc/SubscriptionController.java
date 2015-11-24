@@ -51,18 +51,15 @@ public class SubscriptionController {
 
     @RequestMapping(value = "/removeSubscriptionById", method = RequestMethod.POST)
     public JsonResponse removeSubscriptionById(@RequestBody IdRequest idRequest) {
-        Token token = tokenService.get(idRequest.getId());
         User user = userService.getCurrentUser();
         Collection<Subscription> subscriptions = user.getSubscriptions();
-        Subscription wow = null;
         for(Subscription subscription : subscriptions) {
             if (subscription.getId() == idRequest.getId()) {
-                wow = subscription;
                 subscriptions.remove(subscription);
-                break;
+                userService.update(user);
+                return new JsonResponse(JsonResponse.Status.OK, subscription);
             }
         }
-        userService.update(user);
-        return new JsonResponse(JsonResponse.Status.OK, wow);
+        return new JsonResponse(JsonResponse.Status.ERROR, "Not Found subscription with such id.");
     }
 }

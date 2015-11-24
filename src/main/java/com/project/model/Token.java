@@ -76,4 +76,27 @@ public class Token {
                 ", studio=" + studio +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Token token1 = (Token) o;
+
+        if (id != token1.id) return false;
+        if (!token.equals(token1.token)) return false;
+        if (serial != null ? !serial.equals(token1.serial) : token1.serial != null) return false;
+        return !(studio != null ? !studio.equals(token1.studio) : token1.studio != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + token.hashCode();
+        result = 31 * result + (serial != null ? serial.hashCode() : 0);
+        result = 31 * result + (studio != null ? studio.hashCode() : 0);
+        return result;
+    }
 }

@@ -17,7 +17,7 @@ public class Subscription {
     @SequenceGenerator(name = "SUBSCRIPTION_SEQ", sequenceName = "SUBSCRIPTION_SEQ", allocationSize = 1)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     private Token token;
 
     public Subscription() {
@@ -52,5 +52,24 @@ public class Subscription {
                 "id=" + id +
                 ", token=" + getToken() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Subscription that = (Subscription) o;
+
+        if (id != that.id) return false;
+        return token.equals(that.token);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + token.hashCode();
+        return result;
     }
 }

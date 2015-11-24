@@ -18,23 +18,39 @@ public class DatabaseFiller {
         TokenService tokenService = applicationContext.getBean("tokenService", TokenService.class);
         UserService userService = applicationContext.getBean("userService", UserService.class);
 
+        Serial bigBangTheory = new Serial("Big Bang Theory", "en");
+        Studio kurazhBambey = new Studio("Кураж Бамбей", "ru");
+        Token token1 = new Token(bigBangTheory, kurazhBambey);
+        Token token2 = new Token(bigBangTheory, null);
+        tokenService.save(token1);
+        tokenService.save(token2);
+
+        User user = new User();
+        user.setEmail("vasya@gmail.com");
+        user.setPassword("qwerty");
+        Subscription subscription = new Subscription();
+        subscription.setUser(user);
+        subscription.setToken(token1);
+        user.addSubscription(subscription);
+
+        userService.save(user);
+
+        user.getSubscriptions().remove(subscription);
+        Subscription subscription2 = new Subscription();
+        subscription2.setToken(token2);
+        subscription2.setUser(user);
+        user.addSubscription(subscription2);
+
+        userService.update(user);
+
+
         System.out.println(userService.findByEmail("vasya@gmail.com"));
 
         /* Serials and Studios */
 
         //Кураж Бамбей
 
-//        Serial bigBangTheory = new Serial("Big Bang Theory", "en");
-//        Serial howIMetYourMother = new Serial("How I Met Your Mother", "en");
-//        Serial iLiveWithModels = new Serial("I Live With Models", "en");
-//
-//        Studio kurazhBambey = new Studio("Кураж Бамбей", "ru");
-//
-//        Token token1 = new Token(bigBangTheory, kurazhBambey);
-//        Token token2 = new Token(bigBangTheory, null);
-//
-//        tokenService.save(token1);
-//        tokenService.save(token2);
+
 //        tokenService.save(new Token(howIMetYourMother, kurazhBambey));
 //        tokenService.save(new Token(iLiveWithModels, kurazhBambey));
 

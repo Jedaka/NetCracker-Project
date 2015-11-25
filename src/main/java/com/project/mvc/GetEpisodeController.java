@@ -65,6 +65,12 @@ public class GetEpisodeController {
         jsonResponse.setMessage(episodeList);
         return jsonResponse;
     }
+    @RequestMapping(value = "/subsEpisodes")
+    public @ResponseBody JsonResponse getSubsEpisodes(@RequestBody GetEpisodeRequest request){
+        JsonResponse jsonResponse = new JsonResponse(); //create response
+
+        return jsonResponse;
+    }
     private List<Episode> episodesFromIndex(List<Episode> episodes, int start, int count, boolean subscribed){
         List<Episode> answer = new ArrayList<Episode>();
         HashSet<Token> tokens = getUserTokens(user.getSubscriptions());

@@ -1,11 +1,9 @@
 package com.project.service;
 
+import com.project.communication.ChangePasswordRequest;
 import com.project.database.dao.SubscriptionDAO;
 import com.project.database.dao.UserDAO;
-import com.project.model.Subscription;
-import com.project.model.Token;
 import com.project.model.User;
-import com.project.communication.ChangePasswordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

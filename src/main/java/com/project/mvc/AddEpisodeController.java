@@ -1,6 +1,7 @@
 package com.project.mvc;
 
 import com.project.communication.AddEpisodeRequest;
+import com.project.communication.AddEpisodesRequest;
 import com.project.communication.JsonResponse;
 import com.project.model.Episode;
 import com.project.model.Token;
@@ -11,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by jedaka on 17.11.2015.
@@ -26,32 +30,42 @@ public class AddEpisodeController {
     private Logger logger = Logger.getLogger(AddEpisodeController.class);
 
     @RequestMapping(value = "/episode")
-    public JsonResponse addEpisode(@RequestBody AddEpisodeRequest request){
+    public JsonResponse addEpisode(@RequestBody AddEpisodesRequest request){
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("Adding new episodes. ");
 
         JsonResponse response = new JsonResponse();
-        String recievedToken = request.getToken();
-        Token token = tokenService.findByToken(recievedToken);
+        Set<AddEpisodeRequest> episodes = request.getAddEpisodeRequests();
 
-        if (token == null){
-            response.setStatus(JsonResponse.Status.ERROR);
-            response.setMessage("invalid token");
-            return response;
+        stringBuilder.append(episodes.size() + " received. ");
+
+        Iterator<AddEpisodeRequest> iterator = episodes.iterator();
+        int persistedEpisodeCounter = 0;
+        while (iterator.hasNext()) {
+
+            AddEpisodeRequest addEpisodeRequest = iterator.next();
+
+            String recievedToken = addEpisodeRequest.getToken();
+            Token token = tokenService.findByToken(recievedToken);
+            if (token == null) {
+                continue;
+            }
+
+            Episode episode = addEpisodeRequest.getEpisode();
+            episode.setToken(token);
+            try {
+                episodeService.save(episode);
+                persistedEpisodeCounter++;
+            } catch (Exception e) {
+                stringBuilder.append(e);
+                continue;
+            }
         }
 
-        Episode episode = request.getEpisode();
-        episode.setToken(token);
-        try {
-            episodeService.save(episode);
-        } catch (Exception e) {
-            logger.error(e);
-            response.setStatus(JsonResponse.Status.ERROR);
-            response.setMessage("exception was thrown");
-            return response;
-        }
-
-        logger.info("Episode has been added: " + episode);
+        stringBuilder.append(persistedEpisodeCounter + " persisted.");
         response.setStatus(JsonResponse.Status.OK);
-        response.setMessage(episode);
+        response.setMessage(stringBuilder.toString());
         return response;
     }
 

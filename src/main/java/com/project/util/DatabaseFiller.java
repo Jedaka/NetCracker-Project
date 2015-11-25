@@ -18,33 +18,40 @@ public class DatabaseFiller {
         TokenService tokenService = applicationContext.getBean("tokenService", TokenService.class);
         UserService userService = applicationContext.getBean("userService", UserService.class);
 
-        Serial bigBangTheory = new Serial("Big Bang Theory", "en");
-        Studio kurazhBambey = new Studio("Кураж Бамбей", "ru");
-        Token token1 = new Token(bigBangTheory, kurazhBambey);
-        Token token2 = new Token(bigBangTheory, null);
-        tokenService.save(token1);
-        tokenService.save(token2);
+        //LostFilm
 
-        User user = new User();
-        user.setEmail("vasya@gmail.com");
-        user.setPassword("qwerty");
-        Subscription subscription = new Subscription();
-        subscription.setUser(user);
-        subscription.setToken(token1);
-        user.addSubscription(subscription);
-
-        userService.save(user);
-
-        user.getSubscriptions().remove(subscription);
-        Subscription subscription2 = new Subscription();
-        subscription2.setToken(token2);
-        subscription2.setUser(user);
-        user.addSubscription(subscription2);
-
-        userService.update(user);
-
-
-        System.out.println(userService.findByEmail("vasya@gmail.com"));
+//        Serial walkingDead = new Serial("Walking Dead", "en");
+//        Serial gotham = new Serial("Gotham", "en");
+//        Serial americanHorrorStory = new Serial("American Horror Story", "en");
+//
+//        Studio lostFilm = new Studio("LostFilm", "ru");
+//
+//        Token token1 = new Token(walkingDead, lostFilm);
+//        tokenService.save(token1);
+//        Token token2 = new Token(gotham, lostFilm);
+//        tokenService.save(token2);
+//        Token token3 = new Token(americanHorrorStory, lostFilm);
+//        tokenService.save(token3);
+//
+//        User user = new User();
+//        user.setEmail("vasya@gmail.com");
+//        user.setPassword("qwerty");
+//        Subscription subscription = new Subscription();
+//        subscription.setToken(token1);
+//        user.addSubscription(subscription);
+//
+//        userService.save(user);
+//
+//        user.getSubscriptions().remove(subscription);
+//        Subscription subscription2 = new Subscription();
+//        subscription2.setToken(token2);
+//        subscription2.setUser(user);
+//        user.addSubscription(subscription2);
+//
+//        userService.update(user);
+//
+//
+//        System.out.println(userService.findByEmail("vasya@gmail.com"));
 
         /* Serials and Studios */
 
@@ -56,29 +63,29 @@ public class DatabaseFiller {
 
         //LostFilm
 
-        Serial walkingDead = new Serial("Walking Dead", "en");
-        Serial gotham = new Serial("Gotham", "en");
-        Serial americanHorrorStory = new Serial("American Horror Story", "en");
-
-        Studio lostFilm = new Studio("LostFilm", "ru");
-
-        Token token3 = new Token(walkingDead, lostFilm);
-
-        tokenService.save(token3);
-        tokenService.save(new Token(gotham, lostFilm));
-        tokenService.save(new Token(americanHorrorStory, lostFilm));
-
-        //NovaFilm
-
-        Serial supernatural = new Serial("Supernatural", "en");
-        Serial dexter = new Serial("Dexter", "en");
-        Serial lieToMe = new Serial("Lie To Me", "en");
-
-        Studio novaFilm = new Studio("NovaFilm", "ru");
-
-        tokenService.save(new Token(supernatural, novaFilm));
-        tokenService.save(new Token(dexter, novaFilm));
-        tokenService.save(new Token(lieToMe, novaFilm));
+//        Serial walkingDead = new Serial("Walking Dead", "en");
+//        Serial gotham = new Serial("Gotham", "en");
+//        Serial americanHorrorStory = new Serial("American Horror Story", "en");
+//
+//        Studio lostFilm = new Studio("LostFilm", "ru");
+//
+//        Token token3 = new Token(walkingDead, lostFilm);
+//
+//        tokenService.save(token3);
+//        tokenService.save(new Token(gotham, lostFilm));
+//        tokenService.save(new Token(americanHorrorStory, lostFilm));
+//
+//        //NovaFilm
+//
+//        Serial supernatural = new Serial("Supernatural", "en");
+//        Serial dexter = new Serial("Dexter", "en");
+//        Serial lieToMe = new Serial("Lie To Me", "en");
+//
+//        Studio novaFilm = new Studio("NovaFilm", "ru");
+//
+//        tokenService.save(new Token(supernatural, novaFilm));
+//        tokenService.save(new Token(dexter, novaFilm));
+//        tokenService.save(new Token(lieToMe, novaFilm));
 
         /* Users */
 
@@ -106,6 +113,5 @@ public class DatabaseFiller {
 //        userService.save(stepa);
 //        userService.save(katya);
 //        userService.save(natasha);
-
     }
 }

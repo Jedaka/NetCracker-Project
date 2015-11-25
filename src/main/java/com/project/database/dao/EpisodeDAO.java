@@ -3,8 +3,6 @@ package com.project.database.dao;
 import com.project.model.Episode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Sort;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;

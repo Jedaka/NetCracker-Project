@@ -28,7 +28,7 @@ public class Episode implements Comparable<Episode> {
     private String link;
     @Type(type = "timestamp")
     @Column(name = "PUB_DATETIME")
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm")
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="s")
     private Date date;
 
     public int getId() {

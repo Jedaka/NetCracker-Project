@@ -21,18 +21,6 @@ public class Subscription {
     @ManyToOne()
     private Token token;
 
-    @ManyToOne
-    private User user;
-
-    public Subscription() {
-
-    }
-
-    //Temporary constructor
-    public Subscription(User user, Token token) {
-        this.user = user;
-        this.token = token;
-    }
 
     public int getId() {
         return id;
@@ -40,14 +28,6 @@ public class Subscription {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Token getToken() {

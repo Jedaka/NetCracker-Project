@@ -54,7 +54,7 @@ public class SubscriptionController {
         User user = userService.getCurrentUser();
         Collection<Subscription> subscriptions = user.getSubscriptions();
         for(Subscription subscription : subscriptions) {
-            if (subscription.getId() == idRequest.getId()) {
+            if (subscription.getToken().getId() == idRequest.getId()) {
                 subscriptions.remove(subscription);
                 userService.update(user);
                 return new JsonResponse(JsonResponse.Status.OK, subscription);

@@ -27,11 +27,11 @@ public class EpisodeDAO {
     }
     public List<Episode> getAllOrderByDate(){
         Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(Episode.class).addOrder(Order.desc("PUB_DATETIME")).list();
+        return session.createCriteria(Episode.class).addOrder(Order.desc("date")).list();
     }
     public List<Episode> getAllOrderByDateWhereTokenId(int token){
         Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(Episode.class).add(Restrictions.eq("TOKEN_ID", token)).addOrder(Order.desc("date")).list();
+        return session.createCriteria(Episode.class).add(Restrictions.eq("token", token)).addOrder(Order.desc("date")).list();
     }
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

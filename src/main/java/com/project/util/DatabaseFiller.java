@@ -1,6 +1,5 @@
 package com.project.util;
 
-import com.project.model.*;
 import com.project.service.ApplicationContextProvider;
 import com.project.service.TokenService;
 import com.project.service.UserService;
@@ -17,6 +16,7 @@ public class DatabaseFiller {
 
         TokenService tokenService = applicationContext.getBean("tokenService", TokenService.class);
         UserService userService = applicationContext.getBean("userService", UserService.class);
+
 
         //LostFilm
 

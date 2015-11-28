@@ -6,7 +6,7 @@ package com.project.communication;
 public class GetEpisodeRequest {
 
     private int numberOfEpisodes;
-    private int fromEpisode; // ID!!!
+    private int fromEpisode;
     private boolean isSubscribed;
 
     public int getNumberOfEpisodes() {
@@ -29,7 +29,7 @@ public class GetEpisodeRequest {
         return isSubscribed;
     }
 
-    public void setSubscribed(boolean subscribed) {
+    public void setIsSubscribed(boolean subscribed) {
         isSubscribed = subscribed;
     }
 

@@ -26,10 +26,12 @@ public class EpisodeService {
     public List<Episode> getAll() throws Exception{
         return this.episodeDAO.getAll();
     }
+
     @Transactional(readOnly = true)
-    public List<Episode> getAllOrderByDate() throws Exception{
-        return this.episodeDAO.getAllOrderByDate();
+    public List<Episode> get(int count) throws Exception{
+        return this.episodeDAO.get(count);
     }
+
     @Transactional(readOnly = true)
     public List<Episode> getAllOrderByDateWhereTokenId(int token) throws Exception{
         return this.episodeDAO.getAllOrderByDateWhereTokenId(token);

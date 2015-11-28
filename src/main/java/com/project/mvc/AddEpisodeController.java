@@ -43,22 +43,20 @@ public class AddEpisodeController {
         Iterator<AddEpisodeRequest> iterator = episodes.iterator();
         int persistedEpisodeCounter = 0;
         while (iterator.hasNext()) {
-
             AddEpisodeRequest addEpisodeRequest = iterator.next();
-
             String recievedToken = addEpisodeRequest.getToken();
+
             Token token = tokenService.findByToken(recievedToken);
             if (token == null) {
                 continue;
             }
-
             Episode episode = addEpisodeRequest.getEpisode();
             episode.setToken(token);
             try {
                 episodeService.save(episode);
                 persistedEpisodeCounter++;
             } catch (Exception e) {
-                stringBuilder.append(e);
+                stringBuilder.append(e.toString());
                 continue;
             }
         }

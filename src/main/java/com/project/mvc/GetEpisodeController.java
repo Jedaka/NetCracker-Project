@@ -31,9 +31,7 @@ public class GetEpisodeController {
     private Logger logger = Logger.getLogger(GetEpisodeController.class);
 
     @RequestMapping(value = "/episodes")
-    public
-    @ResponseBody
-    JsonResponse getEpisodes(@RequestBody GetEpisodeRequest request) {
+    public @ResponseBody JsonResponse getEpisodes(@RequestBody GetEpisodeRequest request) {
 
         int numberOfEpisodes = request.getNumberOfEpisodes();
         boolean isSubscribed = request.isSubscribed();

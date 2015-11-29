@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by jedaka on 03.11.2015.
  */
 @Entity(name = "EPISODE")
-public class Episode implements Comparable<Episode> {
+public class Episode {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EPISODE_SEQ")
     @SequenceGenerator(name="EPISODE_SEQ", sequenceName="EPISODE_SEQ",allocationSize=1)
@@ -28,7 +28,7 @@ public class Episode implements Comparable<Episode> {
     private String link;
     @Type(type = "timestamp")
     @Column(name = "PUB_DATETIME")
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="s")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MMM-yyyy, HH:mm:ss", timezone="CET")
     private Date date;
 
     public int getId() {
@@ -97,9 +97,5 @@ public class Episode implements Comparable<Episode> {
                 ", link='" + link + '\'' +
                 ", date=" + date +
                 '}';
-    }
-    @Override
-    public int compareTo(Episode o) {
-        return this.date.compareTo(o.date);
     }
 }

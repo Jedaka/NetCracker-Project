@@ -56,7 +56,7 @@ public class AddEpisodeController {
                 episodeService.save(episode);
                 persistedEpisodeCounter++;
             } catch (Exception e) {
-                stringBuilder.append(e.toString());
+                logger.warn(e.getMessage().toString());
                 continue;
             }
         }

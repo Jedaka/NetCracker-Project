@@ -10,6 +10,11 @@ import java.util.Date;
 /**
  * Created by jedaka on 03.11.2015.
  */
+@Table(
+        name="EPISODE",
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"EPISODE_NUMBER", "SEASON_NUMBER", "TOKEN_ID"})
+)
 @Entity(name = "EPISODE")
 public class Episode {
     @Id

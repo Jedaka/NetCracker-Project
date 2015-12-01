@@ -39,8 +39,6 @@ public class GetEpisodeController {
         JsonResponse jsonResponse = new JsonResponse();
         List<Episode> episodeList;
         user = userService.getCurrentUser();
-
-
         if (!isSubscribed) {
 
             try {

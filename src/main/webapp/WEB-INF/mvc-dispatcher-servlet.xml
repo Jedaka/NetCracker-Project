@@ -24,11 +24,13 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <websocket:message-broker application-destination-prefix="/app">
-        <websocket:stomp-endpoint path="/ws">
-            <websocket:sockjs/>
-        </websocket:stomp-endpoint>
-        <websocket:simple-broker prefix="/topic"/>
-    </websocket:message-broker>
+    <bean id="MyHandler" class="com.project.websockets.MyHandler" />
+    
+    <websocket:handlers>
+        <websocket:mapping path="/ws" handler="MyHandler"/>
+        <websocket:handshake-interceptors>
+            <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
 
 </beans>

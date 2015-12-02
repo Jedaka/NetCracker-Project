@@ -20,7 +20,6 @@ public class Episode {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EPISODE_SEQ")
     @SequenceGenerator(name="EPISODE_SEQ", sequenceName="EPISODE_SEQ",allocationSize=1)
-    @JsonIgnore
     private int id;
 
     @ManyToOne

@@ -37,9 +37,18 @@ public class EpisodeDAO {
         return session.createCriteria(Episode.class).addOrder(Order.desc("date")).list();
     }
 
-    public List<Episode> get(int count) {
+    public List<Episode> get(int count, int from) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(Episode.class).addOrder(Order.desc("date")).setMaxResults(count).list();
+        SQLQuery query = session.createSQLQuery("SELECT * FROM " +
+                "(SELECT  q.*, rownum r FROM " +
+                "(SELECT * FROM EPISODE " +
+                " ORDER BY PUB_DATETIME DESC)" +
+                " q )" +
+                " WHERE r BETWEEN " + from + " AND " + (count + from));
+
+        query.setResultTransformer(new EpisodeResultTransformer());
+        List<Episode> list = query.list();
+        return list;
     }
 
     public List<Episode> getAllOrderByDateWhereTokenId(int token) {

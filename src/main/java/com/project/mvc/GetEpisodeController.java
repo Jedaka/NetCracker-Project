@@ -44,7 +44,7 @@ public class GetEpisodeController {
         if (!isSubscribed) {
 
             try {
-                episodeList = episodeService.get(numberOfEpisodes);
+                episodeList = episodeService.get(numberOfEpisodes, fromEpisode);
                 jsonResponse.setStatus(JsonResponse.Status.OK);
                 jsonResponse.setMessage(episodeList);
             } catch (Exception e) {

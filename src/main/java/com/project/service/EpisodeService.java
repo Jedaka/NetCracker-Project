@@ -28,8 +28,8 @@ public class EpisodeService {
     }
 
     @Transactional(readOnly = true)
-    public List<Episode> get(int count) throws Exception{
-        return this.episodeDAO.get(count);
+    public List<Episode> get(int count, int from) throws Exception{
+        return this.episodeDAO.get(count, from);
     }
 
     @Transactional(readOnly = true)

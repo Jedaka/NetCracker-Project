@@ -10,12 +10,16 @@ import java.util.Date;
 /**
  * Created by jedaka on 03.11.2015.
  */
+@Table(
+        name="EPISODE",
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"EPISODE_NUMBER", "SEASON_NUMBER", "TOKEN_ID"})
+)
 @Entity(name = "EPISODE")
 public class Episode {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EPISODE_SEQ")
     @SequenceGenerator(name="EPISODE_SEQ", sequenceName="EPISODE_SEQ",allocationSize=1)
-    @JsonIgnore
     private int id;
 
     @ManyToOne

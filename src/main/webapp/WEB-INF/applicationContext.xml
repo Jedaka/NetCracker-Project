@@ -35,6 +35,7 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean name="TestAspect" class="com.project.aspect.ControllerAspect"/>
 
     <bean id="applicationContextProvider" class="com.project.service.ApplicationContextProvider"/>
     <bean id="userDAO" class="com.project.database.dao.UserDAO" autowire="byType"/>

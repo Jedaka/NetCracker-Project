@@ -8,6 +8,11 @@ import javax.persistence.*;
  * Created by jedaka on 03.11.2015.
  */
 
+@Table(
+        name="SERIAL",
+        uniqueConstraints=
+        @UniqueConstraint(columnNames = {"TITLE"})
+)
 @Entity(name = "SERIAL")
 public class Serial {
 

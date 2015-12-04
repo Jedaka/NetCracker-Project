@@ -17,7 +17,7 @@ public class DatabaseFiller {
         TokenService tokenService = applicationContext.getBean("tokenService", TokenService.class);
         UserService userService = applicationContext.getBean("userService", UserService.class);
 
-        System.out.println(userService.findUsersBySubscription(tokenService.get(54)));
+        System.out.println(tokenService.getSerialByToken(tokenService.get(54)));
 
         //LostFilm
 

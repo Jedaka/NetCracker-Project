@@ -6,9 +6,11 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.ResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,16 +49,51 @@ public class UserDAO {
     }
 
     public List<User> findUsersBySubscription(Token token){
-        List<User> users = new ArrayList<>();
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("EntityManager");
+        List<User> users;
+        /*EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("EntityManager");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         Query query = entityManager.createQuery("(SELECT user FROM User user WHERE user.id = " +
                 "(SELECT subs.user.id FROM Subscription subs where subs.token =" + token + "))");
-        users = query.getResultList();
+        users = query.getResultList();*/
+        Session session = sessionFactory.getCurrentSession();
+        SQLQuery sqlQuery =  session.createSQLQuery("(select * from users as user where user.id = " +
+                "(select subs.users_id from subscription as subs where subs.token_id = "+token.getToken() +"))");
+        sqlQuery.setResultTransformer(new UserResultTransformer());
+        users = sqlQuery.list();
         return users;
     }
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+    private class UserResultTransformer implements ResultTransformer {
+
+        @Override
+        public Object transformTuple(Object[] objects, String[] strings) {
+            User user = new User();
+            for (int i = 0; i < strings.length; i++) {
+                switch (strings[i]){
+                    case "ID":{
+                        user.setId(((BigDecimal) objects[i]).intValue());
+                        break;
+                    }
+                    case "EMAIL":{
+                        user.setEmail((String) objects[i]);
+                        break;
+                    }
+                    case "PASSWORD":{
+                        user.setPassword((String) objects[i]);
+                        break;
+                    }
+
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public List transformList(List list) {
+            return list;
+        }
     }
 
 }

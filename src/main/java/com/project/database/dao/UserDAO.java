@@ -1,10 +1,16 @@
 package com.project.database.dao;
 
+import com.project.model.Token;
 import com.project.model.User;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jedaka on 03.11.2015.
@@ -40,6 +46,15 @@ public class UserDAO {
         return user;
     }
 
+    public List<User> findUsersBySubscription(Token token){
+        List<User> users = new ArrayList<>();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("EntityManager");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Query query = entityManager.createQuery("(SELECT user FROM User user WHERE user.id = " +
+                "(SELECT subs.user.id FROM Subscription subs where subs.token =" + token + "))");
+        users = query.getResultList();
+        return users;
+    }
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

@@ -1,6 +1,7 @@
 package com.project.service;
 
 import com.project.database.dao.TokenDAO;
+import com.project.model.Serial;
 import com.project.model.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,9 @@ public class TokenService {
     @Transactional(readOnly = true)
     public Token findByToken(String token){
         return tokenDAO.findByToken(token);
+    }
+    public Serial getSerialByToken(Token token){
+        return tokenDAO.getSerialByToken(token);
     }
 
     public void setTokenDAO(TokenDAO tokenDAO) {

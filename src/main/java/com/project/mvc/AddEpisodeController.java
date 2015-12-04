@@ -5,15 +5,20 @@ import com.project.communication.AddEpisodesRequest;
 import com.project.communication.JsonResponse;
 import com.project.model.Episode;
 import com.project.model.Token;
+import com.project.model.User;
 import com.project.service.EpisodeService;
 import com.project.service.TokenService;
+import com.project.service.UserService;
+import com.project.util.Mail;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,6 +32,8 @@ public class AddEpisodeController {
     private TokenService tokenService;
     @Autowired
     private EpisodeService episodeService;
+    @Autowired
+    private UserService userService;
     private Logger logger = Logger.getLogger(AddEpisodeController.class);
 
     @RequestMapping(value = "/episode")
@@ -59,6 +66,15 @@ public class AddEpisodeController {
                 logger.warn(e.getMessage().toString());
                 continue;
             }
+            List<User> usersForNotification = getUsersWhereSubsIsEqualToken(token);
+            try {
+                String title = tokenService.getSerialByToken(token).getTitle();
+                mailList(usersForNotification, episode, title);
+            }catch (Exception e){
+                logger.warn(e.getMessage().toString());
+                continue;
+            }
+
         }
 
         stringBuilder.append(persistedEpisodeCounter + " persisted.");
@@ -67,6 +83,16 @@ public class AddEpisodeController {
         return response;
     }
 
+    private List<User> getUsersWhereSubsIsEqualToken(Token token){
+        List<User> users = userService.findUsersBySubscription(token);
+        return users;
+    }
+    private void mailList(List<User> users, Episode episode, String title){
+        for (int i = 0; i< users.size(); i++){
+            Mail mail = new Mail(users.get(i).getEmail());
+            mail.send(episode, title);
+        }
+    }
     public void setTokenService(TokenService tokenService) {
         this.tokenService = tokenService;
     }

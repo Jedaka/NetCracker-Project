@@ -2,7 +2,9 @@ package com.project.mvc;
 
 import com.project.communication.GetEpisodeRequest;
 import com.project.communication.JsonResponse;
+import com.project.database.dao.UserDAO;
 import com.project.model.Episode;
+import com.project.model.Token;
 import com.project.model.User;
 import com.project.service.EpisodeService;
 import com.project.service.UserService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,4 +79,5 @@ public class GetEpisodeController {
         }
         return jsonResponse;
     }
+
 }

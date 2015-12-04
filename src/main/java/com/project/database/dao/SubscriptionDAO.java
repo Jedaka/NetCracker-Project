@@ -3,6 +3,7 @@ package com.project.database.dao;
 import com.project.model.Subscription;
 import com.project.model.Token;
 import com.project.model.User;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -37,4 +38,6 @@ public class SubscriptionDAO {
         Session session = sessionFactory.getCurrentSession();
         return (Subscription) session.createCriteria(Subscription.class).add(Restrictions.eq("user_id", user.getId())).add(Restrictions.eq("token_id", token.getId())).uniqueResult();
     }
+
+
 }

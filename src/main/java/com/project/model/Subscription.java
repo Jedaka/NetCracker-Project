@@ -1,6 +1,8 @@
 package com.project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -17,6 +19,19 @@ public class Subscription {
 
     @ManyToOne()
     private Token token;
+
+    @ManyToOne
+    @JoinColumn(name = "USERS_ID", updatable = false, insertable = false)
+    @JsonIgnore
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Subscription() {
 

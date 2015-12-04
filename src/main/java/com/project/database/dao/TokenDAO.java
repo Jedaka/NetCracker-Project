@@ -1,5 +1,6 @@
 package com.project.database.dao;
 
+import com.project.model.Serial;
 import com.project.model.Token;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,6 +31,10 @@ public class TokenDAO {
         return session.createCriteria(Token.class).list();
     }
 
+    public Serial getSerialByToken(Token token){
+        Session session = sessionFactory.getCurrentSession();
+        return (Serial) session.createCriteria(Token.class).add(Restrictions.eq("token", token)).uniqueResult();
+    }
     public Token read(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Token.class, id);

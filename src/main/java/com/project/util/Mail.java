@@ -18,12 +18,21 @@ public class Mail {
     private TokenService tokenService;
 
     private static final String FROM = "notification.netserials@mail.ru";
-    private static final String HOST = "localhost";
+    private static final String PASSWORD = "netcrackerproject";
+    private static final String HOST = "smtp.mail.ru";
+    private static final String PORT = "587";
     private static final Properties PROPERTIES = System.getProperties();
     private static final Session SESSION;
     static {
-        PROPERTIES.setProperty("mail.smtp.host", HOST);
-        SESSION = Session.getDefaultInstance(PROPERTIES);
+        PROPERTIES.put("mail.smtp.host", HOST);
+        PROPERTIES.put("mail.smtp.starttls.enable", "true");
+        PROPERTIES.put("mail.smtp.auth", "true");
+        PROPERTIES.put("mail.smtp.port", PORT);
+        SESSION = Session.getInstance(PROPERTIES, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(FROM, PASSWORD);
+            }
+        });
     }
     private final String to;
 
@@ -34,7 +43,7 @@ public class Mail {
         try{
             MimeMessage message = new MimeMessage(SESSION);
             message.setFrom(new InternetAddress(FROM));
-            message.setRecipients(Message.RecipientType.TO, to);
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject("Вышла новая серия", "UTF-8");
             message.setText("Cериал + \"" + title + "\" " +
                     "S" + episode.getSeasonNumber() +
@@ -42,10 +51,20 @@ public class Mail {
                     "Link: " + episode.getLink()
             );
             Transport.send(message);
-            System.out.println("Отправлено!");
+            System.out.println("Notification has been sent!");
         }catch (MessagingException e){
             e.printStackTrace();
         }
     }
+
+//    public static void main(String[] args) {
+//        Mail mail = new Mail("maksim_larin@mail.ru");
+//        Episode episode = new Episode();
+//        episode.setId(1);
+//        episode.setEpisodeNumber(1);
+//        episode.setSeasonNumber(2);
+//        episode.setLink("www.mail.ru");
+//        mail.send(episode, "test");
+//    }
 
 }

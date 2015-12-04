@@ -69,11 +69,12 @@ public class AddEpisodeController {
             List<User> usersForNotification = getUsersWhereSubsIsEqualToken(token);
             try {
                 String title = tokenService.getSerialByToken(token).getTitle();
-                mailList(usersForNotification, episode, title);
+                sentMails(usersForNotification, episode, title);
             }catch (Exception e){
                 logger.warn(e.getMessage().toString());
                 continue;
             }
+
 
         }
 
@@ -87,7 +88,7 @@ public class AddEpisodeController {
         List<User> users = userService.findUsersBySubscription(token);
         return users;
     }
-    private void mailList(List<User> users, Episode episode, String title){
+    private void sentMails(List<User> users, Episode episode, String title){
         for (int i = 0; i< users.size(); i++){
             Mail mail = new Mail(users.get(i).getEmail());
             mail.send(episode, title);

@@ -9,9 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.ResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,8 +54,8 @@ public class UserDAO {
                 "(SELECT subs.user.id FROM Subscription subs where subs.token =" + token + "))");
         users = query.getResultList();*/
         Session session = sessionFactory.getCurrentSession();
-        SQLQuery sqlQuery =  session.createSQLQuery("(select * from users as user where user.id = " +
-                "(select subs.users_id from subscription as subs where subs.token_id = "+token.getToken() +"))");
+        SQLQuery sqlQuery =  session.createSQLQuery("select * from users u where u.id = " +
+                "(select subs.users_id from subscription subs where subs.token_id = "+ token.getId() +")");
         sqlQuery.setResultTransformer(new UserResultTransformer());
         users = sqlQuery.list();
         return users;
@@ -66,7 +64,6 @@ public class UserDAO {
         this.sessionFactory = sessionFactory;
     }
     private class UserResultTransformer implements ResultTransformer {
-
         @Override
         public Object transformTuple(Object[] objects, String[] strings) {
             User user = new User();
@@ -87,7 +84,7 @@ public class UserDAO {
 
                 }
             }
-            return null;
+            return user;
         }
 
         @Override

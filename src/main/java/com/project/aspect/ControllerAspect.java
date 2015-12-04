@@ -2,10 +2,7 @@ package com.project.aspect;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 
 /**
  * Created by jedaka on 10.11.2015.
@@ -42,6 +39,13 @@ public class ControllerAspect {
         logger = Logger.getLogger(joinPoint.getTarget().getClass());
         logger.info(joinPoint.getSignature().toShortString() + " | Return: " + returnValue.toString());
 
+    }
+
+    @AfterThrowing(value = "controllerPointCut()", throwing = "e")
+    public void controllerAdviceAfterThrowing(JoinPoint joinPoint, Throwable e){
+        logger = Logger.getLogger(joinPoint.getTarget().getClass());
+        logger.warn(joinPoint.getSignature().toShortString() + " | Throws: " + e.getMessage());
+        e.printStackTrace();
     }
 
     @Pointcut("execution(* com.project.mvc.*.*(..))")

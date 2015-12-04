@@ -54,7 +54,7 @@ public class UserDAO {
                 "(SELECT subs.user.id FROM Subscription subs where subs.token =" + token + "))");
         users = query.getResultList();*/
         Session session = sessionFactory.getCurrentSession();
-        SQLQuery sqlQuery =  session.createSQLQuery("select * from users u where u.id = " +
+        SQLQuery sqlQuery =  session.createSQLQuery("select * from users u where u.id in " +
                 "(select subs.users_id from subscription subs where subs.token_id = "+ token.getId() +")");
         sqlQuery.setResultTransformer(new UserResultTransformer());
         users = sqlQuery.list();

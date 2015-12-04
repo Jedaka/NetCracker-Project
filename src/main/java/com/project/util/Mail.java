@@ -1,12 +1,11 @@
 package com.project.util;
 
 import com.project.model.Episode;
-import com.project.model.Token;
-import com.project.service.TokenService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.log4j.Logger;
 
 import javax.mail.*;
-import javax.mail.internet.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 /**
@@ -21,6 +20,7 @@ public class Mail {
     private static final String PORT = "587";
     private static final Properties PROPERTIES = System.getProperties();
     private static final Session SESSION;
+    private static final Logger logger = Logger.getLogger(Mail.class);
     static {
         PROPERTIES.put("mail.smtp.host", HOST);
         PROPERTIES.put("mail.smtp.starttls.enable", "true");
@@ -49,20 +49,11 @@ public class Mail {
                     "Link: " + episode.getLink()
             );
             Transport.send(message);
-            System.out.println("Notification has been sent!");
+            logger.info("Notification about new episode of " + title + " has been sent to " + to);
+
         }catch (MessagingException e){
-            e.printStackTrace();
+            logger.warn(e.getMessage());
         }
     }
-
-//    public static void main(String[] args) {
-//        Mail mail = new Mail("maksim_larin@mail.ru");
-//        Episode episode = new Episode();
-//        episode.setId(1);
-//        episode.setEpisodeNumber(1);
-//        episode.setSeasonNumber(2);
-//        episode.setLink("www.mail.ru");
-//        mail.send(episode, "test");
-//    }
 
 }

@@ -1,5 +1,6 @@
 package com.project.util;
 
+import com.project.model.Episode;
 import com.project.service.ApplicationContextProvider;
 import com.project.service.TokenService;
 import com.project.service.UserService;
@@ -17,6 +18,13 @@ public class DatabaseFiller {
         TokenService tokenService = applicationContext.getBean("tokenService", TokenService.class);
         UserService userService = applicationContext.getBean("userService", UserService.class);
 
+        Episode episode = new Episode();
+        episode.setLink("adsadsa");
+        episode.setSeasonNumber(1);
+        episode.setEpisodeNumber(4);
+        System.out.println("Episode create");
+        Mail mail = new Mail("calomonbkm@gmail.com");
+        mail.send(episode, "Title");
 
         //LostFilm
 

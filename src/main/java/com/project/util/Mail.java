@@ -14,8 +14,6 @@ import java.util.Properties;
  */
 public class Mail {
 
-    @Autowired
-    private TokenService tokenService;
 
     private static final String FROM = "notification.netserials@mail.ru";
     private static final String PASSWORD = "netcrackerproject";

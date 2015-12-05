@@ -31,8 +31,6 @@ public class AddEpisodeController {
     @Autowired
     private TokenService tokenService;
     @Autowired
-    private SerialService serialService;
-    @Autowired
     private EpisodeService episodeService;
     @Autowired
     private UserService userService;
@@ -53,9 +51,9 @@ public class AddEpisodeController {
         int persistedEpisodeCounter = 0;
         while (iterator.hasNext()) {
             AddEpisodeRequest addEpisodeRequest = iterator.next();
-            String recievedToken = addEpisodeRequest.getToken();
+            String receivedToken = addEpisodeRequest.getToken();
 
-            Token token = tokenService.findByToken(recievedToken);
+            Token token = tokenService.findByToken(receivedToken);
             if (token == null) {
                 continue;
             }
@@ -71,7 +69,7 @@ public class AddEpisodeController {
             String title = addEpisodeRequest.getSerialTitle();
             List<User> usersForNotification = getUsersWhereSubsIsEqualToken(token);
             try {
-                sentMails(usersForNotification, episode, title);
+                sendMails(usersForNotification, episode, title);
             }catch (Exception e){
                 logger.warn(e.getMessage().toString());
                 continue;
@@ -88,7 +86,7 @@ public class AddEpisodeController {
         List<User> users = userService.findUsersBySubscription(token);
         return users;
     }
-    private void sentMails(List<User> users, Episode episode, String title){
+    private void sendMails(List<User> users, Episode episode, String title){
         String[] internetAddresses = new String[users.size()];
         for (int i = 0; i< users.size(); i++){
             internetAddresses[i] = users.get(i).getEmail();

@@ -15,7 +15,7 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        webSocketHandlerRegistry.addHandler(new WSHandler(), "/test").setHandshakeHandler(new DefaultHandshakeHandler());
+        webSocketHandlerRegistry.addHandler(new ConnectHandler(), "/connect").setAllowedOrigins("*").setHandshakeHandler(new DefaultHandshakeHandler());
     }
 
 }

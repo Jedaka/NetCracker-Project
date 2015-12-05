@@ -45,4 +45,6 @@
     <bean id="episodeDAO" class="com.project.database.dao.EpisodeDAO" autowire="byType"/>
     <bean id="episodeService" class="com.project.service.EpisodeService" autowire="byName"/>
     <bean id="subscriptionDAO" class="com.project.database.dao.SubscriptionDAO" autowire="byType"/>
+
+    <bean id="SessionStore" class="com.project.websockets.store.WebSocketSessionStore" />
 </beans>

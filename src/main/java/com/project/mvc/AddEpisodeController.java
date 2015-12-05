@@ -7,6 +7,7 @@ import com.project.model.Episode;
 import com.project.model.Token;
 import com.project.service.EpisodeService;
 import com.project.service.TokenService;
+import com.project.websockets.store.WebSocketSessionStore;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,8 @@ public class AddEpisodeController {
     private TokenService tokenService;
     @Autowired
     private EpisodeService episodeService;
+    @Autowired
+    private WebSocketSessionStore sessionStore;
     private Logger logger = Logger.getLogger(AddEpisodeController.class);
 
     @RequestMapping(value = "/episode")

@@ -24,14 +24,6 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="MyHandler" class="com.project.websockets.MyHandler" />
-    <bean class="com.project.websockets.TestController"/>
-    <bean class="com.project.websockets.WebSocketConfig"/>
-    <websocket:handlers>
-        <websocket:mapping path="/ws" handler="MyHandler"/>
-        <websocket:handshake-interceptors>
-            <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
-        </websocket:handshake-interceptors>
-    </websocket:handlers>
+    <bean class="com.project.websockets.WebSocketConfiguration" name="WSConfig"/>
 
 </beans>

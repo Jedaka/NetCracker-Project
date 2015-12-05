@@ -4,9 +4,11 @@ import com.project.communication.AddEpisodeRequest;
 import com.project.communication.AddEpisodesRequest;
 import com.project.communication.JsonResponse;
 import com.project.model.Episode;
+import com.project.model.Serial;
 import com.project.model.Token;
 import com.project.model.User;
 import com.project.service.EpisodeService;
+import com.project.service.SerialService;
 import com.project.service.TokenService;
 import com.project.service.UserService;
 import com.project.util.Mail;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +33,8 @@ public class AddEpisodeController {
 
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private SerialService serialService;
     @Autowired
     private EpisodeService episodeService;
     @Autowired
@@ -67,7 +73,7 @@ public class AddEpisodeController {
             }
             List<User> usersForNotification = getUsersWhereSubsIsEqualToken(token);
             try {
-                String title = tokenService.getSerialByToken(token).getTitle();
+                String title = serialService.getSerialByToken(token).getTitle();
                 sentMails(usersForNotification, episode, title);
             }catch (Exception e){
                 logger.warn(e.getMessage().toString());
@@ -86,10 +92,20 @@ public class AddEpisodeController {
         return users;
     }
     private void sentMails(List<User> users, Episode episode, String title){
+        String[] internetAddresses = new String[users.size()];
         for (int i = 0; i< users.size(); i++){
-            Mail mail = new Mail(users.get(i).getEmail());
-            mail.send(episode, title);
+            internetAddresses[i] = users.get(i).getEmail();
         }
+        Mail mail = null;
+        try {
+            mail = new Mail(internetAddresses);
+            logger.info("All emails are correct");
+        } catch (AddressException e) {
+            e.printStackTrace();
+            logger.warn(e.getMessage() + "There is incorrect emails");
+
+        }
+        mail.send(episode, title);
     }
     public void setTokenService(TokenService tokenService) {
         this.tokenService = tokenService;

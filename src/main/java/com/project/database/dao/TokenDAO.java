@@ -31,10 +31,7 @@ public class TokenDAO {
         return session.createCriteria(Token.class).list();
     }
 
-    public Serial getSerialByToken(Token token){
-        Session session = sessionFactory.getCurrentSession();
-        return ((Token) session.createCriteria(Token.class).add(Restrictions.eq("token", token.getToken())).uniqueResult()).getSerial();
-    }
+
     public Token read(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Token.class, id);

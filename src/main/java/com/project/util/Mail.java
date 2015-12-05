@@ -4,6 +4,7 @@ import com.project.model.Episode;
 import org.apache.log4j.Logger;
 
 import javax.mail.*;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -32,16 +33,20 @@ public class Mail {
             }
         });
     }
-    private final String to;
+    private final InternetAddress[] to;
 
-    public Mail(String to){
-        this.to = to;
+    public Mail(String[] to) throws AddressException {
+        this.to = new InternetAddress[to.length];
+        for (int i = 0; i < to.length; i++) {
+            this.to[i] = new InternetAddress(to[i]);
+        }
     }
     public void send(Episode episode, String title){
+        
         try{
             MimeMessage message = new MimeMessage(SESSION);
             message.setFrom(new InternetAddress(FROM));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setRecipients(Message.RecipientType.TO, to);
             message.setSubject("Вышла новая серия", "UTF-8");
             message.setText("Cериал + \"" + title + "\" " +
                     "S" + episode.getSeasonNumber() +

@@ -45,9 +45,7 @@ public class TokenService {
     public Token findByToken(String token){
         return tokenDAO.findByToken(token);
     }
-    public Serial getSerialByToken(Token token){
-        return tokenDAO.getSerialByToken(token);
-    }
+
 
     public void setTokenDAO(TokenDAO tokenDAO) {
         this.tokenDAO = tokenDAO;

@@ -7,7 +7,6 @@ import com.project.model.Episode;
 import com.project.model.Token;
 import com.project.model.User;
 import com.project.service.EpisodeService;
-import com.project.service.SerialService;
 import com.project.service.TokenService;
 import com.project.service.UserService;
 import com.project.util.Mail;

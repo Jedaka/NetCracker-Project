@@ -1,6 +1,5 @@
 package com.project.database.dao;
 
-import com.project.model.Serial;
 import com.project.model.Token;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

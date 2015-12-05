@@ -6,8 +6,10 @@ import com.project.communication.JsonResponse;
 import com.project.model.Episode;
 import com.project.model.Token;
 import com.project.model.User;
+import com.project.notification.Mail;
 import com.project.service.EpisodeService;
 import com.project.service.TokenService;
+import com.project.service.UserService;
 import com.project.service.WebSocketMessageService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class AddEpisodeController {
     private EpisodeService episodeService;
     @Autowired
     private WebSocketMessageService messageService;
+    @Autowired
+    private UserService userService;
 
     private Logger logger = Logger.getLogger(AddEpisodeController.class);
 
@@ -78,6 +82,7 @@ public class AddEpisodeController {
         }
 
         stringBuilder.append(persistedEpisodeCounter + " persisted.");
+
         response.setStatus(JsonResponse.Status.OK);
         response.setMessage(stringBuilder.toString());
         return response;
@@ -87,6 +92,7 @@ public class AddEpisodeController {
         List<User> users = userService.findUsersBySubscription(token);
         return users;
     }
+
     private void sendMails(List<User> users, Episode episode, String title){
         String[] internetAddresses = new String[users.size()];
         for (int i = 0; i< users.size(); i++){
@@ -103,6 +109,7 @@ public class AddEpisodeController {
         }
         mail.send(episode, title);
     }
+
     public void setTokenService(TokenService tokenService) {
         this.tokenService = tokenService;
     }
@@ -113,5 +120,9 @@ public class AddEpisodeController {
 
     public void setMessageService(WebSocketMessageService messageService) {
         this.messageService = messageService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

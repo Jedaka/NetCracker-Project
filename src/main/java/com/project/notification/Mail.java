@@ -7,6 +7,7 @@ import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -54,7 +55,7 @@ public class Mail {
                     "Link: " + episode.getLink()
             );
             Transport.send(message);
-            logger.info("Notification about new episode of " + title + " has been sent to " + to);
+            logger.info("Notification about new episode of " + title + " has been sent to " + Arrays.toString(to));
 
         }catch (MessagingException e){
             logger.warn(e.getMessage());

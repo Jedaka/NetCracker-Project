@@ -61,24 +61,32 @@ public class AddEpisodeController {
             if (token == null) {
                 continue;
             }
+
             Episode episode = addEpisodeRequest.getEpisode();
             episode.setToken(token);
+
             try {
                 episodeService.save(episode);
-                messageService.sendEpisodeToConnectedUsers(episode);
                 persistedEpisodeCounter++;
             } catch (Exception e) {
-                logger.warn(e.getMessage().toString());
+                logger.warn("Exception while persisting episode has occurred " + e.getMessage());
                 continue;
             }
-            String title = addEpisodeRequest.getSerialTitle();
-            List<User> usersForNotification = getUsersWhereSubsIsEqualToken(token);
+
             try {
-                sendMails(usersForNotification, episode, title);
+                messageService.sendEpisodeToConnectedUsers(episode);
+            } catch (Exception e) {
+                logger.warn("Exception while sending to websockets has occurred: " + e.getMessage());
+            }
+
+            try {
+                List<User> usersForNotification = getUsersWhereSubsIsEqualToken(token);
+                sendMails(usersForNotification, episode, token.getSerial().getTitle());
             }catch (Exception e){
-                logger.warn(e.getMessage().toString());
+                logger.warn("Exception while sending to emails has occurred: " + e.getMessage().toString());
                 continue;
             }
+
         }
 
         stringBuilder.append(persistedEpisodeCounter + " persisted.");

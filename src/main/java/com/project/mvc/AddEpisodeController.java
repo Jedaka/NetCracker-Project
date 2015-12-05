@@ -34,7 +34,7 @@ public class AddEpisodeController {
     @Autowired
     private EpisodeService episodeService;
     @Autowired
-    private WebSocketMessageService messageService;
+    private WebSocketMessageService webSocketMessageService;
     @Autowired
     private UserService userService;
 
@@ -74,7 +74,7 @@ public class AddEpisodeController {
             }
 
             try {
-                messageService.sendEpisodeToConnectedUsers(episode);
+                webSocketMessageService.sendEpisodeToConnectedUsers(episode);
             } catch (Exception e) {
                 logger.warn("Exception while sending to websockets has occurred: " + e.getMessage());
             }
@@ -126,8 +126,8 @@ public class AddEpisodeController {
         this.episodeService = episodeService;
     }
 
-    public void setMessageService(WebSocketMessageService messageService) {
-        this.messageService = messageService;
+    public void setWebSocketMessageService(WebSocketMessageService webSocketMessageService) {
+        this.webSocketMessageService = webSocketMessageService;
     }
 
     public void setUserService(UserService userService) {

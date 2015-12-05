@@ -48,11 +48,6 @@ public class UserDAO {
 
     public List<User> findUsersBySubscription(Token token){
         List<User> users;
-        /*EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("EntityManager");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        Query query = entityManager.createQuery("(SELECT user FROM User user WHERE user.id = " +
-                "(SELECT subs.user.id FROM Subscription subs where subs.token =" + token + "))");
-        users = query.getResultList();*/
         Session session = sessionFactory.getCurrentSession();
         SQLQuery sqlQuery =  session.createSQLQuery("select * from users u where u.id in " +
                 "(select subs.users_id from subscription subs where subs.token_id = "+ token.getId() +")");

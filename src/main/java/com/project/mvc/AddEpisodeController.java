@@ -5,15 +5,21 @@ import com.project.communication.AddEpisodesRequest;
 import com.project.communication.JsonResponse;
 import com.project.model.Episode;
 import com.project.model.Token;
+import com.project.model.User;
+import com.project.notification.Mail;
 import com.project.service.EpisodeService;
 import com.project.service.TokenService;
+import com.project.service.UserService;
+import com.project.service.WebSocketMessageService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.internet.AddressException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,6 +33,11 @@ public class AddEpisodeController {
     private TokenService tokenService;
     @Autowired
     private EpisodeService episodeService;
+    @Autowired
+    private WebSocketMessageService messageService;
+    @Autowired
+    private UserService userService;
+
     private Logger logger = Logger.getLogger(AddEpisodeController.class);
 
     @RequestMapping(value = "/episode")
@@ -44,9 +55,9 @@ public class AddEpisodeController {
         int persistedEpisodeCounter = 0;
         while (iterator.hasNext()) {
             AddEpisodeRequest addEpisodeRequest = iterator.next();
-            String recievedToken = addEpisodeRequest.getToken();
+            String receivedToken = addEpisodeRequest.getToken();
 
-            Token token = tokenService.findByToken(recievedToken);
+            Token token = tokenService.findByToken(receivedToken);
             if (token == null) {
                 continue;
             }
@@ -54,17 +65,49 @@ public class AddEpisodeController {
             episode.setToken(token);
             try {
                 episodeService.save(episode);
+                messageService.sendEpisodeToConnectedUsers(episode);
                 persistedEpisodeCounter++;
             } catch (Exception e) {
+                logger.warn(e.getMessage().toString());
+                continue;
+            }
+            String title = addEpisodeRequest.getSerialTitle();
+            List<User> usersForNotification = getUsersWhereSubsIsEqualToken(token);
+            try {
+                sendMails(usersForNotification, episode, title);
+            }catch (Exception e){
                 logger.warn(e.getMessage().toString());
                 continue;
             }
         }
 
         stringBuilder.append(persistedEpisodeCounter + " persisted.");
+
         response.setStatus(JsonResponse.Status.OK);
         response.setMessage(stringBuilder.toString());
         return response;
+    }
+
+    private List<User> getUsersWhereSubsIsEqualToken(Token token){
+        List<User> users = userService.findUsersBySubscription(token);
+        return users;
+    }
+
+    private void sendMails(List<User> users, Episode episode, String title){
+        String[] internetAddresses = new String[users.size()];
+        for (int i = 0; i< users.size(); i++){
+            internetAddresses[i] = users.get(i).getEmail();
+        }
+        Mail mail = null;
+        try {
+            mail = new Mail(internetAddresses);
+            logger.info("All emails are correct");
+        } catch (AddressException e) {
+            e.printStackTrace();
+            logger.warn(e.getMessage() + "There is incorrect emails");
+
+        }
+        mail.send(episode, title);
     }
 
     public void setTokenService(TokenService tokenService) {
@@ -73,5 +116,13 @@ public class AddEpisodeController {
 
     public void setEpisodeService(EpisodeService episodeService) {
         this.episodeService = episodeService;
+    }
+
+    public void setMessageService(WebSocketMessageService messageService) {
+        this.messageService = messageService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

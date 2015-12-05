@@ -8,6 +8,7 @@ import com.project.model.User;
 import com.project.service.TokenService;
 import com.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +27,12 @@ public class SubscriptionController {
 
     @Autowired
     TokenService tokenService;
+
+    @RequestMapping(value= "/web")
+    @SendTo("/wow")
+    public String wow() {
+        return "WebSocket";
+    }
 
     @RequestMapping(value = "/getTokens", method = RequestMethod.GET)
     public JsonResponse getTokens() {

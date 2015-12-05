@@ -5,13 +5,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 
-
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-        <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
-        <property name="username" value="maxim" />
-        <property name="password" value="qwerty" />
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+        <property name="username" value="maxim"/>
+        <property name="password" value="qwerty"/>
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -23,18 +22,19 @@
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
-        <property name="packagesToScan" value="com.project.model" />
+        <property name="packagesToScan" value="com.project.model"/>
     </bean>
 
-    <tx:annotation-driven  transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="dataSource" ref="dataSource" />
-        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="dataSource" ref="dataSource"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="TestAspect" class="com.project.aspect.ControllerAspect"/>
 
     <bean id="applicationContextProvider" class="com.project.service.ApplicationContextProvider"/>
     <bean id="userDAO" class="com.project.database.dao.UserDAO" autowire="byType"/>
@@ -44,4 +44,9 @@
     <bean id="episodeDAO" class="com.project.database.dao.EpisodeDAO" autowire="byType"/>
     <bean id="episodeService" class="com.project.service.EpisodeService" autowire="byName"/>
     <bean id="subscriptionDAO" class="com.project.database.dao.SubscriptionDAO" autowire="byType"/>
+    <bean id="sessionStore" class="com.project.websockets.store.WebSocketSessionStore"/>
+    <bean id="webSocketMessageService" class="com.project.service.WebSocketMessageService">
+        <property name="sessionStore" ref="sessionStore"/>
+    </bean>
+
 </beans>

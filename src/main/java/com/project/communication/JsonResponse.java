@@ -5,6 +5,8 @@ package com.project.communication;
  */
 public class JsonResponse<T> {
 
+
+
     public enum Status {
         OK, ERROR
     }
@@ -42,5 +44,21 @@ public class JsonResponse<T> {
                 "status=" + status +
                 ", message=" + message +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        JsonResponse<?> that = (JsonResponse<?>) o;
+
+        return status == that.status;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return status.hashCode();
     }
 }

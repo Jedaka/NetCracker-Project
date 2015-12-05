@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 /**
  * Created by jedaka on 03.11.2015.
+ *
  */
 @Entity(name = "STUDIO")
 public class Studio {

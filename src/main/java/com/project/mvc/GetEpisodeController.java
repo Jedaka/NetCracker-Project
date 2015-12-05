@@ -1,6 +1,6 @@
 package com.project.mvc;
 
-import com.project.communication.GetEpisodeRequest;
+import com.project.communication.GetEpisodesRequest;
 import com.project.communication.JsonResponse;
 import com.project.model.Episode;
 import com.project.model.User;
@@ -31,7 +31,7 @@ public class GetEpisodeController {
     private Logger logger = Logger.getLogger(GetEpisodeController.class);
 
     @RequestMapping(value = "/episodes")
-    public @ResponseBody JsonResponse getEpisodes(@RequestBody GetEpisodeRequest request) {
+    public @ResponseBody JsonResponse getEpisodes(@RequestBody GetEpisodesRequest request) {
 
         int numberOfEpisodes = request.getNumberOfEpisodes();
         boolean isSubscribed = request.isSubscribed();

@@ -9,7 +9,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Created by jedaka on 03.11.2015.
+ *
+ */
 @Entity(name = "USERS")
 public class User {
 

@@ -8,7 +8,6 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.ResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +19,7 @@ import java.util.List;
 
 /**
  * Created by jedaka on 17.11.2015.
+ *
  */
 @Repository
 public class EpisodeDAO {
@@ -39,6 +39,14 @@ public class EpisodeDAO {
         return session.createCriteria(Episode.class).addOrder(Order.desc("date")).list();
     }
 
+    /**
+     *
+     * Return list of episodes in interval from (from) to (from+count) sorted by date
+     *
+     * @param count       number of episodes
+     * @param from        episode to get from
+     * @return            list
+     */
     public List<Episode> get(int count, int from) {
         Session session = sessionFactory.getCurrentSession();
         SQLQuery query = session.createSQLQuery("SELECT * FROM " +
@@ -53,11 +61,17 @@ public class EpisodeDAO {
         return list;
     }
 
-    public List<Episode> getAllOrderByDateWhereTokenId(int token) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(Episode.class).add(Restrictions.eq("token", token)).addOrder(Order.desc("date")).list();
-    }
 
+    /**
+     *
+     * Return list of episodes in interval from (from) to (from+count) sorted by date for certain user
+     *
+     *
+     * @param user
+     * @param count  number of episodes
+     * @param from   episode to get from
+     * @return       list
+     */
     public List<Episode> getEpisodesForUser(User user, int count, int from) {
         Session session = sessionFactory.getCurrentSession();
         String email = user.getEmail();
@@ -83,6 +97,11 @@ public class EpisodeDAO {
         this.tokenService = tokenService;
     }
 
+    /**
+     *
+     *  Transform query result to object
+     *
+     */
     private class EpisodeResultTransformer implements ResultTransformer {
         @Override
         public Object transformTuple(Object[] objects, String[] strings) {

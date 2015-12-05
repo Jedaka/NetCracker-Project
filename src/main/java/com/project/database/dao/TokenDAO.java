@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by jedaka on 12.11.2015.
+ *
  */
 @Repository
 public class TokenDAO {

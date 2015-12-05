@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * Created by jedaka on 03.11.2015.
+ *
  */
 @Table(
         name="EPISODE",

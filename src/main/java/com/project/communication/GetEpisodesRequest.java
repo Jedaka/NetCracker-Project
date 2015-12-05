@@ -1,12 +1,29 @@
 package com.project.communication;
 
 /**
- * Created by jedaka on 23.11.2015.
+ *  Created by jedaka on 23.11.2015.
+ *
+ *  Request that send client to server to get episodes
+ *
  */
-public class GetEpisodeRequest {
+public class GetEpisodesRequest {
 
+    /**
+     * Number of episodes to get
+     */
     private int numberOfEpisodes;
+
+    /**
+     * From what episode client wants to get define number of episodes
+     *
+     * @see #numberOfEpisodes
+     */
     private int fromEpisode;
+
+    /**
+     * if true get subscribed user episodes
+     * else get episodes from general pool
+     */
     private boolean isSubscribed;
 
     public int getNumberOfEpisodes() {

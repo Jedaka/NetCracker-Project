@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by jedaka on 03.11.2015.
+ *
  */
 @Repository
 public class UserDAO {
@@ -48,6 +49,12 @@ public class UserDAO {
         return user;
     }
 
+    /**
+     * Return list of users who follow certain token
+     *
+     * @param token
+     * @return
+     */
     public List<User> findUsersBySubscription(Token token){
         List<User> users;
         Session session = sessionFactory.getCurrentSession();
@@ -60,6 +67,12 @@ public class UserDAO {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;;
     }
+
+    /**
+     *
+     * Transform result of query to object
+     *
+     */
     private class UserResultTransformer implements ResultTransformer {
         @Override
         public Object transformTuple(Object[] objects, String[] strings) {

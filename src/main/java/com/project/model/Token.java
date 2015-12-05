@@ -8,6 +8,12 @@ import java.util.UUID;
 
 /**
  * Created by jedaka on 03.11.2015.
+ *
+ * Special entity that present relation between Serial and Studio entities
+ *
+ * @see Serial
+ * @see Studio
+ *
  */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"serial_id", "studio_id"}))
@@ -18,6 +24,11 @@ public class Token {
     @SequenceGenerator(name = "TOKEN_SEQ", sequenceName = "TOKEN_SEQ", allocationSize = 1)
     private int id;
 
+    /**
+     * String contains UUID that uniquely identifies entity
+     * Using in parser's requests
+     *
+     */
     @JsonIgnore
     private String token = UUID.randomUUID().toString();
 

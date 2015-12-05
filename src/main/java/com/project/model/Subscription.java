@@ -1,12 +1,11 @@
 package com.project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 /**
  * Created by jedaka on 03.11.2015.
+ *
  */
 @Entity(name = "SUBSCRIPTION")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"token_id", "users_id"}))
@@ -19,19 +18,6 @@ public class Subscription {
 
     @ManyToOne()
     private Token token;
-
-    @ManyToOne
-    @JoinColumn(name = "USERS_ID", updatable = false, insertable = false)
-    @JsonIgnore
-    private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public Subscription() {
 

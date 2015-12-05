@@ -12,6 +12,12 @@ public class ControllerAspect {
 
     private Logger logger;
 
+    /**
+     * Logging logic before executing method's body.
+     * Log method arguments
+     *
+     * @param joinPoint method's information
+     */
     @Before(value = "controllerPointCut()")
     public void controllerAdviceBefore(JoinPoint joinPoint){
 
@@ -34,6 +40,13 @@ public class ControllerAspect {
 
     }
 
+    /**
+     * Logging logic after executing method's body
+     * Log method return value
+     *
+     * @param joinPoint method's information
+     * @param returnValue return value
+     */
     @AfterReturning(value =  "controllerPointCut()", returning = "returnValue")
     public void controllerAdviceAfter(JoinPoint joinPoint, Object returnValue){
         logger = Logger.getLogger(joinPoint.getTarget().getClass());
@@ -41,6 +54,14 @@ public class ControllerAspect {
 
     }
 
+    /**
+     *
+     * Logging logic in case of exception
+     * Log exception
+     *
+     * @param joinPoint method's information
+     * @param e exception
+     */
     @AfterThrowing(value = "controllerPointCut()", throwing = "e")
     public void controllerAdviceAfterThrowing(JoinPoint joinPoint, Throwable e){
         logger = Logger.getLogger(joinPoint.getTarget().getClass());
@@ -48,6 +69,11 @@ public class ControllerAspect {
         e.printStackTrace();
     }
 
+    /**
+     *
+     * Pointcut where advice take place
+     *
+     */
     @Pointcut("execution(* com.project.mvc.*.*(..))")
     public void controllerPointCut(){}
 

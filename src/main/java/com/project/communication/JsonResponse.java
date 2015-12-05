@@ -2,6 +2,10 @@ package com.project.communication;
 
 /**
  * Created by vganshin on 12.11.15.
+ *
+ * Template of server's response
+ *
+ * @param <T> type of message
  */
 public class JsonResponse<T> {
 
@@ -9,7 +13,14 @@ public class JsonResponse<T> {
         OK, ERROR
     }
 
+    /**
+     * Status of the client's request
+     */
     private Status status;
+
+    /**
+     * Object that will be serialize and send to the client
+     */
     private T message;
 
     public JsonResponse() {

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Created by vganshin on 23.11.15.
+ *
  */
 @Repository
 public class SubscriptionDAO {

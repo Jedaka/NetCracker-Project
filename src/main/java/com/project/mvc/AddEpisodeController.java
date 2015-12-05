@@ -1,6 +1,6 @@
 package com.project.mvc;
 
-import com.project.communication.AddEpisodeRequest;
+import com.project.communication.EpisodeInformation;
 import com.project.communication.AddEpisodesRequest;
 import com.project.communication.JsonResponse;
 import com.project.model.Episode;
@@ -40,6 +40,14 @@ public class AddEpisodeController {
 
     private Logger logger = Logger.getLogger(AddEpisodeController.class);
 
+    /**
+     *
+     * Controller that handle addEpisodesRequest and add episodes in the data base
+     * Additionally, it notify users by email and send new episodes to websockets
+     *
+     * @param request request contains episodes to add
+     * @return
+     */
     @RequestMapping(value = "/episode")
     public JsonResponse addEpisode(@RequestBody AddEpisodesRequest request){
         StringBuilder stringBuilder = new StringBuilder();
@@ -47,22 +55,22 @@ public class AddEpisodeController {
         stringBuilder.append("Adding new episodes. ");
 
         JsonResponse response = new JsonResponse();
-        Set<AddEpisodeRequest> episodes = request.getAddEpisodeRequests();
+        Set<EpisodeInformation> episodes = request.getEpisodesInformation();
 
         stringBuilder.append(episodes.size() + " received. ");
 
-        Iterator<AddEpisodeRequest> iterator = episodes.iterator();
+        Iterator<EpisodeInformation> iterator = episodes.iterator();
         int persistedEpisodeCounter = 0;
         while (iterator.hasNext()) {
-            AddEpisodeRequest addEpisodeRequest = iterator.next();
-            String receivedToken = addEpisodeRequest.getToken();
+            EpisodeInformation episodeInformation = iterator.next();
+            String receivedToken = episodeInformation.getToken();
 
             Token token = tokenService.findByToken(receivedToken);
             if (token == null) {
                 continue;
             }
 
-            Episode episode = addEpisodeRequest.getEpisode();
+            Episode episode = episodeInformation.getEpisode();
             episode.setToken(token);
 
             try {

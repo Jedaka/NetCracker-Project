@@ -4,7 +4,6 @@ import com.project.communication.AddEpisodeRequest;
 import com.project.communication.AddEpisodesRequest;
 import com.project.communication.JsonResponse;
 import com.project.model.Episode;
-import com.project.model.Serial;
 import com.project.model.Token;
 import com.project.model.User;
 import com.project.service.EpisodeService;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -71,9 +69,9 @@ public class AddEpisodeController {
                 logger.warn(e.getMessage().toString());
                 continue;
             }
+            String title = addEpisodeRequest.getSerialTitle();
             List<User> usersForNotification = getUsersWhereSubsIsEqualToken(token);
             try {
-                String title = serialService.getSerialByToken(token).getTitle();
                 sentMails(usersForNotification, episode, title);
             }catch (Exception e){
                 logger.warn(e.getMessage().toString());

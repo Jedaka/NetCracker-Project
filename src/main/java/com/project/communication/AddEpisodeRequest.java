@@ -11,6 +11,16 @@ public class AddEpisodeRequest {
 
     private Episode episode;
 
+    private String serialTitle;
+
+    public String getSerialTitle() {
+        return serialTitle;
+    }
+
+    public void setSerialTitle(String serialTitle) {
+        this.serialTitle = serialTitle;
+    }
+
     public String getToken() {
         return token;
     }
@@ -32,6 +42,7 @@ public class AddEpisodeRequest {
         return "AddEpisodeRequest{" +
                 "token='" + token + '\'' +
                 ", episode=" + episode +
+                ", serialTitle='" + serialTitle + '\'' +
                 '}';
     }
 }

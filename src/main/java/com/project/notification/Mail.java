@@ -1,4 +1,4 @@
-package com.project.util;
+package com.project.notification;
 
 import com.project.model.Episode;
 import org.apache.log4j.Logger;

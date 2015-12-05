@@ -9,7 +9,7 @@ import com.project.model.User;
 import com.project.service.EpisodeService;
 import com.project.service.TokenService;
 import com.project.service.UserService;
-import com.project.util.Mail;
+import com.project.notification.Mail;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

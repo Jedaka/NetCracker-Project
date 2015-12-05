@@ -30,6 +30,7 @@ public class TokenDAO {
         return session.createCriteria(Token.class).list();
     }
 
+
     public Token read(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Token.class, id);

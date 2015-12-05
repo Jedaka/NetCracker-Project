@@ -41,6 +41,13 @@ public class ControllerAspect {
 
     }
 
+    @AfterThrowing(value = "controllerPointCut()", throwing = "e")
+    public void controllerAdviceAfterThrowing(JoinPoint joinPoint, Throwable e){
+        logger = Logger.getLogger(joinPoint.getTarget().getClass());
+        logger.warn(joinPoint.getSignature().toShortString() + " | Throws: " + e.getMessage());
+        e.printStackTrace();
+    }
+
     @Pointcut("execution(* com.project.mvc.*.*(..))")
     public void controllerPointCut(){}
 

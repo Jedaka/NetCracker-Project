@@ -5,6 +5,7 @@ import com.project.database.dao.EpisodeDAO;
 import com.project.database.dao.SubscriptionDAO;
 import com.project.database.dao.UserDAO;
 import com.project.model.Episode;
+import com.project.model.Token;
 import com.project.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -80,6 +81,9 @@ public class UserService {
             return true;
         }
         return false;
+    }
+    public List<User> findUsersBySubscription(Token token){
+        return userDAO.findUsersBySubscription(token);
     }
 
     public void setEpisodeDAO(EpisodeDAO episodeDAO) {

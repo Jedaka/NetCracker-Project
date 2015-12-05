@@ -18,6 +18,9 @@ public class DatabaseFiller {
         UserService userService = applicationContext.getBean("userService", UserService.class);
 
 
+        userService.delete(userService.read(1));
+
+
         //LostFilm
 
 //        Serial walkingDead = new Serial("Walking Dead", "en");

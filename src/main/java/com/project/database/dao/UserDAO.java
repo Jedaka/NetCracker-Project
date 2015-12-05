@@ -56,7 +56,7 @@ public class UserDAO {
         return users;
     }
     public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+        this.sessionFactory = sessionFactory;;
     }
     private class UserResultTransformer implements ResultTransformer {
         @Override

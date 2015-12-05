@@ -1,5 +1,6 @@
 package com.project.websockets;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -15,7 +16,12 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        webSocketHandlerRegistry.addHandler(new ConnectHandler(), "/connect").setAllowedOrigins("*").setHandshakeHandler(new DefaultHandshakeHandler());
+        webSocketHandlerRegistry.addHandler(connectHandler(), "/connect").setAllowedOrigins("*").setHandshakeHandler(new DefaultHandshakeHandler());
+    }
+
+    @Bean
+    public ConnectHandler connectHandler(){
+        return new ConnectHandler();
     }
 
 }

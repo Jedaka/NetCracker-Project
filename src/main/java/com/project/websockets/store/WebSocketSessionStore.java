@@ -3,7 +3,6 @@ package com.project.websockets.store;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @Component
 public class WebSocketSessionStore {
 
-    private List<WebSocketSession> sessions = new LinkedList<>();
+    private static List<WebSocketSession> sessions = new LinkedList<>();
 
     public void addSession(WebSocketSession session){
         synchronized (sessions){
@@ -21,12 +20,8 @@ public class WebSocketSessionStore {
         }
     }
 
-    public List<WebSocketSession> getSessions(){
-        List<WebSocketSession> resultList = new LinkedList<>();
-        synchronized (sessions) {
-            Collections.copy(resultList, sessions);
-        }
-        return resultList;
+    public List<WebSocketSession> getSessions() {
+        return sessions;
     }
 
     public void deleteSession(WebSocketSession session){

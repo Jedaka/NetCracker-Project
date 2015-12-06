@@ -17,7 +17,6 @@ public class EpisodeInformation {
 
     private Episode episode;
 
-
     public String getToken() {
         return token;
     }

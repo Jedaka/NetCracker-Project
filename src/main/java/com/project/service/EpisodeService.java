@@ -36,10 +36,6 @@ public class EpisodeService {
         return this.episodeDAO.get(count, from);
     }
 
-    @Transactional(readOnly = true)
-    public List<Episode> getAllOrderByDateWhereTokenId(int token) throws Exception{
-        return this.episodeDAO.getAllOrderByDateWhereTokenId(token);
-    }
 
     public void setEpisodeDAO(EpisodeDAO episodeDAO) {
         this.episodeDAO = episodeDAO;

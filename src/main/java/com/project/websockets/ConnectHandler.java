@@ -9,6 +9,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 /**
  * Created by jedaka on 05.12.2015.
+ *
  */
 public class ConnectHandler extends TextWebSocketHandler {
 

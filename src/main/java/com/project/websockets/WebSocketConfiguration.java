@@ -9,6 +9,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 /**
  * Created by jedaka on 05.12.2015.
+ *
  */
 @EnableWebSocket
 @Configuration

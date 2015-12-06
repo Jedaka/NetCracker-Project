@@ -18,12 +18,24 @@ import java.util.List;
 @Service
 public class WebSocketMessageService {
 
+    /**
+     * Store of websocket connections (Online users)
+     *
+     */
     @Autowired
     private WebSocketSessionStore sessionStore;
 
+    /**
+     * Serializer objects into JSON
+     */
     private ObjectMapper objectMapper = new ObjectMapper();
     private Logger logger = Logger.getLogger(WebSocketMessageService.class);
 
+    /**
+     * Send new episodes to connected users
+     *
+     * @param episode
+     */
     public void sendEpisodeToConnectedUsers(Episode episode) {
         logger.info("Sending episode to users...");
         List<WebSocketSession> sessions = sessionStore.getSessions();

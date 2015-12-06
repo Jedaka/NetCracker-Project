@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * Created by jedaka on 05.12.2015.
+ *
+ * Store of websockets connections (Online users)
  */
 @Component
 public class WebSocketSessionStore {

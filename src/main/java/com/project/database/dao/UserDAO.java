@@ -1,8 +1,6 @@
 package com.project.database.dao;
 
-import com.project.model.Token;
 import com.project.model.User;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -49,21 +47,6 @@ public class UserDAO {
         return user;
     }
 
-    /**
-     * Return list of users who follow certain token
-     *
-     * @param token
-     * @return
-     */
-    public List<User> findUsersBySubscription(Token token){
-        List<User> users;
-        Session session = sessionFactory.getCurrentSession();
-        SQLQuery sqlQuery =  session.createSQLQuery("select * from users u where u.id in " +
-                "(select subs.users_id from subscription subs where subs.token_id = "+ token.getId() +")");
-        sqlQuery.setResultTransformer(new UserResultTransformer());
-        users = sqlQuery.list();
-        return users;
-    }
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;;
     }

@@ -1,23 +1,19 @@
 package com.project.mvc;
 
-import com.project.communication.EpisodeInformation;
 import com.project.communication.AddEpisodesRequest;
+import com.project.communication.EpisodeInformation;
 import com.project.communication.JsonResponse;
 import com.project.model.Episode;
+import com.project.model.Subscription;
 import com.project.model.Token;
-import com.project.model.User;
-import com.project.notification.Mail;
-import com.project.service.EpisodeService;
-import com.project.service.TokenService;
-import com.project.service.UserService;
-import com.project.service.WebSocketMessageService;
+import com.project.notification.MailSender;
+import com.project.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.mail.internet.AddressException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -37,6 +33,10 @@ public class AddEpisodeController {
     private WebSocketMessageService webSocketMessageService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private SubscriptionService subscriptionService;
+    @Autowired
+    private MailSender mailSender;
 
     private Logger logger = Logger.getLogger(AddEpisodeController.class);
 
@@ -88,8 +88,8 @@ public class AddEpisodeController {
             }
 
             try {
-                List<User> usersForNotification = getUsersWhereSubsIsEqualToken(token);
-                sendMails(usersForNotification, episode, token.getSerial().getTitle());
+                List<Subscription> usersForNotification = subscriptionService.findSubscriptionsByToken(token);
+                sendMails(usersForNotification, episode);
             }catch (Exception e){
                 logger.warn("Exception while sending to emails has occurred: " + e.getMessage().toString());
                 continue;
@@ -104,26 +104,16 @@ public class AddEpisodeController {
         return response;
     }
 
-    private List<User> getUsersWhereSubsIsEqualToken(Token token){
-        List<User> users = userService.findUsersBySubscription(token);
-        return users;
+    private void sendMails(List<Subscription> subscriptions, Episode episode){
+
+        for (Subscription subscription: subscriptions){
+            mailSender.send(subscription, episode);
+        }
+
     }
 
-    private void sendMails(List<User> users, Episode episode, String title){
-        String[] internetAddresses = new String[users.size()];
-        for (int i = 0; i< users.size(); i++){
-            internetAddresses[i] = users.get(i).getEmail();
-        }
-        Mail mail = null;
-        try {
-            mail = new Mail(internetAddresses);
-            logger.info("All emails are correct");
-        } catch (AddressException e) {
-            e.printStackTrace();
-            logger.warn(e.getMessage() + "There is incorrect emails");
-
-        }
-        mail.send(episode, title);
+    public void setSubscriptionService(SubscriptionService subscriptionService) {
+        this.subscriptionService = subscriptionService;
     }
 
     public void setTokenService(TokenService tokenService) {
@@ -140,5 +130,9 @@ public class AddEpisodeController {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
     }
 }

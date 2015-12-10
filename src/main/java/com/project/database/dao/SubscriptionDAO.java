@@ -2,12 +2,14 @@ package com.project.database.dao;
 
 import com.project.model.Subscription;
 import com.project.model.Token;
-import com.project.model.User;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by vganshin on 23.11.15.
@@ -34,10 +36,25 @@ public class SubscriptionDAO {
         session.delete(object);
     }
 
-    public Subscription findByUserAndToken(User user, Token token) {
+    public Subscription findByRemoval(String removal){
         Session session = sessionFactory.getCurrentSession();
-        return (Subscription) session.createCriteria(Subscription.class).add(Restrictions.eq("user_id", user.getId())).add(Restrictions.eq("token_id", token.getId())).uniqueResult();
+        return (Subscription) session.createCriteria(Subscription.class).add(Restrictions.eq("removal", removal)).uniqueResult();
     }
 
+    /**
+     * Return list of users who follow certain token
+     *
+     * @param token
+     * @return
+     */
+    public List<Subscription> findSubscriptionsByToken(Token token){
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from SUBSCRIPTION s where s.token.id = " + token.getId());
+        List<Subscription> users = query.list();
+        return users;
+    }
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 }

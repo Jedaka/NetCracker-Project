@@ -18,9 +18,14 @@ public class HelloController {
 		return "hello";
 	}
 
-	@RequestMapping(value = "/login")
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(){
 		return "login";
+	}
+
+	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET, headers = "Content-Type: utf-8")
+	public String subscriptions() {
+		return "subscriptions";
 	}
 
 }

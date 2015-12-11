@@ -10,6 +10,7 @@ import com.project.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,8 +21,8 @@ import java.util.Collection;
 /**
  * Created by vganshin on 24.11.15.
  */
-//@Secured("ROLE_USER")
-@RestController
+@Secured("ROLE_USER")
+@RestController(value = "/api")
 public class SubscriptionController {
     @Autowired
     private UserService userService;

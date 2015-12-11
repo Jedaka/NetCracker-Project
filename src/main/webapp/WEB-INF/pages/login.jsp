@@ -12,7 +12,7 @@
 </head>
 <body>
 <form name='loginForm'
-      action="/auth/login" method='POST'>
+      action="/auth" method='POST'>
 
     <table>
         <tr>

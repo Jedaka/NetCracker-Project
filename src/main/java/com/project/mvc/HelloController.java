@@ -61,8 +61,18 @@ public class HelloController {
 	}
 
 	@RequestMapping(value = "/feedback", method = RequestMethod.POST)
-	public ModelAndView feedback(String message, String author){
-		mailSender.sendFeedback(message, author);
+	public ModelAndView feedback(String message, String anonymous) {
+		String author = "Anonymous";
+		if (anonymous == null) {
+			try {
+				User user = userService.getCurrentUser();
+				author = user.getEmail();
+			} catch (Exception e) {
+			}
+		}
+		System.out.println("=======");
+		System.out.println(anonymous);
+		mailSender.sendFeedback(message, anonymous);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("feedback");
 		modelAndView.addObject("message", "Ваше сообщение было отправлено администраторам");

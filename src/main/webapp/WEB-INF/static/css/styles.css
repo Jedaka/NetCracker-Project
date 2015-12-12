@@ -1,5 +1,4 @@
 body {
-  font-family: "Tahoma";
   overflow-y: scroll;
 }
 
@@ -34,9 +33,13 @@ body {
   margin-top: 10px;
 }
 
-.logout {
+a.logout {
   margin: 0 5px;
   color: #0074BD;
+}
+
+a.logout:hover {
+  color: #64C2FD;
 }
 
 /* Description */

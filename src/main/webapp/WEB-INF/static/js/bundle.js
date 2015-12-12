@@ -81,12 +81,6 @@
 	
 	var _actions = __webpack_require__(261);
 	
-	var _actionsAuthActions = __webpack_require__(250);
-	
-	window.login = _actionsAuthActions.login;
-	
-	window.store = _store2['default'];
-	
 	var Root = (function (_React$Component) {
 	  _inherits(Root, _React$Component);
 	
@@ -126,37 +120,29 @@
 	      var dispatch = _props.dispatch;
 	      var visibilityFilter = _props.visibilityFilter;
 	
-	      var email = 'ganshinv@gmail.com'; //this.props.auth.profile.email;
-	
 	      return _react2['default'].createElement(
 	        'div',
-	        { className: 'wrapper' },
-	        _react2['default'].createElement(Header, { email: email }),
-	        _react2['default'].createElement(
-	          'div',
-	          { className: 'main' },
-	          _react2['default'].createElement(Description, null),
-	          _react2['default'].createElement(SearchLine, {
-	            activeFilter: visibilityFilter.filter,
-	            setPattern: function (pattern) {
-	              return dispatch((0, _actions.setPattern)(pattern));
-	            },
-	            setVisibilityFilter: function (filter) {
-	              return dispatch((0, _actions.setVisibilityFilter)(filter));
-	            }
-	          }),
-	          _react2['default'].createElement(Tokens, {
-	            tokens: this.props.subscriptions.tokens,
-	            filter: visibilityFilter.filter,
-	            pattern: visibilityFilter.pattern,
-	            subscribe: function (tokenId) {
-	              return dispatch((0, _actionsSubscriptions.subscribe)(tokenId));
-	            },
-	            unsubscribe: function (tokenId) {
-	              return dispatch((0, _actionsSubscriptions.unsubscribe)(tokenId));
-	            }
-	          })
-	        )
+	        null,
+	        _react2['default'].createElement(SearchLine, {
+	          activeFilter: visibilityFilter.filter,
+	          setPattern: function (pattern) {
+	            return dispatch((0, _actions.setPattern)(pattern));
+	          },
+	          setVisibilityFilter: function (filter) {
+	            return dispatch((0, _actions.setVisibilityFilter)(filter));
+	          }
+	        }),
+	        _react2['default'].createElement(Tokens, {
+	          tokens: this.props.subscriptions.tokens,
+	          filter: visibilityFilter.filter,
+	          pattern: visibilityFilter.pattern,
+	          subscribe: function (tokenId) {
+	            return dispatch((0, _actionsSubscriptions.subscribe)(tokenId));
+	          },
+	          unsubscribe: function (tokenId) {
+	            return dispatch((0, _actionsSubscriptions.unsubscribe)(tokenId));
+	          }
+	        })
 	      );
 	    }
 	  }]);
@@ -168,59 +154,8 @@
 	  return App;
 	})(_react2['default'].Component);
 	
-	var Header = (function (_React$Component3) {
-	  _inherits(Header, _React$Component3);
-	
-	  function Header() {
-	    _classCallCheck(this, Header);
-	
-	    _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).apply(this, arguments);
-	  }
-	
-	  _createClass(Header, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2['default'].createElement(
-	        'div',
-	        null,
-	        _react2['default'].createElement(
-	          'a',
-	          { className: 'logo', href: '/' },
-	          _react2['default'].createElement(
-	            'span',
-	            { className: 'netcracker__black_color' },
-	            'Net'
-	          ),
-	          _react2['default'].createElement(
-	            'span',
-	            { className: 'netcracker__blue_color' },
-	            'Serials'
-	          )
-	        ),
-	        _react2['default'].createElement(
-	          'span',
-	          { className: 'profile' },
-	          _react2['default'].createElement(
-	            'span',
-	            { className: 'email' },
-	            this.props.email
-	          ),
-	          _react2['default'].createElement(
-	            'a',
-	            { href: '/logout', className: 'logout' },
-	            'Выйти'
-	          )
-	        ),
-	        _react2['default'].createElement('hr', null)
-	      );
-	    }
-	  }]);
-	
-	  return Header;
-	})(_react2['default'].Component);
-	
-	var Description = (function (_React$Component4) {
-	  _inherits(Description, _React$Component4);
+	var Description = (function (_React$Component3) {
+	  _inherits(Description, _React$Component3);
 	
 	  function Description() {
 	    _classCallCheck(this, Description);
@@ -234,7 +169,7 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'description' },
-	        'Выберай сериалы, которые тебе интересны.',
+	        'Выберите сериалы, которые Вам интересны.',
 	        _react2['default'].createElement('br', null),
 	        'О выходе новых серий мы сообщим по почте.'
 	      );
@@ -244,8 +179,8 @@
 	  return Description;
 	})(_react2['default'].Component);
 	
-	var SearchLine = (function (_React$Component5) {
-	  _inherits(SearchLine, _React$Component5);
+	var SearchLine = (function (_React$Component4) {
+	  _inherits(SearchLine, _React$Component4);
 	
 	  function SearchLine() {
 	    _classCallCheck(this, SearchLine);
@@ -306,8 +241,8 @@
 	  return SearchLine;
 	})(_react2['default'].Component);
 	
-	var Tokens = (function (_React$Component6) {
-	  _inherits(Tokens, _React$Component6);
+	var Tokens = (function (_React$Component5) {
+	  _inherits(Tokens, _React$Component5);
 	
 	  function Tokens() {
 	    _classCallCheck(this, Tokens);
@@ -360,8 +295,8 @@
 	  return Tokens;
 	})(_react2['default'].Component);
 	
-	var Token = (function (_React$Component7) {
-	  _inherits(Token, _React$Component7);
+	var Token = (function (_React$Component6) {
+	  _inherits(Token, _React$Component6);
 	
 	  function Token() {
 	    _classCallCheck(this, Token);
@@ -20556,7 +20491,7 @@
 	
 	var _apiWebsocket2 = _interopRequireDefault(_apiWebsocket);
 	
-	var store = (0, _redux.applyMiddleware)(_reduxThunk2['default'], (0, _reduxLogger2['default'])())(_redux.createStore)(_reducers2['default']);
+	var store = (0, _redux.applyMiddleware)(_reduxThunk2['default'])(_redux.createStore)(_reducers2['default']);
 	
 	store.dispatch((0, _actionsAuthActions.getProfile)());
 	// store.dispatch(getEpisodes(10, 0, false));

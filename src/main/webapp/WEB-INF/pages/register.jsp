@@ -24,21 +24,14 @@
         <hr/>
     </div>
     <div class='main'>
-        <h2>Вход</h2>
+        <h2>Регистрация</h2>
+        <p>Авторизируем по следующей схеме: на почту, которую ты укажешь, будет выслан пароль для входа.</p>
+        <p>Забыл пароль? Регистрируйся снова. Пароль вышлем новый. Подписки сохраним.</p>
         <form name='loginForm' action="/auth" method='POST'>
-            <div>
-                <label>Email<br>
-                    <input type='email' name='email'>
-                </label>
-            </div>
-            <div>
-                <label>Пароль<br>
-                    <input type='password' name='password' />
-                </label>
-            </div>
-            <input type='hidden' name='remember' value="on" />
-            <button>Войти</button>
-            <a href="/registration" href="logout" class="logout">Забыл пароль?</a>
+            <label>Email:
+                <input type='email' name='email'>
+            </label>
+            <button>Зарегистрировать</button>
         </form>
     </div>
 </div>

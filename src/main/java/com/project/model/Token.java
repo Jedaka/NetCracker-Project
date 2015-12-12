@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"serial_id", "studio_id"}))
-public class Token {
+public class Token implements Comparable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TOKEN_SEQ")
@@ -108,6 +108,15 @@ public class Token {
         result = 31 * result + token.hashCode();
         result = 31 * result + (serial != null ? serial.hashCode() : 0);
         result = 31 * result + (studio != null ? studio.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        int result = this.getSerial().getTitle().compareTo(((Token) o).getSerial().getTitle());
+        if (result == 0){
+            result = this.getStudio().getName().compareTo(((Token) o).getStudio().getName());
+        }
         return result;
     }
 }

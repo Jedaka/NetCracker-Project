@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by jedaka on 12.11.2015.
@@ -31,7 +31,7 @@ public class TokenService {
     }
 
     @Transactional(readOnly = true)
-    public List<Token> getAll() {
+    public Set<Token> getAll() {
         return tokenDAO.getAll();
     }
 

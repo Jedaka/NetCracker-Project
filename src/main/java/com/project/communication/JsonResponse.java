@@ -19,7 +19,7 @@ public class JsonResponse<T> {
     private Status status;
 
     /**
-     * Object that will be serialize and send to the client
+     * Object that will be serialize and sendEpisode to the client
      */
     private T message;
 

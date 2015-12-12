@@ -3,7 +3,7 @@ package com.project.communication;
 /**
  *  Created by jedaka on 23.11.2015.
  *
- *  Request that send client to server to get episodes
+ *  Request that sendEpisode client to server to get episodes
  *
  */
 public class GetEpisodesRequest {

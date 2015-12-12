@@ -43,7 +43,7 @@ public class AddEpisodeController {
     /**
      *
      * Controller that handle addEpisodesRequest and add episodes in the data base
-     * Additionally, it notify users by email and send new episodes to websockets
+     * Additionally, it notify users by email and sendEpisode new episodes to websockets
      *
      * @param request request contains episodes to add
      * @return
@@ -107,7 +107,7 @@ public class AddEpisodeController {
     private void sendMails(List<Subscription> subscriptions, Episode episode){
 
         for (Subscription subscription: subscriptions){
-            mailSender.send(subscription, episode);
+            mailSender.sendEpisode(subscription, episode);
         }
 
     }

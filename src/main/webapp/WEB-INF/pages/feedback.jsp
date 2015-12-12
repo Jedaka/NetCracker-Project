@@ -27,7 +27,7 @@
     <p>
 
     </p>
-    <form name='loginForm' action="/feedback" method='POST'>
+    <form name='loginForm' action="/feedback" method='POST' accept-charset="UTF-8">
       <label>
         От <span id="author"></span>:
         <textarea name="message" style="width: 100%; height: 100px;" placeholder="Текст сообщения"></textarea>

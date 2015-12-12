@@ -1,23 +1,29 @@
 package com.project.mvc;
 
 import com.project.model.User;
+import com.project.notification.MailSender;
 import com.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 @Controller
 @EnableWebMvc
 public class HelloController {
+
 	@Autowired
 	UserService userService;
+	@Autowired
+	MailSender mailSender;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -33,6 +39,34 @@ public class HelloController {
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String register(){
 		return "register";
+	}
+
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)
+	public ModelAndView registerRequest(String email){
+		User user = userService.findByEmail(email);
+		if (user != null){
+			user.setPassword(new BigInteger(40, new SecureRandom()).toString(36));
+			userService.update(user);
+		}
+		else {
+			user = new User();
+			user.setEmail(email);
+			userService.save(user);
+		}
+		mailSender.sendPassword(email, user.getPassword());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("register");
+		modelAndView.addObject("message", "Пароль был выслан вам на e-mail, проверьте почту!");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/feedback", method = RequestMethod.POST)
+	public ModelAndView feedback(String message, String author){
+		mailSender.sendFeedback(message, author);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("feedback");
+		modelAndView.addObject("message", "Ваше сообщение было отправлено администраторам");
+		return modelAndView;
 	}
 
 	@Secured("ROLE_USER")

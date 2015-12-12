@@ -3,7 +3,7 @@ package com.project.communication;
 /**
  *  Created by vganshin on 12.11.15.
  *
- *  Request that send client to the server to change a password
+ *  Request that sendEpisode client to the server to change a password
  *
  *
  */

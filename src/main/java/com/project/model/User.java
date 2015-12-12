@@ -6,6 +6,8 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class User {
     @Column(unique = true)
     private String email;
     @JsonIgnore
-    private String password;
+    private String password = new BigInteger(40, new SecureRandom()).toString(36);
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "USERS_ID", referencedColumnName = "ID", nullable = false)

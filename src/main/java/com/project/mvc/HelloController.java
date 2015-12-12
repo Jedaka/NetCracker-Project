@@ -20,83 +20,82 @@ import java.security.SecureRandom;
 @EnableWebMvc
 public class HelloController {
 
-	@Autowired
-	UserService userService;
-	@Autowired
-	MailSender mailSender;
+    @Autowired
+    UserService userService;
+    @Autowired
+    MailSender mailSender;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) {
-		model.addAttribute("message", "Hello world!");
-		return "hello";
-	}
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String printWelcome(ModelMap model) {
+        model.addAttribute("message", "Hello world!");
+        return "hello";
+    }
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(){
-		return "login";
-	}
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        return "login";
+    }
 
-	@RequestMapping(value = "/registration", method = RequestMethod.GET)
-	public String register(){
-		return "register";
-	}
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String register() {
+        return "register";
+    }
 
-	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView registerRequest(String email){
-		User user = userService.findByEmail(email);
-		if (user != null){
-			user.setPassword(new BigInteger(40, new SecureRandom()).toString(36));
-			userService.update(user);
-		}
-		else {
-			user = new User();
-			user.setEmail(email);
-			userService.save(user);
-		}
-		mailSender.sendPassword(email, user.getPassword());
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("register");
-		modelAndView.addObject("message", "Пароль был выслан вам на e-mail, проверьте почту!");
-		return modelAndView;
-	}
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public ModelAndView registerRequest(String email) {
+        User user = userService.findByEmail(email);
+        if (user != null) {
+            user.setPassword(new BigInteger(40, new SecureRandom()).toString(36));
+            userService.update(user);
+        } else {
+            user = new User();
+            user.setEmail(email);
+            userService.save(user);
+        }
+        mailSender.sendPassword(email, user.getPassword());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("register");
+        modelAndView.addObject("message", "Пароль был выслан вам на e-mail, проверьте почту!");
+        return modelAndView;
+    }
 
-	@RequestMapping(value = "/feedback", method = RequestMethod.POST)
-	public ModelAndView feedback(String message, String anonymous) {
-		String author = "Anonymous";
-		if (anonymous == null) {
-			try {
-				User user = userService.getCurrentUser();
-				author = user.getEmail();
-			} catch (Exception e) {
-			}
-		}
-		System.out.println("=======");
-		System.out.println(anonymous);
-		mailSender.sendFeedback(message, anonymous);
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("feedback");
-		modelAndView.addObject("message", "Ваше сообщение было отправлено администраторам");
-		return modelAndView;
-	}
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
+    public String subscriptions(ModelMap model, HttpServletResponse response) {
+        User user = userService.getCurrentUser();
+        model.addAttribute("email", user.getEmail());
+        return "subscriptions";
+    }
 
-	@Secured("ROLE_USER")
-	@RequestMapping(value = "/subscriptions", method = RequestMethod.GET)
-	public String subscriptions(ModelMap model, HttpServletResponse response) {
-//		response.setCharacterEncoding("utf-8");
-		User user = userService.getCurrentUser();
-		model.addAttribute("email", user.getEmail());
-		return "subscriptions";
-	}
+    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
+    public String feedback(ModelMap model, HttpServletResponse response) {
+        response.setCharacterEncoding("utf-8");
+        try {
+            User user = userService.getCurrentUser();
+            model.addAttribute("email", user.getEmail());
+        } catch (Exception e) {
+            model.addAttribute("email", "");
+        }
+        return "feedback";
+    }
 
-	@RequestMapping(value = "/feedback", method = RequestMethod.GET)
-	public String feedback(ModelMap model, HttpServletResponse response) {
-		response.setCharacterEncoding("utf-8");
-		try {
-			User user = userService.getCurrentUser();
-			model.addAttribute("email", user.getEmail());
-		} catch (Exception e) {
-			model.addAttribute("email", "");
-		}
-		return "feedback";
-	}
+    @RequestMapping(value = "/feedback", method = RequestMethod.POST)
+    public ModelAndView feedback(String message, String anonymous) {
+        ModelAndView modelAndView = new ModelAndView();
+        String author = "Anonymous";
+        if (anonymous == null) {
+            try {
+                User user = userService.getCurrentUser();
+                author = user.getEmail();
+                modelAndView.addObject("email", author);
+            } catch (Exception e) {
+                modelAndView.addObject("email", "");
+            }
+        }
+        mailSender.sendFeedback(message, author);
+
+        modelAndView.addObject("message", "Ваше сообщение было отправлено администраторам");
+        modelAndView.setViewName("feedback");
+        return modelAndView;
+    }
 }

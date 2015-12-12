@@ -9,7 +9,6 @@ import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -97,10 +96,6 @@ public class MailSender {
     public void sendFeedback(String feedback, String author){
         try {
             MimeMessage message = new MimeMessage(SESSION);
-            System.out.println(new String(feedback.getBytes(), Charset.forName("UTF-8")));
-            System.out.println(new String(feedback.getBytes(), Charset.forName("windows-1251")));
-            System.out.println(new String(feedback.getBytes(), Charset.forName("windows-1252")));
-            System.out.println(new String(feedback.getBytes(), Charset.forName("windows-1252")));
             message.setFrom(new InternetAddress(FROM));
             message.setRecipients(Message.RecipientType.TO, ADMINS);
             message.setSubject("NetSerials.ru: Новый фидбек", "UTF-8");

@@ -39,6 +39,7 @@
       <br>
       <button>Отправить</button>
     </form>
+    <h3>${message}</h3>
   </div>
 </div>
 <script>

@@ -29,27 +29,14 @@
     </p>
     <form name='loginForm' action="/feedback" method='POST' accept-charset="UTF-8">
       <label>
-        От <span id="author"></span>:
-        <textarea name="message" style="width: 100%; height: 100px;" placeholder="Текст сообщения"></textarea>
-      </label>
-      <label id="anonChecbox">
-        <input type='checkbox' name='anonymous' onchange="e => {authorField.innerText = e.srcElement.checked ? author : anon}">
-        Анонимно
+        От:<br>
+        <input type="email" name="email" placeholder="inbox@example.com" value="${email}"<br>
+        Тело письма:<br>
+        <textarea name="message" style="width: 100%; height: 100px;" placeholder="Текст сообщения"></textarea><br>
       </label>
       <br>
       <button>Отправить</button>
     </form>
   </div>
 </div>
-<script>
-  var anon = "Неизвестного Доброжелателя";
-  var author = '${email}';
-  var authorField = document.getElementById("author");
-  if (author) {
-    authorField.innerText = author;
-  } else {
-    document.forms[0].anonymous.checked = true;
-    document.getElementById("anonChecbox").style.display = 'none';
-    authorField.innerText = anon;
-  }
-</script>
+

@@ -28,8 +28,8 @@
         <p>Авторизируем по следующей схеме: на почту, которую ты укажешь, будет выслан пароль для входа.</p>
         <p>Забыл пароль? Регистрируйся снова. Пароль вышлем новый. Подписки сохраним.</p>
         <form name='loginForm' action="/registration" method='POST'>
-            <label>Email:
-                <input type='email' name='email'>
+            <label>E-mail:
+                <input type='email' name='email' required placeholder="inbox@example.com"/>
             </label>
             <button>Зарегистрировать</button>
         </form>

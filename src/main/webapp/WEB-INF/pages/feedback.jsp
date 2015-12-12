@@ -30,7 +30,7 @@
     <form name='loginForm' action="/feedback" method='POST' accept-charset="UTF-8">
       <label>
         От:<br>
-        <input type="email" name="email" placeholder="inbox@example.com" value="${email}"<br>
+        <input type="email" name="email" placeholder="inbox@example.com" value="${email}"><br>
         Тело письма:<br>
         <textarea name="message" style="width: 100%; height: 100px;" placeholder="Текст сообщения"></textarea><br>
       </label>

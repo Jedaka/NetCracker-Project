@@ -208,7 +208,7 @@
 	          _react2['default'].createElement(
 	            'a',
 	            { href: '/logout', className: 'logout' },
-	            'logout'
+	            'Выйти'
 	          )
 	        ),
 	        _react2['default'].createElement('hr', null)
@@ -234,7 +234,7 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'description' },
-	        'Выберите сериалы, которые Вам интересны.',
+	        'Выберай сериалы, которые тебе интересны.',
 	        _react2['default'].createElement('br', null),
 	        'О выходе новых серий мы сообщим по почте.'
 	      );

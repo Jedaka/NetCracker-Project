@@ -27,7 +27,7 @@
         <h2>Регистрация</h2>
         <p>Авторизируем по следующей схеме: на почту, которую ты укажешь, будет выслан пароль для входа.</p>
         <p>Забыл пароль? Регистрируйся снова. Пароль вышлем новый. Подписки сохраним.</p>
-        <form name='loginForm' action="/hello" method='POST'>
+        <form name='loginForm' action="/auth" method='POST'>
             <label>Email:
                 <input type='email' name='email'>
             </label>

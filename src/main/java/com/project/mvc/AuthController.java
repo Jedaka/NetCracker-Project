@@ -52,4 +52,5 @@ public class AuthController {
         User user = userService.getCurrentUser();
         return new JsonResponse(JsonResponse.Status.OK, user);
     }
+
 }

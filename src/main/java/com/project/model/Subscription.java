@@ -1,11 +1,14 @@
 package com.project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 /**
  * Created by jedaka on 03.11.2015.
- *
  */
 @Entity(name = "SUBSCRIPTION")
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"token_id", "users_id"}))
@@ -18,6 +21,14 @@ public class Subscription {
 
     @ManyToOne()
     private Token token;
+
+    @JsonIgnore
+    private String removal = new BigInteger(300, new SecureRandom()).toString(36);
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "users_id", insertable = false, updatable = false)
+    private User user;
 
     public Subscription() {
 
@@ -44,14 +55,31 @@ public class Subscription {
         this.token = token;
     }
 
-    @Override
+    public void setRemoval(String removal) {
+        this.removal = removal;
+    }
 
+    public String getRemoval() {
+        return removal;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    @Override
     public String toString() {
         return "Subscription{" +
                 "id=" + id +
-                ", token=" + getToken() +
+                ", token=" + token +
+                ", removal='" + removal + '\'' +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {

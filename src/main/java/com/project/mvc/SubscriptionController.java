@@ -7,6 +7,7 @@ import com.project.model.Token;
 import com.project.model.User;
 import com.project.service.TokenService;
 import com.project.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.access.annotation.Secured;
@@ -24,10 +25,10 @@ import java.util.Collection;
 @RestController(value = "/api")
 public class SubscriptionController {
     @Autowired
-    UserService userService;
-
+    private UserService userService;
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
+    private Logger logger = Logger.getLogger(Subscription.class);
 
     @RequestMapping(value= "/web")
     @SendTo("/wow")
@@ -70,4 +71,19 @@ public class SubscriptionController {
         }
         return new JsonResponse(JsonResponse.Status.ERROR, "Not Found subscription with such id.");
     }
+
+    @RequestMapping(value = "/removeSubscription")
+    public String removeSubscription(String removal){
+        try {
+            userService.deleteSubscriptionByRemoval(removal);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.warn(e.getMessage());
+            return "Something went wrong";
+        }
+        String response = "Subscription has been deleted successfully";
+        logger.info(response);
+        return response;
+    }
+
 }

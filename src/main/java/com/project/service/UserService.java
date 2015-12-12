@@ -5,7 +5,7 @@ import com.project.database.dao.EpisodeDAO;
 import com.project.database.dao.SubscriptionDAO;
 import com.project.database.dao.UserDAO;
 import com.project.model.Episode;
-import com.project.model.Token;
+import com.project.model.Subscription;
 import com.project.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,10 +26,10 @@ public class UserService {
     private UserDAO userDAO;
     @Autowired
     private EpisodeDAO episodeDAO;
-
     @Autowired
     private SubscriptionDAO subscriptionDAO;
 
+    @Transactional
     public int save(User user){
         return userDAO.create(user);
     }
@@ -39,10 +39,12 @@ public class UserService {
         return userDAO.read(id);
     }
 
+    @Transactional
     public void update(User user){
         userDAO.update(user);
     }
 
+    @Transactional
     public void delete(User user){
         userDAO.delete(user);
     }
@@ -52,11 +54,6 @@ public class UserService {
         return userDAO.findByEmail(email);
     }
 
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
-
     @Transactional(readOnly = true)
     public List<Episode> getSubscribedEpisodes(User user, int count){
         return this.getSubscribedEpisodes(user, count, 0);
@@ -65,6 +62,14 @@ public class UserService {
     @Transactional(readOnly = true)
     public List<Episode> getSubscribedEpisodes(User user, int count, int from){
         return episodeDAO.getEpisodesForUser(user, count, from);
+    }
+
+    @Transactional
+    public void deleteSubscriptionByRemoval(String removal){
+        Subscription subscription = subscriptionDAO.findByRemoval(removal);
+        User user = subscription.getUser();
+        user.getSubscriptions().remove(subscription);
+        this.update(user);
     }
 
     public User getCurrentUser() {
@@ -82,11 +87,16 @@ public class UserService {
         }
         return false;
     }
-    public List<User> findUsersBySubscription(Token token){
-        return userDAO.findUsersBySubscription(token);
-    }
 
     public void setEpisodeDAO(EpisodeDAO episodeDAO) {
         this.episodeDAO = episodeDAO;
+    }
+
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    public void setSubscriptionDAO(SubscriptionDAO subscriptionDAO) {
+        this.subscriptionDAO = subscriptionDAO;
     }
 }

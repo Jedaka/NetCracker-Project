@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!doctype html>
 <link rel="shortcut icon" type="image/x-icon" href="static/favicon.ico">
 <meta charset="utf-8"/>
@@ -24,6 +25,14 @@
         <hr/>
     </div>
     <div class='main'>
+
+        <% String email = request.getParameter("email"); %>
+        <% if (email != null) {%>
+        <h2>Благодарим за регистрацию!</h2>
+        <p>
+            Пароль был отправлен на адрес <b><%=email %></b>, проверьте почту!
+        </p>
+        <% } else { %>
         <h2>Регистрация</h2>
         <p>Авторизируем по следующей схеме: на почту, которую ты укажешь, будет выслан пароль для входа.</p>
         <p>Забыл пароль? Регистрируйся снова. Пароль вышлем новый. Подписки сохраним.</p>
@@ -33,8 +42,6 @@
             </label>
             <button>Зарегистрировать</button>
         </form>
-
-        <h3>${message}</h3>
-
+        <% } %>
     </div>
 </div>

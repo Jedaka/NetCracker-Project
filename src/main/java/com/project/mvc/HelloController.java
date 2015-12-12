@@ -55,7 +55,7 @@ public class HelloController {
         mailSender.sendPassword(email, user.getPassword());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("register");
-        modelAndView.addObject("message", "Пароль был выслан вам на e-mail, проверьте почту!");
+        modelAndView.addObject("email", email);
         return modelAndView;
     }
 

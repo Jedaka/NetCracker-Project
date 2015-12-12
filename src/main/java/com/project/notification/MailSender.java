@@ -21,7 +21,7 @@ public class MailSender {
     private final String DOMAIN = "http://localhost:8080/";
     private final String UNSUBSCRIBE_URL = DOMAIN + "removeSubscription/?removal=%s";
     private final String LOGIN_URL = DOMAIN + "login";
-    private final Address[] ADMINS = new Address[1];
+    private final Address[] ADMINS = new Address[3];
     private final String FROM = "notification.netserials@mail.ru";
     private final String PASSWORD = "netcrackerproject";
     private final String HOST = "smtp.mail.ru";
@@ -34,8 +34,8 @@ public class MailSender {
 
         try {
             ADMINS[0] = new InternetAddress("jhoweiser@gmail.com");
-//            ADMINS[1] = new InternetAddress("ganshinv@gmail.com");
-//            ADMINS[2] = new InternetAddress("maksim_larin@yahoo.com");
+            ADMINS[1] = new InternetAddress("ganshinv@gmail.com");
+            ADMINS[2] = new InternetAddress("maksim_larin@yahoo.com");
         } catch (AddressException e) {
             logger.warn("Exception while init emails: " + e.getMessage());
 

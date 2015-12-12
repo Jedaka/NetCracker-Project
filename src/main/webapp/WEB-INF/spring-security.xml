@@ -12,7 +12,8 @@
                 username-parameter="email"
                 password-parameter="password"
                 login-processing-url="/auth"
-                default-target-url="/subscriptions" />
+                default-target-url="/subscriptions"
+                authentication-failure-url="/login?error"/>
         <logout
                 logout-url="/logout"
                 logout-success-url="/"

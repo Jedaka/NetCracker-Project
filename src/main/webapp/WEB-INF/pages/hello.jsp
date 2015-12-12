@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jedaka
-  Date: 10.11.2015
-  Time: 0:35
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <link rel="shortcut icon" type="image/x-icon" href="static/favicon.ico">
@@ -18,7 +11,7 @@
 		</a>
     <span class='profile'>
       <a href="/subscriptions" class='logout'>
-		  Войти
+		  Вход
 	  </a>
     </span>
 		<hr/>
@@ -28,5 +21,6 @@
 		<p>NetSerials — это простой способ следить за вашими любимыми сериалами без нервного мониторинга сайтов студий или других побочных ресурсов</p>
 		<p>Ты просто выбираешь интересующие тебя сериалы, а мы сообщаем тебе о выходе новых серий по почте.</p>
 		<p>Новенький? <a href="/registration" class="logout">Регистрируйся</a></p>
+		<p>Проблемы? Предложения? <a href="/feedback" class="logout">Пиши</a></p>
 	</div>
 </div>

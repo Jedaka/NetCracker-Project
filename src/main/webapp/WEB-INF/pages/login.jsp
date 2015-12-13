@@ -38,7 +38,7 @@
             </div>
             <input type='hidden' name='remember' value="on" />
             <button>Войти</button>
-            <a href="/registration" href="logout" class="logout">Забыл пароль?</a>
+            <a href="/registration" href="logout" class="logout">Забыли пароль?</a>
         </form>
     </div>
 </div>

@@ -28,28 +28,38 @@
 
     </p>
     <form name='loginForm' action="/feedback" method='POST' accept-charset="UTF-8">
-      <label>
-        От <span id="author"></span>:
-        <textarea name="message" style="width: 100%; height: 100px;" placeholder="Текст сообщения"></textarea>
-      </label>
-      <label id="anonChecbox">
-        <input type='checkbox' name='anonymous' onchange="e => {authorField.innerText = e.srcElement.checked ? author : anon}">
-        Анонимно
-      </label>
-      <br>
-      <button>Отправить</button>
+      <table width="100%" cellspacing="0" cellpadding="4">
+        <tbody><tr>
+          <td align="right" width="100">От</td>
+          <td>
+            <input type="email" name="email" placeholder="inbox@example.com">
+          </td>
+        </tr>
+        <tr>
+          <td align="right">Тема</td>
+          <td>
+            <select name="theme" required>
+              <option value="error" selected>Ошибка</option>
+              <option value="feedback">Отзыв</option>
+              <option value="suggestion">Предложение</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td align="right" valign="top">Тело&nbsp;письма</td>
+          <td>
+            <textarea name="message" cols="35" rows="10" placeholder="Текст письма" required></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <input type="submit" value="Отправить">
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </form>
   </div>
 </div>
-<script>
-  var anon = "Неизвестного Доброжелателя";
-  var author = '${email}';
-  var authorField = document.getElementById("author");
-  if (author) {
-    authorField.innerText = author;
-  } else {
-    document.forms[0].anonymous.checked = true;
-    document.getElementById("anonChecbox").style.display = 'none';
-    authorField.innerText = anon;
-  }
-</script>
+

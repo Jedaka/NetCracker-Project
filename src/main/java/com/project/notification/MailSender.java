@@ -9,7 +9,6 @@ import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -22,7 +21,7 @@ public class MailSender {
     private final String DOMAIN = "http://localhost:8080/";
     private final String UNSUBSCRIBE_URL = DOMAIN + "removeSubscription/?removal=%s";
     private final String LOGIN_URL = DOMAIN + "login";
-    private final Address[] ADMINS = new Address[1];
+    private final Address[] ADMINS = new Address[3];
     private final String FROM = "notification.netserials@mail.ru";
     private final String PASSWORD = "netcrackerproject";
     private final String HOST = "smtp.mail.ru";
@@ -35,8 +34,8 @@ public class MailSender {
 
         try {
             ADMINS[0] = new InternetAddress("jhoweiser@gmail.com");
-//            ADMINS[1] = new InternetAddress("ganshinv@gmail.com");
-//            ADMINS[2] = new InternetAddress("maksim_larin@yahoo.com");
+            ADMINS[1] = new InternetAddress("ganshinv@gmail.com");
+            ADMINS[2] = new InternetAddress("maksim_larin@yahoo.com");
         } catch (AddressException e) {
             logger.warn("Exception while init emails: " + e.getMessage());
 
@@ -53,7 +52,19 @@ public class MailSender {
     }
 
     public void sendEpisode(Subscription subscription, Episode episode) {
-
+        /**
+         * !!! Еще не сделал
+         *
+         * Тема: [NetSerials] {SerialName} ({StudioName})
+         *
+         * Дорогой подписчик,
+         *
+         * Вышла [{EpisodeNumber} серия {SeasonNumber}-го сезона].
+         * Если Вам больше не интересен данный сериал, [можете отписаться от него.]
+         *
+         * Приятного просмотра,
+         * команда NetSerials.
+         */
         User user = subscription.getUser();
         String recipient = user.getEmail();
         String serialTitle = episode.getSerial().getTitle();
@@ -78,15 +89,26 @@ public class MailSender {
         }
     }
 
-    public void sendPassword(String email, String password){
+    public void sendPassword(String email, String password) {
+        /**
+         * Тема: Регистрация на сайте NetSerials
+         *
+         * Благодарим за регистрацию!
+         * Ваш пароль для входа: {password}
+         *
+         * Ссылка для входа: http://localhost:8080/login?email={email}
+         *
+         * Команда NetSerials.
+         */
         try {
             MimeMessage message = new MimeMessage(SESSION);
             message.setFrom(new InternetAddress(FROM));
             message.setRecipients(Message.RecipientType.TO, email);
-            message.setSubject("NetSerials.ru: Ваш пароль для входа", "UTF-8");
-            message.setText("Спасибо за регистрацию на нашем сайте!\n" +
-                    "Ваш пароль: " + password + "\n" +
-                    "Ссылка для входа: " + LOGIN_URL);
+            message.setSubject("Регистрация на сайте NetSerials", "UTF-8");
+            message.setText("Благодарим за регистрацию!\n" +
+                    "Ваш пароль для входа: " + password + "\n\n" +
+                    "Ссылка для входа: " + LOGIN_URL +
+                    "\n\nКоманда NetSerials.");
             Transport.send(message);
             logger.info("Password has been sent to " + email);
         } catch (MessagingException e) {
@@ -94,17 +116,19 @@ public class MailSender {
         }
     }
 
-    public void sendFeedback(String feedback, String author){
+    public void sendFeedback(String email, String theme, String text) {
+        /**
+         * Тема: [NetSerials] {theme}
+         *
+         * От {email}:
+         * {message}
+         */
         try {
             MimeMessage message = new MimeMessage(SESSION);
-            System.out.println(new String(feedback.getBytes(), Charset.forName("UTF-8")));
-            System.out.println(new String(feedback.getBytes(), Charset.forName("windows-1251")));
-            System.out.println(new String(feedback.getBytes(), Charset.forName("windows-1252")));
-            System.out.println(new String(feedback.getBytes(), Charset.forName("windows-1252")));
             message.setFrom(new InternetAddress(FROM));
             message.setRecipients(Message.RecipientType.TO, ADMINS);
-            message.setSubject("NetSerials.ru: Новый фидбек", "UTF-8");
-            message.setText("From: " + author + "\n" + feedback);
+            message.setSubject("[NetSerials] " + theme, "UTF-8");
+            message.setText("От " + email + ":\n" + text);
             Transport.send(message);
             logger.info("Feedback has been sent to: " + Arrays.toString(ADMINS));
         } catch (MessagingException e) {

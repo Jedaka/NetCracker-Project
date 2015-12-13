@@ -46,9 +46,9 @@
           </td>
         </tr>
         <tr>
-          <td align="right" valign="top">Тело&nbsp;письма</td>
+          <td align="right" valign="top">Сообщение</td>
           <td>
-            <textarea name="message" cols="35" rows="10" placeholder="Текст письма" required></textarea>
+            <textarea name="message" cols="35" rows="10" placeholder="" required></textarea>
           </td>
         </tr>
         <tr>
@@ -60,6 +60,7 @@
         </tbody>
       </table>
     </form>
+    <h3>${message}</h3>
   </div>
 </div>
 

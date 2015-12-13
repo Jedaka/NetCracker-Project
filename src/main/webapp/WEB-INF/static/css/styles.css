@@ -2,6 +2,7 @@ body {
   overflow-y: scroll;
 }
 
+
 .wrapper {
   max-width: 500px;
   width: 100%;
@@ -53,6 +54,9 @@ a.logout:hover {
 .filter__search_line {
   margin-top: 5px;
   width: 99%; /* тут что-то не то */
+  height: 30px;
+  margin-bottom: 5px;
+  font-size: large;
 }
 
 .filter__subscription {

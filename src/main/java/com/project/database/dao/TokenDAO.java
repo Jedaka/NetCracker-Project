@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by jedaka on 12.11.2015.
@@ -24,10 +26,12 @@ public class TokenDAO {
         return (Integer) session.save(object);
     }
 
-    public List<Token> getAll() {
+    public Set<Token> getAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(Token.class).list();
+        Set<Token> resultSet = new TreeSet<Token>(session.createCriteria(Token.class).list());
+        return resultSet;
     }
+
     public List<Token> getAllOUsersToken(){
         Session session = sessionFactory.getCurrentSession();
         return session.createCriteria(Token.class).list();

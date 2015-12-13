@@ -27,15 +27,16 @@
         <h2>Вход</h2>
         <form name='loginForm' action="/auth" method='POST'>
             <div>
-                <label>Email<br>
-                    <input type='email' name='email'>
+                <label>Email:<br>
+                    <input type='email' name='email' required placeholder="inbox@example.com"/>
                 </label>
             </div>
             <div>
-                <label>Пароль<br>
-                    <input type='password' name='password' />
+                <label>Пароль:<br>
+                    <input type='password' name='password' required placeholder="******"/>
                 </label>
             </div>
+            <%= request.getParameter("error") != null ? "<div style='color: red;'>Неверный логин или пароль</div>" : "" %>
             <input type='hidden' name='remember' value="on" />
             <button>Войти</button>
             <a href="/registration" href="logout" class="logout">Забыли пароль?</a>

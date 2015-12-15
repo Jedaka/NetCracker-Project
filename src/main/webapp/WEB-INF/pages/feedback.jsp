@@ -18,15 +18,12 @@
   </div>
   <div class='main'>
     <h2>Обратная связь</h2>
-    <p>
-      Нет сериала, который тебе интересен?
-      Вышла новая серия, а мы ее пропустили?
-      Есть предложения?
-      Пиши
-    </p>
-    <p>
-
-    </p>
+    <div class="feedback__comment">
+      <p>Нет сериала, который Вам интересен?</p>
+      <p>Вышла новая серия, а мы ее пропустили?</p>
+      <p>Есть предложения?</p>
+      <p>Напишите нам.</p>
+    </div>
     <form name='loginForm' action="/feedback" method='POST' accept-charset="UTF-8">
       <table width="100%" cellspacing="0" cellpadding="4">
         <tbody><tr>
@@ -36,7 +33,7 @@
           </td>
         </tr>
         <tr>
-          <td align="right">Тема</td>
+          <td align="right">Тема<span style="color: red;">*</span></td>
           <td>
             <select name="theme" required>
               <option value="error" selected>Ошибка</option>
@@ -46,7 +43,7 @@
           </td>
         </tr>
         <tr>
-          <td align="right" valign="top">Сообщение</td>
+          <td align="right" valign="top">Сообщение<span style="color: red;">*</span></td>
           <td>
             <textarea name="message" cols="35" rows="10" placeholder="" required></textarea>
           </td>
@@ -60,6 +57,7 @@
         </tbody>
       </table>
     </form>
+    <p><span style="color:red;">*</span> — обязательные поля. Если вы не укажите адрес для обратной связи, мы не сможем Вам ответить.</p>
     <h3>${message}</h3>
   </div>
 </div>

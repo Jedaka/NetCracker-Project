@@ -26,20 +26,35 @@
     <div class='main'>
         <h2>Вход</h2>
         <form name='loginForm' action="/auth" method='POST'>
-            <div>
-                <label>Email:<br>
-                    <input type='email' name='email' required placeholder="inbox@example.com"/>
-                </label>
-            </div>
-            <div>
-                <label>Пароль:<br>
-                    <input type='password' name='password' required placeholder="******"/>
-                </label>
-            </div>
-            <%= request.getParameter("error") != null ? "<div style='color: red;'>Неверный логин или пароль</div>" : "" %>
+            <table width="100%" cellspacing="0" cellpadding="4">
+                <tbody>
+                    <tr>
+                        <td align="right" width="100">
+                            Email
+                        </td>
+                        <td>
+                            <input type='email' name='email' required placeholder="inbox@example.com"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            Пароль
+                        </td>
+                        <td>
+                            <input type='password' name='password' required placeholder="password"/>
+                        </td>
+                    </tr>
+                    <%= request.getParameter("error") != null ? "<tr><td></td><td><div style='color: red;'>Неверный логин или пароль</div></td></tr>" : "" %>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Войти">
+                            <a href="/registration" class="logout">Забыли пароль?</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <input type='hidden' name='remember' value="on" />
-            <button>Войти</button>
-            <a href="/registration" href="logout" class="logout">Забыли пароль?</a>
         </form>
     </div>
 </div>

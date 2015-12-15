@@ -71,19 +71,4 @@ public class SubscriptionController {
         }
         return new JsonResponse(JsonResponse.Status.ERROR, "Not Found subscription with such id.");
     }
-
-    @RequestMapping(value = "/removeSubscription")
-    public String removeSubscription(String removal){
-        try {
-            userService.deleteSubscriptionByRemoval(removal);
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn(e.getMessage());
-            return "Something went wrong";
-        }
-        String response = "Subscription has been deleted successfully";
-        logger.info(response);
-        return response;
-    }
-
 }

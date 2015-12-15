@@ -8,10 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!doctype html>
-<link rel="shortcut icon" type="image/x-icon" href="static/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
 <meta charset="utf-8"/>
 <title>NetSerials</title>
-<link rel="stylesheet" href="static/css/styles.css"/>
+<link rel="stylesheet" href="/static/css/styles.css"/>
 <div class='wrapper'>
     <div>
         <a class='logo' href='/'>

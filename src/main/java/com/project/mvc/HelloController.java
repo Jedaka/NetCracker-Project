@@ -89,4 +89,16 @@ public class HelloController {
         modelAndView.setViewName("feedback");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/removeSubscription")
+    public String removeSubscription(String removal){
+        try {
+            userService.deleteSubscriptionByRemoval(removal);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // not found
+        }
+        String response = "Subscription has been deleted successfully";
+        return "unsubscribe";
+    }
 }

@@ -80,19 +80,10 @@ public class HelloController {
     }
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
-    public ModelAndView feedback(String message, String anonymous) {
+    public ModelAndView feedback(String email, String theme, String text) {
         ModelAndView modelAndView = new ModelAndView();
-        String author = "Anonymous";
-        if (anonymous == null) {
-            try {
-                User user = userService.getCurrentUser();
-                author = user.getEmail();
-                modelAndView.addObject("email", author);
-            } catch (Exception e) {
-                modelAndView.addObject("email", "");
-            }
-        }
-        mailSender.sendFeedback(message, author);
+
+        mailSender.sendFeedback(email, theme, text);
 
         modelAndView.addObject("message", "Ваше сообщение было отправлено администраторам");
         modelAndView.setViewName("feedback");

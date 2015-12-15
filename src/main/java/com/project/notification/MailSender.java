@@ -17,11 +17,10 @@ import java.util.Properties;
  */
 public class MailSender {
 
-
     private final String DOMAIN = "http://localhost:8080/";
     private final String UNSUBSCRIBE_URL = DOMAIN + "removeSubscription/?removal=%s";
     private final String LOGIN_URL = DOMAIN + "login";
-    private final Address[] ADMINS = new Address[3];
+    private final Address[] ADMINS = new Address[1];
     private final String FROM = "notification.netserials@mail.ru";
     private final String PASSWORD = "netcrackerproject";
     private final String HOST = "smtp.mail.ru";
@@ -33,9 +32,9 @@ public class MailSender {
     public MailSender() {
 
         try {
-            ADMINS[0] = new InternetAddress("jhoweiser@gmail.com");
-            ADMINS[1] = new InternetAddress("ganshinv@gmail.com");
-            ADMINS[2] = new InternetAddress("maksim_larin@yahoo.com");
+            ADMINS[0] = new InternetAddress("ganshinv@gmail.com");
+//            ADMINS[0] = new InternetAddress("jhoweiser@gmail.com");
+//            ADMINS[2] = new InternetAddress("maksim_larin@yahoo.com");
         } catch (AddressException e) {
             logger.warn("Exception while init emails: " + e.getMessage());
 
@@ -59,7 +58,7 @@ public class MailSender {
          *
          * Дорогой подписчик,
          *
-         * Вышла [{EpisodeNumber} серия {SeasonNumber}-го сезона].
+         * вышла [{EpisodeNumber} серия {SeasonNumber}-го сезона].
          * Если Вам больше не интересен данный сериал, [можете отписаться от него.]
          *
          * Приятного просмотра,
@@ -67,19 +66,27 @@ public class MailSender {
          */
         User user = subscription.getUser();
         String recipient = user.getEmail();
+
         String serialTitle = episode.getSerial().getTitle();
+        String studioName = episode.getStudio().getName();
+
+        int seasonNumber = episode.getSeasonNumber();
+        int episodeNumber = episode.getEpisodeNumber();
+        String link = episode.getLink();
+
         String removal = subscription.getRemoval();
+        String unsubscribeLink = String.format(UNSUBSCRIBE_URL, removal);
 
         try {
             MimeMessage message = new MimeMessage(SESSION);
             message.setFrom(new InternetAddress(FROM));
             message.setRecipients(Message.RecipientType.TO, recipient);
-            message.setSubject(serialTitle + ": вышла новая серия", "UTF-8");
-            message.setText("Cериал + \"" + serialTitle + "\" " +
-                    "S" + episode.getSeasonNumber() +
-                    "E" + episode.getEpisodeNumber() +
-                    "Link: " + episode.getLink() + "\n" +
-                    "Отписаться от сериала: " + String.format(UNSUBSCRIBE_URL, removal));
+            message.setHeader("Content-Type", "text/html; charset=UTF-8");
+            message.setSubject("[NetSerials] " + serialTitle + " (" + studioName + ")", "UTF-8");
+
+            String text = "Дорогой подписчик,\n\nвышла %1$s-я серия %2$s-го сезона. (%3$s)\n\nЕсли Вам больше не интересен данный сериал, можете отписаться от него. (%4$s)\n\nПриятного просмотра,\nкоманда NetSerials.";
+
+            message.setText(String.format(text, seasonNumber, episodeNumber, link, unsubscribeLink));
 
             Transport.send(message);
             logger.info("Notification about new episode of " + serialTitle + " has been sent to " + recipient);
@@ -94,9 +101,8 @@ public class MailSender {
          * Тема: Регистрация на сайте NetSerials
          *
          * Благодарим за регистрацию!
-         * Ваш пароль для входа: {password}
          *
-         * Ссылка для входа: http://localhost:8080/login?email={email}
+         * Ваш пароль для входа: {password}
          *
          * Команда NetSerials.
          */
@@ -105,9 +111,8 @@ public class MailSender {
             message.setFrom(new InternetAddress(FROM));
             message.setRecipients(Message.RecipientType.TO, email);
             message.setSubject("Регистрация на сайте NetSerials", "UTF-8");
-            message.setText("Благодарим за регистрацию!\n" +
-                    "Ваш пароль для входа: " + password + "\n\n" +
-                    "Ссылка для входа: " + LOGIN_URL +
+            message.setText("Благодарим за регистрацию!" +
+                    "\n\nВаш пароль для входа: " + password +
                     "\n\nКоманда NetSerials.");
             Transport.send(message);
             logger.info("Password has been sent to " + email);
